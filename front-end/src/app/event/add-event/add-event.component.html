@@ -20,7 +20,7 @@
           </div>
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group"> //TODO only to admin
           <div class="col-md-9 col-md-offset-1">
               <div class="customDiv">
                   <div class="pull-right">
@@ -34,7 +34,7 @@
                   </select>
               </div>
           </div>
-      </div>
+      </div> -->
 
       <div class="form-group">
           <div class="col-md-9 col-md-offset-1">
@@ -73,8 +73,8 @@
                           </span>
                       </div>
                       <div class=" pre-scrollable">
-                          <div class="col-xs-10" *ngFor="let item of volunteerService.volunteers | filter:queryIn:volunteerService.volunteers:searchFor" (click)="addToList(item)" (mouseover)="hover=true"
-                              (mouseleave)="hover=false">
+                            <div class="col-xs-10" *ngFor="let item of arrayToView | filter:queryIn:arrayToView:searchFor" (click)="addToList(item)" (mouseover)="hover=true"
+                            (mouseleave)="hover=false">
                               {{ item.name }}
                               <span class="glyphicon glyphicon-arrow-right pull-right text-success" [ngStyle]="{opacity: hover==true ? '1' : '0'}">
                               </span>

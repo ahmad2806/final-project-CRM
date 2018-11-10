@@ -5,6 +5,7 @@ import { EventService } from '../event.service';
 import { EventModel } from '../event.model';
 import { VolunteersService } from '../../volunteer/volunteers.service';
 import { Router } from '@angular/router';
+import { DonorService } from '../../donor/donor.service';
 
 @Component({
   selector: 'app-add-event',
@@ -18,24 +19,37 @@ export class AddEventComponent implements OnInit {
   @ViewChild('descriptionInput') desInputRef: ElementRef;
   searchFor = 'event';
   modelType = '';
-  relatedTo: VolunteerModel[] = [];
-  arrived: VolunteerModel[] = [];
-  didntarrived: VolunteerModel[] = [];
+  relatedTo = [];
+  arrived = [];
+  didntarrived = [];
 
 
+  arrayToView = [];
+  tempArr = [];
 
-
-  constructor(private volunteerService: VolunteersService, private eventService: EventService, private router: Router) {
+  constructor(private volunteerService: VolunteersService, private eventService: EventService, private router: Router, private donors: DonorService) {
     eventService.relatedTo = this.relatedTo;
+
+    if (this.router.url == "/Header/donor/donorEvent") {
+      this.tempArr = donors.Donor;
+    }
+    else {
+      this.tempArr = volunteerService.volunteers;
+    }
+
+    for (let i = 0; i < this.tempArr.length; i++) {
+      this.arrayToView.push(this.tempArr[i]);
+
+    }
   }
   addToList(item) {
-    const index = this.volunteerService.volunteers.indexOf(item);	   
-    this.relatedTo.push(this.volunteerService.volunteers[index]);	
-    this.volunteerService.volunteers.splice(index, 1);	
+    const index = this.arrayToView.indexOf(item);
+    this.relatedTo.push(this.arrayToView[index]);
+    this.arrayToView.splice(index, 1);	
   }
   delFromList(item) {
     const index = this.relatedTo.indexOf(item);
-    this.volunteerService.volunteers.push(this.relatedTo[index]);
+    this.arrayToView.push(this.relatedTo[index]);
     this.relatedTo.splice(index, 1);
   }
 
@@ -50,8 +64,28 @@ export class AddEventComponent implements OnInit {
       alert("תשלים את הנתונים הנדרשים");
     }
     else {
+      if (this.router.url === "/Header/donor/donorEvent") {
+        this.modelType = 'donor-Model';
+      } else {
+        this.modelType = 'volunteer-Model';
+      }
       const eventAdded = new EventModel(eventName, this.modelType, d, eventDescription, this.relatedTo, this.arrived, this.relatedTo);
-      this.eventService.add(eventAdded);	
+      if (this.router.url == "/Header/donor/donorEvent") {
+        for (let i = 0; i < this.relatedTo.length; i++) {
+          this.relatedTo[i].hisEvent.push(eventAdded);
+        }
+
+      }	
+      if (this.router.url != "/Header/donor/donorEvent") {
+        // for (let i = 0; i < this.relatedTo.length; i++) {
+        //   this.relatedTo[i].myEvents.push(eventAdded);
+
+        // }
+        this.eventService.add(eventAdded, "volunteer");
+      } else {
+        this.eventService.add(eventAdded, "donor");
+      }
+      //TODO
 
 
      

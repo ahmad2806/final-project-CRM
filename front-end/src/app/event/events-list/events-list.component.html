@@ -1,7 +1,7 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <button type="button"  data-toggle="modal" data-target="#addModal" class="btn btn-primary col-xs-1   	glyphicon glyphicon-plus"></button>
+            <button type="button" *ngIf="router.url != '/Header/main'"  data-toggle="modal" data-target="#addModal" class="btn btn-primary col-xs-1   	glyphicon glyphicon-plus"></button>
             <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-xs-4 text-right">
                             <button type="button" class="btn btn-info" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" [attr.data-target]="'#'+i">הצג</button>
-                            <button type="button" class="btn btn-warning" data-toggle="modal"  (click)="arrayOfVolunteers(i)" data-target="#editModal">עדכן</button>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" *ngIf="router.url != '/Header/main'" (click)="arrayOfVolunteers(i)" data-target="#editModal">עדכן</button>
                             <!--  -->
                             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
                                 #closeAddExpenseModal>
@@ -66,15 +66,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-9 col-md-offset-1">
                                                         <div class="customDiv">
-                                                                <div class="pull-right">	
-                                                                        <span class="pull-right " dir="rtl">סוג האירוע</span>	
-                                                                        <span class="text-danger">*</span>	
-                                                                    </div>	
-                                                                    <select class=" col-xs-6 pull-right form-control" dir="rtl" [(ngModel)]="modelType" name="type">	
-                                                                        <option value="volunteer-Model" dir="rtl" class=" pull-right">מתנדבים</option>	
-                                                                        <option value="donar-Model" dir="rtl" class="pull-right">טורמים</option>	
-                                                                        <option value="adopted-Model" dir="rtl" class="pull-right">אימוצים</option>	
-                                                                    </select>
+
                                                         </div>
                                                     </div>
                                                 </div>

@@ -3,6 +3,8 @@ import { EventModel } from '../event.model';
 import { VolunteersService } from '../../volunteer/volunteers.service';
 import { EventService } from '../event.service';
 import { VolunteerModel } from '../../volunteer/volunteer.model';
+import { Router } from '@angular/router';
+import { DonorService } from '../../donor/donor.service';
 
 @Component({
   selector: 'app-events-list',
@@ -26,22 +28,24 @@ export class EventsListComponent implements OnInit, DoCheck {
 
   private eventList: EventModel[] = [];
   private eventListOnSearch: EventModel[] = [];
-  private volunteersList: VolunteerModel[] = [];
+  private volunteersList = [];
   private relevantVolunteersToEvent: VolunteerModel[] = [];
 
-  constructor(private volunteerService: VolunteersService, private eventService: EventService) {
-
+  constructor(private volunteerService: VolunteersService, private eventService: EventService, private router: Router, private donors: DonorService) {
+    //TODO
 
   }
 
   ngDoCheck() {
-    if (this.eventService.generalEvents != this.eventListOnSearch) {
-      this.eventList = this.eventService.generalEvents;
+    if (this.router.url != "/Header/donor/donorEvent") {
+      if (this.eventService.generalEvents != this.eventListOnSearch) {
+        this.eventList = this.eventService.generalEvents;
 
-      this.eventListOnSearch = this.eventService.generalEvents;
+        this.eventListOnSearch = this.eventService.generalEvents;
+      }
     }
   }
-  
+
 
   ngOnInit() {
 
@@ -51,13 +55,13 @@ export class EventsListComponent implements OnInit, DoCheck {
     const index = this.eventList[i].didntArrived.indexOf(item);
     this.eventList[i].arrived.push(this.eventList[i].didntArrived[index]);
     this.eventList[i].didntArrived.splice(index, 1);
-    this.eventService.generalEvents =this.eventList ;
+    this.eventService.generalEvents = this.eventList;
   }
   delFromList(item, i) {
     const index = this.eventList[i].arrived.indexOf(item);
     this.eventList[i].didntArrived.push(this.eventList[i].arrived[index]);
     this.eventList[i].arrived.splice(index, 1);
-    this.eventService.generalEvents =this.eventList ;
+    this.eventService.generalEvents = this.eventList;
   }
 
   addToRelativeList(item, i) {
@@ -116,11 +120,11 @@ export class EventsListComponent implements OnInit, DoCheck {
       this.eventList[i].description = eventDescription;
       this.eventList[i].type = this.modelType;
       this.eventList[i].relativeTo = this.relatedTo;
-      this.eventService.generalEvents =this.eventList ;
+      this.eventService.generalEvents = this.eventList;
 
 
 
-      
+
       back.click();
 
 
@@ -132,9 +136,9 @@ export class EventsListComponent implements OnInit, DoCheck {
     this.i = i;
   }
   removeEvent() {
-    this.eventService.deletedEvents.push(this.eventList[this.i]);	
-    this.eventList.splice(this.i, 1);	
-    this.eventService.generalEvents =this.eventList ;	
+    this.eventService.deletedEvents.push(this.eventList[this.i]);
+    this.eventList.splice(this.i, 1);
+    this.eventService.generalEvents = this.eventList;
   }
 
   update(thisdate) {
@@ -156,7 +160,7 @@ export class EventsListComponent implements OnInit, DoCheck {
           }
         }
       }
-    
+
     }
     //     for(let i=0;i<this.eventList[0].date.length;i++){
 
@@ -165,7 +169,7 @@ export class EventsListComponent implements OnInit, DoCheck {
 
     //     }
     //  let  time = this.eventList[0].date[0];
-    this.eventService.generalEvents =this.eventList ;
+    this.eventService.generalEvents = this.eventList;
   }
 
 
