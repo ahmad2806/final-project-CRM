@@ -46,7 +46,7 @@ import { DonorService } from './donor/donor.service';
 import {MatRadioModule} from '@angular/material/radio';
 import { AddDonorComponent } from './donor/add-donor/add-donor.component';
 import { FigurecardComponent } from './dash-board/figurecard/figurecard.component';
-
+import { Ng2ImgMaxModule } from 'ng2-img-max';
 
 const appRoutes: Routes = [
   {
@@ -121,6 +121,7 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatRadioModule,
     MatIconModule,
+    Ng2ImgMaxModule,
   ],
   providers: [UserService,
     VolunteersService,

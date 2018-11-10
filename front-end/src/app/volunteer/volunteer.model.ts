@@ -1,5 +1,6 @@
 import { EmailValidator } from "@angular/forms";
 import { FreeDayes } from "./free-days.model";
+import { EventModel } from "../event/event.model";
 
 export class VolunteerModel {
     constructor(public name: string, public id: string,
@@ -8,8 +9,8 @@ export class VolunteerModel {
         public homePhone: string,
         public email: string,
         public volunteerType: string,
-        public freeDays:FreeDayes, public hasCar: boolean,
-        public agreeToLeft: boolean, public job: string,public avatar) {
+        public freeDays, public hasCar: boolean,
+        public agreeToLeft: boolean, public job: string,public avatar, public my_events: EventModel[]) {
 
     }
 }
