@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../../users/user.service';
 
 
 @Component({
@@ -9,17 +10,9 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private users:UserService) { }
 
   ngOnInit() {
   }
-  Vonclick(){	 
-    this.router.navigate(["/volenteer"]);	
-  }	
-  UsersonClick(){	
-    this.router.navigate(["/users"]);	
-  }	
-  HomeonClick(){	
-    this.router.navigate(["/main"]);	
-  }
+
 }
