@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { EventService } from '../event/event.service';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  constructor(private auth: AuthService, private router: Router) {   
-}
+  badge=false;
+  constructor(private auth: AuthService, private router: Router,public events: EventService) {   
+    if(this.events.inProgressEvents.length>0){
+      this.badge=true;
+  }}
 
 
   ngOnInit() {

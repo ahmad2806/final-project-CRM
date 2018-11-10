@@ -11,26 +11,29 @@
             <div class="col-xs-3 text-center">
                   <button type="button" (click)="openNav()" class="btn btn-default text-success  glyphicon glyphicon-th-list col-xs-2 "></button>
                   <div class="col-xs-3">
-                              
-                         <button type="button" class="btn btn-info text-success  glyphicon glyphicon glyphicon-bell col-xs-12 ps"></button>  
-                         <span class="badge col-xs-0" *ngIf="badge">{{events.inProgressEvents.length}}</span>     
-                           
+
+                        <button type="button" class="btn btn-info text-success  glyphicon glyphicon glyphicon-bell col-xs-12 ps"></button>
+                        <span class="badge col-xs-0" *ngIf="badge">{{events.inProgressEvents.length}}</span>
+
                   </div>
                   <button type="button" class="btn btn-danger text-success  glyphicon glyphicon-log-out col-xs-2 " (click)="signOut()"></button>
-            </div>            
+            </div>
             <div class="col-xs-6 text-center text-success btn-lg">
                   <a [routerLink]="['/Header/main']">J.S.P.C.A</a>
             </div>
             <div class=" col-xs-3 input-group changethisone">
-                        <!-- <input type="text" title="חפס שם" class="form-control text-right">	        TODO      
+
+            </div>
+            <div class=" col-xs-3 input-group changethisone">
+                  <!-- <input type="text" title="חפס שם" class="form-control text-right">	         bak      
                         <span class="input-group-addon">	
                               <i class="glyphicon glyphicon-search"></i>	
                         </span> -->
             </div>
       </div>
 </div>
-      
-      <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 <div id="main">
       <router-outlet></router-outlet>
 </div>
