@@ -1,9 +1,10 @@
 import { EventModel } from "../event/event.model";
+import { Donate } from "./donate.model";
 
 export class DonorModel {
     constructor(
         public name: string,
-        public lastName:string,
+        public donateDate: Date,
         public id: string,
         public birthday: Date,
         public address: string,
@@ -14,6 +15,8 @@ export class DonorModel {
         public amount: number,
         public hisEvent: EventModel[],
         public description:string,
+        public donate:Donate[],
+
     ) 
     {
 

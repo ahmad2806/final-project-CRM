@@ -37,12 +37,7 @@
           <h5 *ngIf="item.donorType ==='פרטי'">ת"ז: {{item.id}}</h5>
           <h5>תאריך תרומה: {{item.donateDate | date:"dd/MM/yyyy"}}</h5>
         </div>
-        <div class="col-sm-3 pull-right">	
-            <h5>{{item.description}}</h5>	
-          </div>
-        <div class="col-sm-3 pull-right">	
-            <h5>{{item.description}}</h5>	
-          </div>
+       
       </div>
       <div class="pull-left">
         <button class="btn btn-warning" (click)="edit(item)" data-toggle="modal" data-target="#edit">עדכן</button>
@@ -72,9 +67,6 @@
           <mat-form-field>
             <input matInput placeholder="שם" [(ngModel)]="name">
           </mat-form-field>
-          <mat-form-field>	
-              <input matInput placeholder="שם משפחה" [(ngModel)]="lastname">	
-            </mat-form-field>
           <br>
           <mat-form-field *ngIf="privateDonor">
             <input matInput placeholder="תז של התורם" [(ngModel)]="id">
@@ -100,10 +92,7 @@
             <input matInput placeholder="דוא'ל" [(ngModel)]="email">
           </mat-form-field>
           <br>
-          <mat-form-field>	
-              <input matInput placeholder="סכום תרומה" [(ngModel)]="amount">	
-            </mat-form-field>	
-            <br>
+
           <mat-form-field>
             <textarea matInput placeholder="פרטים נוספים" [(ngModel)]="description"></textarea>
           </mat-form-field>
