@@ -83,7 +83,7 @@
                                                                 <div class="col-sm-3 pull-left text-left">{{item.birthday | date:"dd/MM/yyyy"}}</div>
                                                         </div>
                                                         <div class="row ">
-                                                                <div class="col-sm-3 pull-right">:טל נייד</div>
+                                                                <div class="col-sm-3 pull-right">:טל נוסף</div>
                                                                 <div class="col-sm-3 pull-left text-left">{{item.telePhone}}</div>
                                                         </div>
                                                         <div class="row ">
@@ -92,7 +92,7 @@
                                                         </div>
 
                                                         <div class="row ">
-                                                                <div class="col-sm-3 pull-right">:טל טל נוסף</div>
+                                                                <div class="col-sm-3 pull-right">:טל נייד</div>
                                                                 <div class="col-sm-3 pull-left text-left">{{item.phone}}</div>
                                                         </div>
                                                         <div class="row ">
@@ -127,14 +127,14 @@
 
                                                 <div class="col-sm-3 pull-left">
                                                         <div class="row text-center">ימים הוא יכול להתנדב</div>
-                                                        <hr> 
+                                                        <hr>
                                                         <div *ngIf="item.freeDays.sunday" class="col-sm-12 text-center">ראשון</div>
                                                         <div *ngIf="item.freeDays.monday" class="col-sm-12 text-center">שני</div>
                                                         <div *ngIf="item.freeDays.tuesday" class="col-sm-12 text-center">שלישי</div>
                                                         <div *ngIf="item.freeDays.wednesday" class="col-sm-12 text-center">רביעי</div>
                                                         <div *ngIf="item.freeDays.thursday" class="col-sm-12 text-center">חמישי</div>
                                                         <div *ngIf="item.freeDays.friday" class="col-sm-12 text-center">שישי</div>
-                                                        <div *ngIf="item.freeDays.saturday" class="col-sm-12 text-center">שבת</div> 
+                                                        <div *ngIf="item.freeDays.saturday" class="col-sm-12 text-center">שבת</div>
 
                                                 </div>
                                         </div>
@@ -162,8 +162,7 @@
         </div>
 
 </div>
-<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
+<div *ngIf="noVolunteers" class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                         <div class="modal-body">
@@ -216,7 +215,7 @@
                                 <!------ Include the above in your HEAD tag ---------->
 
 
-                                <div class="row " >
+                                <div class="row " *ngIf="noVolunteers">
                                         <div class="col-sm-12">
 
 
@@ -358,9 +357,9 @@
                                         </div> -->
 
                                                         <div class="form-group">
-                                                                <label class="control-label col-md-4 pull-right text-right"> *ימים הוא יכול להתנדב
+                                                                <!-- <label class="control-label col-md-4 pull-right text-right"> *ימים הוא יכול להתנדב
                                                                         <span class="text-danger"></span>
-                                                                </label>
+                                                                </label> -->
 
                                                                 <div class="col-md-8">
 
@@ -369,15 +368,15 @@
 
 
 
-                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.sunday" #sunday>ראשון</mat-checkbox>
-                                               
-                                                    <mat-checkbox [checked]="editingVolunteer.freeDays.monday" #monday>שני</mat-checkbox>
-                                            
-                                                    <mat-checkbox [checked]="editingVolunteer.freeDays.tuesday" #tuesday>שלישי</mat-checkbox>
-                                                    <mat-checkbox [checked]="editingVolunteer.freeDays.wednesday" #wednesday>רביעי</mat-checkbox>
-                                                    <mat-checkbox [checked]="editingVolunteer.freeDays.thursday" #thursday>חמישי</mat-checkbox>
-                                                    <mat-checkbox [checked]="editingVolunteer.freeDays.friday" #friday>שישי</mat-checkbox>
-                                             
+                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.sunday" #sunday>ראשון</mat-checkbox>
+
+                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.monday" #monday>שני</mat-checkbox>
+
+                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.tuesday" #tuesday>שלישי</mat-checkbox>
+                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.wednesday" #wednesday>רביעי</mat-checkbox>
+                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.thursday" #thursday>חמישי</mat-checkbox>
+                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.friday" #friday>שישי</mat-checkbox>
+
                                                                 </div>
                                                         </div>
 
