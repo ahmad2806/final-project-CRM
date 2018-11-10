@@ -1,4 +1,5 @@
 <span class="container">
+    <button type="button text-left" #exit class="close" data-dismiss="modal" aria-label="Close"></button>
   <mat-radio-group>
     <mat-radio-button value="1" (click)="radioChoice('Foundation')">קרן</mat-radio-button>
     <mat-radio-button value="2" (click)="radioChoice('private')">פרטי</mat-radio-button>
@@ -10,7 +11,7 @@
     <input matInput placeholder="שם התורם" [(ngModel)]="name">
   </mat-form-field>
   <mat-form-field>	
-      <input matInput placeholder="שם משפחה" [(ngModel)]="lastname">	
+      <input type="date" matInput placeholder="תאריך תרומה" [(ngModel)]="donateDate">
     </mat-form-field>
 
   <br>
@@ -44,7 +45,7 @@
   </mat-form-field>
   <br>
 
-  <button mat-raised-button [routerLink]="['/Header/donor/donorList']" (click)="save()" data-dismiss="modal">שמור</button>
+  <button class="btn btn-primary center-block" style="width: 30%;" [routerLink]="['/Header/donor/donorList']" (click)="save(exit)" data-dismiss="modal">שמור</button>
 </ol>
 
 <ol *ngIf="Foundation">
@@ -74,8 +75,11 @@
   <mat-form-field>
     <input matInput placeholder="סכום התרומה" [(ngModel)]="amount">
   </mat-form-field>
+  <mat-form-field>
+      <input type="date" matInput placeholder="שם התורם" [(ngModel)]="donateDate">
+    </mat-form-field>
   <br>
 
-  <button type="button " class="btn btn-primary center-block" style="width: 30%;" (click)="save()" data-dismiss="modal" [routerLink]="['/Header/donor/donorList']" >שמור</button>
+  <button type="button " class="btn btn-primary center-block" style="width: 30%;" (click)="save(exit)"  [routerLink]="['/Header/donor/donorList']" data-dismiss="modal">שמור</button>
 
 </ol>
