@@ -17,6 +17,8 @@ export class EventService {
   arrived: VolunteerModel[] = [];
   arrived1: VolunteerModel[] = [];
   didntarrived: VolunteerModel[] = [];
+  donorEvents:EventModel[]=[];
+
   date: Date;
 
   clicked: string = "";
@@ -25,14 +27,14 @@ export class EventService {
 
     this.relatedTo =  [
       new VolunteerModel("אחמד", "20541774", new Date, "beit-hanina", "0524651749","", 
-        "025859294", "AHMADLOXIZ@gmail.com", "cat", new FreeDayes(true, false, true, true, true, false, false), true, false, "software engineering", ""),
+        "025859294", "AHMADLOXIZ@gmail.com", "cat", new FreeDayes(true, false, true, true, true, false, false), true, false, "software engineering", "", []),
       new VolunteerModel("אחמד", "20541774", new Date, "beit-hanina", "0524651749", "",
-        "025859294", "AHMADLOXIZ@gmail.com", "cat", new FreeDayes(true, false, true, true, true, false, false), true, false, "software engineering", ""),
+        "025859294", "AHMADLOXIZ@gmail.com", "cat", new FreeDayes(true, false, true, true, true, false, false), true, false, "software engineering", "", []),
       new VolunteerModel("אחמד", "20541774", new Date, "beit-hanina", "0524651749", "",
-        "025859294", "AHMADLOXIZ@gmail.com", "cat", new FreeDayes(true, false, true, true, true, false, false), true, false, "software engineering", ""),
+        "025859294", "AHMADLOXIZ@gmail.com", "cat", new FreeDayes(true, false, true, true, true, false, false), true, false, "software engineering", "", []),
     ];
     this.didntarrived = this.relatedTo;
-    this.commingSoonEvents = [ //year,month,date	   
+    this.commingSoonEvents = [ //year,month,date	   //TODO
       new EventModel("1", "volunteer-Model", new Date(2018, 1, 8), "שלח כרטיס מתנה", this.relatedTo, [], this.didntarrived),	
       new EventModel("2", "volunteer-Model", new Date(2018, 2, 8), "שלח כרטיס מתנה", this.relatedTo, [], this.didntarrived),	
       new EventModel("3", "volunteer-Model", new Date(2018, 3, 8), "שלח כרטיס מתנה", this.relatedTo, [], this.didntarrived),	
@@ -70,8 +72,10 @@ export class EventService {
   public get InProgressEvents() {
     return this.inProgressEvents.slice;
   }
-  public add(event: EventModel) {
-
+  public add(event: EventModel, type) {
+    if(type=="donor")
+    this.donorEvents.push(event);
+    else
     this.commingSoonEvents.push(event);
   }
   public get Clicked() {
