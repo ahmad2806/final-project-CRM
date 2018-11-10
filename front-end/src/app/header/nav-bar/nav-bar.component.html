@@ -1,0 +1,21 @@
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <img  [routerLink]="['/Header/main']" src="../../../assets/img.jpg" class="img-rounded btn" alt="Cinque Terre">
+    </div>
+  </div>
+<br><hr>
+  <div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs nav-justified" role="tablist">
+            <li ><a [routerLink]="['/Header/main']">דף הבית</a></li><br>
+            <li><a >אירועים</a></li><br>
+            <li><a [routerLink]="['/Header/users']">משתמשים</a></li>
+            <hr>
+            <li><a *ngIf="users.activeUser.VolPer" [routerLink]="['/Header/volenteer/VolunteersList']">מתנדבים</a></li> <br>
+            <li><a *ngIf="users.activeUser.DonorPer" [routerLink]="['/Header/donor/donorList']">תורמים</a></li> <br>
+            <li><a [routerLink]="['/Header/volenteer/VolunteersList']">מאומצים</a></li><br>  
+            <br>      
+          </ul>
+    </div>
+  </div>
+  

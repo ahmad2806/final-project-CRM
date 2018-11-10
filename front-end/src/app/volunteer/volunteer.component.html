@@ -1,0 +1,32 @@
+<div class="container ">
+   
+
+    
+  <br>
+
+<ul class="nav nav-pills">
+ 
+  <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/Header/volenteer/addVolunteer']">הוספת מתנדבים</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link"(click)="onclick()">רשימת האירועים</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/Header/volenteer/VolunteersList']">רשימת המתנדבים</a>
+  </li>
+</ul>
+<br>
+<hr>
+</div>
+
+<router-outlet></router-outlet>
+
+<!-- <app-create-vol *ngIf="addVol"></app-create-vol>
+<app-vol-list *ngIf="VolList"></app-vol-list>
+<app-event *ngIf="eventList"></app-event> -->
+
+
+
+
