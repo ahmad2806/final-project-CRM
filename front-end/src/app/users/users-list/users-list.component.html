@@ -69,7 +69,8 @@
                                 <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#deleteModal" (click)="onRemove(us)">מחק</button>
                             </div>
                             <div class="col-xs-6 text-left">
-                                    <button type="button" data-toggle="modal" data-target="#editModal" class="btn btn-warning" (click)="onEdit(us)">עדכן</button>	
+                                <button type="button" data-toggle="modal" data-target="#editModal" class="btn btn-warning invisible" #edit></button>
+                                <button type="button" class="btn btn-warning " (click)="onEdit(us,edit)">עדכן</button>
                             </div>
 
                         </div>

@@ -15,7 +15,7 @@ export class UsersListComponent implements OnInit {
   today = Date.now();
 
   constructor(private userService: UserService) {
-
+    //TODO
   }
   ngOnInit() {
 
@@ -24,9 +24,9 @@ export class UsersListComponent implements OnInit {
   onRemove(removeUser: User) {
     this.userService.UserRemoving = this.userService.usersList.indexOf(removeUser);
   }
-  onEdit(editUser: User) {
+  onEdit(editUser: User, edit) {
     this.userService.UserEditing = editUser;
-
+    edit.click();
   }
 
   SumbitRemove() {
@@ -34,7 +34,7 @@ export class UsersListComponent implements OnInit {
       alert("the admin cannot be removed");	
       return;
         }
-
+            // TODO
             this.userService.usersList.splice(this.userService.UserRemoving, 1);
         return;
 

@@ -16,7 +16,7 @@
                             <input matInput placeholder="שם פרטי" name="name" value=" " [(ngModel)]="name" required>
                         </mat-form-field>
                         <mat-form-field>
-                            <input matInput placeholder="טלפון" type="number" name="phone" [(ngModel)]="tel" required>
+                            <input matInput placeholder="טלפון"  name="phone" [(ngModel)]="tel" required>
                         </mat-form-field>
                         <mat-form-field>
                             <input matInput placeholder="אי-מייל" name="email" [(ngModel)]="email" required>
@@ -42,45 +42,27 @@
                         <br>
                         <div class="row">
                             <div class="col-xs-12">
-                                    <label for="per"> הרשאה למתנדבים</label>	
-                                </div>	
-                                <div class="col-xs-12">	
-                                    <mat-radio-group class="text-right">	
-                                        <mat-radio-button value="1" #Vper required>כן</mat-radio-button>	
-                                        <mat-radio-button value="2">לא</mat-radio-button>	
-                                    </mat-radio-group>
+                                <mat-checkbox name="aa" [value]="true" [(ngModel)]="Vper">הרשאה למתנדבים</mat-checkbox>
+
                             </div>
                         </div>
                         <br>
                         <br>
                         <div class="row">
-                                <label for="per"> הרשאה לתורמים</label>	
-                            </div>	
-                                <div class="row">	
-                                <mat-radio-group class="text-right">	
-                                        <mat-radio-button value="1" #Dper required>כן</mat-radio-button>	
-                                        <mat-radio-button value="2">לא</mat-radio-button>	
-                                    </mat-radio-group>
+                            <div class="col-xs-12">
+                                <mat-checkbox name="bb" [value]="true" [(ngModel)]="Dper">הרשאה לתורמים</mat-checkbox>
+                            </div>
                         </div>
                         <br>
                         <br>
-                        <div class="row">
-                            </div>	
-                            <label for="per"> הרשאה למאומצים</label>	
-                                <div class="row">	
-                                <mat-radio-group class="text-right">	
-                                        <mat-radio-button value="1" #Aper required>כן</mat-radio-button>	
-                                        <mat-radio-button value="2">לא</mat-radio-button>	
-                                    </mat-radio-group>
-                        </div>
-                        <br>
+                        
                     </div>
                 </div>
             </div>
             <div class="modal-footer text-center">
                 <button type="reset" #reset class="btn btn-warning">איפוס
                 </button>
-                <button type="button" class="btn btn-primary" [disabled]="!f.valid" (click)="onSumbit(Vper.checked,Dper.checked,Aper.checked,reset,exit)">שמור
+                <button type="button" class="btn btn-primary" [disabled]="!f.valid" (click)="onSumbit(reset,exit)">שמור
                 </button>
             </div>
         </form>

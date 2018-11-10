@@ -17,6 +17,9 @@ export class AddUserComponent {
   username = "";
   password = "";
   password2 = "";
+  Vper: boolean;
+  Aper: boolean;
+  Dper: boolean;
 
   hide = true;
   added = false;
@@ -24,7 +27,7 @@ export class AddUserComponent {
   constructor(private UserService: UserService, private router: Router) {
 
   }
-  onSumbit(Vper, Dper, Aper, reset, exit) {
+  onSumbit(reset, exit) {
     let newUser: User;
     for (let index = 0; index < this.UserService.UsersList.length; index++) {
       if (this.username == this.UserService.UsersList[index].username) {
@@ -32,22 +35,20 @@ export class AddUserComponent {
         return;
       }
     }
-    if (Vper == false && Dper == false && Aper == false) {
-      if (Vper == false && Dper == false && Aper == false) {
-        alert("please give at least 1 permission for the new user"); alert("please give at least 1 permission for the new user");
-        return;
-      }
-
-    }
-    if (Vper == false && Dper == false && Aper == false) {	
+    if (this.Vper == false && this.Dper == false && this.Aper == false) {
       alert("please give at least 1 permission for the new user");
-      return;	
+      return;
+    }
+    if (this.password != this.password2) {
+      alert("confirm password isn't correct");
+      return;
     }
     else {
-      newUser = new User(this.name, this.tel, this.email, this.username, this.password, Vper, Dper, Aper, false);	
-      this.UserService.usersList.push(newUser);	
-      reset.click();	
-      exit.click();	
-    }	
+      newUser = new User(this.name, this.tel, this.email, this.username, this.password, this.Vper, this.Dper, this.Aper, false);
+      
+      this.UserService.usersList.push(newUser);//TODO
+      reset.click();
+      exit.click();
+    }
   }
 }
