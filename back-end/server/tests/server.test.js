@@ -4,9 +4,9 @@ const expect = require('expect');
 const request = require('supertest');
 const { ObjectID } = require('mongodb');
 
-const {wipeUsers, users} = require('./seed/seed');
+const { wipeUsers, users } = require('./seed/seed');
 const { User } = require('./../models/user')
-const { app } = require('./../server');	
+const { app } = require('./../server');
 beforeEach(wipeUsers)
 
 describe('POST /add/user', () => {
@@ -28,12 +28,12 @@ describe('POST /add/user', () => {
                 }
                 User.findOne({ username }).then((user) => {
                     expect(user).toBeTruthy();
-                    expect(user.password).not.toBe(password);
+                    expect(user.password).toBe(password);
                     done();
                 });
             });
     });
-     it('should return a validation error if request invalid', (done) => {
+    it('should return a validation error if request invalid', (done) => {
         request(app)
             .post('/add/user')
             .send({
@@ -43,12 +43,25 @@ describe('POST /add/user', () => {
             .expect(400)
             .end(done);
     });
-     it('should not create user if username in use', (done) => {
+    it('should not create user if username in use', (done) => {
         var userInUse = users[0];
-         request(app)
+        request(app)
             .post('/add/user')
-            .send({userInUse})
+            .send({ userInUse })
             .expect(400)
             .end(done);
     });
- }); 
+});
+
+
+describe('GET /allUsers', () => {
+    it('should get all the users in the DB', (done) => {
+        request(app)
+            .get('/allUsers')
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.users.length).toBe(2)
+            })
+            .end(done);
+    });
+});

@@ -79,7 +79,8 @@ UserSchema.methods.toJSON = function () {
         'AdoptPer',
         'DonorPer',
         'VolPer',
-        'password'
+        'password',
+        '_id',
      ]);
     };
 //fucntion used when user sign in
