@@ -75,6 +75,18 @@ app.patch('/user', (req, res) => {
     }, (e) => res.status(400).send())
 });
 
+app.post('/delete/user', (req, res) => {
+    User.findOneAndRemove({
+        username: req.body.username
+    })
+    .then((user) => {
+        if (!user) {
+            return res.status(404).send();   
+        }
+        res.send({user})
+    }, (e) => res.status(400).send());
+});
+
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
 });

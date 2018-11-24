@@ -22,4 +22,7 @@ export class ServerService {
     editUser(user) {
         return this.http.patch(`${this.url}/user`, user);
     }
+    deleteUser(user) {
+        return this.http.post(`${this.url}/delete/user`, user);
+    }
 } 
