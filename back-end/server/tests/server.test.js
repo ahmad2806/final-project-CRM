@@ -65,3 +65,52 @@ describe('GET /allUsers', () => {
             .end(done);
     });
 });
+
+
+describe('POST /users/login', () => {
+    it('should login user and return auth token', (done) => {
+        request(app)
+            .post('/users/login')
+            .send({
+                username: users[0].username,
+                password: users[0].password
+            })
+            .expect(200)
+            .expect((res) => {
+                expect(res.headers['x-auth']).toBeTruthy();
+            })
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+                User.findById(users[0]._id).then((user) => {
+                    expect(user.toObject().tokens[1]).toMatchObject({//insted of toInclude ... should pass an object to it
+                        access: 'auth',
+                        token: res.headers['x-auth']
+                    })
+                    done();
+                }, (e) => done(e));
+            });
+    });
+    it('should reject invalid login', (done) => {
+        request(app)
+            .post('/users/login')
+            .send({
+                username: users[1].username,
+                password: '123456pass'
+            })
+            .expect(404)
+            .expect((res) => {
+                expect(res.headers['x-auth']).toBeFalsy();
+            })
+            .end((err, res) => {
+                if (err) {
+                    return done(err)
+                }
+                User.findById(users[1]._id).then((user) => {
+                    expect(user.tokens.length).toBe(1)
+                    done();
+                })
+            }, (e) => done(e));
+    });
+});
