@@ -47,6 +47,8 @@ import { AddDonorComponent } from './donor/add-donor/add-donor.component';
 import { FigurecardComponent } from './dash-board/figurecard/figurecard.component';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
 
+import { ServerService } from './server.service';
+import { HttpModule } from '@angular/http';
 const appRoutes: Routes = [
   {
     path: 'Header',canActivate:[AuthGuard], component: HeaderComponent, children: [
@@ -120,11 +122,13 @@ const appRoutes: Routes = [
     MatRadioModule,
     MatIconModule,
     Ng2ImgMaxModule,
+    HttpModule,
   ],
   providers: [UserService,
     VolunteersService,
     AppboolService, EventService,
     AuthService,AuthGuard,DonorService,
+    ServerService,
   ],
   bootstrap: [AppComponent]
 
