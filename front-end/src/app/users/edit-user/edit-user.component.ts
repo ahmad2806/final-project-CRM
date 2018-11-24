@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { NgForm } from '@angular/forms';
 import { User } from '../user.model';
+import { ServerService } from '../../server.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -9,8 +10,10 @@ import { User } from '../user.model';
   styleUrls: ['./edit-user.component.css']
 })
 export class EditUserComponent implements OnInit {
-  constructor(private userService: UserService,) {
-  }
+  constructor(
+    private userService: UserService,
+    private serverSerice: ServerService
+  ) { }
 
   ngOnInit() {
   }
@@ -19,10 +22,10 @@ export class EditUserComponent implements OnInit {
     // let newUser: User;
     // let swap: boolean = false;
     // let currIndex: number = 0;
-    if (Vper == false && Dper == false && Aper == false && Freeze == false) {
-      alert("freeze the account or delete it give at least 1 permission");
-      return;
-    }
+    // if (Vper == false && Dper == false && Aper == false && Freeze == false) {
+    //   alert("freeze the account or delete it give at least 1 permission");
+    //   return;
+    // }
     // for (let index = 0; index < this.userService.usersList.length; index++) {
     //   if (index == this.userService.usersList.length - 1) {
     //     swap = true;
@@ -48,16 +51,28 @@ export class EditUserComponent implements OnInit {
     //   }
     // }
 
-    let newUser = new User(form.value.name, form.value.phone, form.value.email, this.userService.UserEditing.username, form.value.password, Vper, Dper, Aper, Freeze);
-    this.userService.UserEditing.name = form.value.name;
-    this.userService.UserEditing.phone = form.value.phone;
-    this.userService.UserEditing.email = form.value.email;
-    this.userService.UserEditing.password = form.value.password;
-    this.userService.UserEditing.VolPer = Vper;
-    this.userService.UserEditing.DonorPer = Dper;
-    this.userService.UserEditing.AdoptPer = Aper;
-    this.userService.UserEditing.Freeze = Freeze;
-   
+    // let newUser = new User(form.value.name, form.value.phone, form.value.email, this.userService.UserEditing.username, form.value.password, Vper, Dper, Aper, Freeze);
+    // this.userService.UserEditing.name = form.value.name;
+    // this.userService.UserEditing.phone = form.value.phone;
+    // this.userService.UserEditing.email = form.value.email;
+    // this.userService.UserEditing.password = form.value.password;
+    // this.userService.UserEditing.VolPer = Vper;
+    // this.userService.UserEditing.DonorPer = Dper;
+    // this.userService.UserEditing.AdoptPer = Aper;
+    // this.userService.UserEditing.Freeze = Freeze;
+
     //TODO
+    this.serverSerice.editUser(this.userService.UserEditing)
+      .subscribe((res) => {
+        if (res.status === 400) {
+          return alert('הפרטים שהוזנו שגויים');
+        }
+        if (res.status === 200) {
+          var currIndex = this.userService.usersList.indexOf(this.userService.UserEditing);
+          this.userService.usersList[currIndex] = this.userService.UserEditing;
+        } else {
+          return alert('בעיה מצד שרת');
+        }
+      });
   }
 }

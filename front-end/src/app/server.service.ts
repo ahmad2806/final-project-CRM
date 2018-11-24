@@ -19,4 +19,7 @@ export class ServerService {
     login(user){
         return this.http.post(`${this.url}/users/login`,user)
     }
+    editUser(user) {
+        return this.http.patch(`${this.url}/user`, user);
+    }
 } 
