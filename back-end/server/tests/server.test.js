@@ -115,8 +115,8 @@ describe('POST /users/login', () => {
     });
 });
 
-describe('PATCH /user', ()=> {
-    it('should update user',(done) => {
+describe('PATCH /user', () => {
+    it('should update user', (done) => {
         request(app)
             .patch('/user')
             .send({
@@ -130,5 +130,36 @@ describe('PATCH /user', ()=> {
                 expect(res.body.user.phone).toBe('0123456789');
             })
             .end(done);
+
+
+        describe('DELETE /user', () => {
+            it('should delete a user', (done) => {
+                userId = users[0]._id;
+                request(app)
+                    .post('/delete/user')
+                    .send(users[0])
+                    .expect(200)
+                    .expect((res) => {
+                        expect(res.body.user.username).toBe(users[0].username);
+                        expect(res.body.user.name).toBe(users[0].name);
+                    })
+                    .end((err, res) => {
+                        if (err) {
+                            return done(err);
+                        }
+                        User.findById(userId).then((user) => {
+                            expect(user).toBeFalsy();
+                            done();
+                        }, (e) => done(e));
+                    });
+            });
+            it('should not delete unExisted user and return 404', (done) => {
+                request(app)
+                    .post('/delete/user')
+                    .send({ username: 'notThere' })
+                    .expect(404)
+                    .end(done)
+            })
+        });
     });
 });
