@@ -9,12 +9,12 @@ const { User } = require('./../models/user')
 const { app } = require('./../server');
 beforeEach(wipeUsers)
 
-describe('POST /add/user', () => {
+describe('POST /user', () => {
     var username = 'ahmadhashem@gmail.com';
     var password = '12345679abc';
     it('should create a user', (done) => {
         request(app)
-            .post('/add/user')
+            .post('/user')
             .send({ username, password })
             .expect(200)
             .expect((res) => {
@@ -35,7 +35,7 @@ describe('POST /add/user', () => {
     });
     it('should return a validation error if request invalid', (done) => {
         request(app)
-            .post('/add/user')
+            .post('/user')
             .send({
                 username: 'Ahmad Hashem',
                 password: '123'
@@ -46,7 +46,7 @@ describe('POST /add/user', () => {
     it('should not create user if username in use', (done) => {
         var userInUse = users[0];
         request(app)
-            .post('/add/user')
+            .post('/user')
             .send({ userInUse })
             .expect(400)
             .end(done);
@@ -112,5 +112,23 @@ describe('POST /users/login', () => {
                     done();
                 })
             }, (e) => done(e));
+    });
+});
+
+describe('PATCH /user', ()=> {
+    it('should update user',(done) => {
+        request(app)
+            .patch('/user')
+            .send({
+                username: users[0].username,
+                password: 'ahmadhashem',
+                phone: '0123456789'
+            })
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.user.password).toBe('ahmadhashem');
+                expect(res.body.user.phone).toBe('0123456789');
+            })
+            .end(done);
     });
 });
