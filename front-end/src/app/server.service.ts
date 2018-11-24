@@ -5,9 +5,14 @@ import { User } from "./users/user.model";
 //at  https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi/related?hl=en
 @Injectable()
 export class ServerService {
-     constructor(private http: Http) {
-     }
-     addNewUser(user: User){
-        return this.http.post('http://localhost:3000/add/user', user);
+    url = 'http://localhost:3000';
+
+    constructor(private http: Http) {
+    }
+    addNewUser(user: User) {
+        return this.http.post(`${this.url}/add/user`, user);
+    }
+    getAllUsers() {
+        return this.http.get(`${this.url}/allUsers`)
     }
 } 

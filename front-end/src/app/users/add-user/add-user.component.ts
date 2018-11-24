@@ -28,16 +28,25 @@ export class AddUserComponent {
   added = false;
   disappear = true;
   constructor(private UserService: UserService, private router: Router, private serverService: ServerService) {
-
+    this.UserService.usersList = [];
+    serverService.getAllUsers()
+      .subscribe((res) => {
+        let allUsers = res.json().users;
+        for (let index = 0; index < allUsers.length; index++) {
+          this.UserService.usersList.push(allUsers[index]);
+        }
+      }, (e) => {
+        alert('error while fetching users');
+      });
   }
   onSumbit(reset, exit) {
     let newUser: User;
-    // for (let index = 0; index < this.UserService.UsersList.length; index++) {
-    //   if (this.username == this.UserService.UsersList[index].username) {
-    //     alert("username is already in use");
-    //     return;
-    //   }
-    // }
+    for (let index = 0; index < this.UserService.UsersList.length; index++) {
+      if (this.username == this.UserService.UsersList[index].username) {
+        alert("username is already in use");
+        return;
+      }
+    }
     if (this.Vper == false && this.Dper == false && this.Aper == false) {
       alert("please give at least 1 permission for the new user");
       return;
@@ -48,13 +57,15 @@ export class AddUserComponent {
     }
     else {
       newUser = new User(this.name, this.tel, this.email, this.username, this.password, this.Vper, this.Dper, this.Aper, false);
-      
+
       // this.UserService.usersList.push(newUser);//TODO
       console.log(JSON.stringify(newUser, undefined, 2));
       this.serverService.addNewUser(newUser)
-        .subscribe((res) =>{
-          console.log(res);
-        }, (e) => console.log("error while saving",e))
+        .subscribe((res) => {
+          this.UserService.usersList.push(newUser);
+        }, (e) => {
+          alert("מספר טליפון לא תקין \n נשה שוב");
+        });
       reset.click();
       exit.click();
     }

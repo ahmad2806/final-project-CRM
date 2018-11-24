@@ -70,8 +70,18 @@ var UserSchema = new Schema({
 UserSchema.methods.toJSON = function () {
     var user = this;
     var userObject = user.toObject();
-    return _.pick(userObject, ['_id', 'username']);
-};
+    return _.pick(userObject, [
+        'username',
+        'name',
+        'phone',
+        'email',
+        'Freeze',
+        'AdoptPer',
+        'DonorPer',
+        'VolPer',
+        'password'
+     ]);
+    };
 //fucntion used when user sign in
 UserSchema.methods.generateAuthToken = function () {
     var user = this;
@@ -83,18 +93,18 @@ UserSchema.methods.generateAuthToken = function () {
     });
 };
 //so we dont hash the password more than once
-UserSchema.pre('save', function (next) {
-    var user = this;
-    if (user.isModified('password')) {
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(user.password, salt, (err, hash) => {
-                user.password = hash;
-                next();
-            });
-        });
-    } else {
-        next();
-    }
-});
+// UserSchema.pre('save', function (next) {
+//     var user = this;
+//     if (user.isModified('password')) {
+//         bcrypt.genSalt(10, (err, salt) => {
+//             bcrypt.hash(user.password, salt, (err, hash) => {
+//                 user.password = hash;
+//                 next();
+//             });
+//         });
+//     } else {
+//         next();
+//     }
+// });//the client want to have access to the users passwords that he sets
 var User = mongoose.model('User', UserSchema);
 module.exports = { User }

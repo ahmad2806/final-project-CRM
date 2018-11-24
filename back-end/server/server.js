@@ -26,16 +26,25 @@ app.use((request, response, next) => {
 app.use(bodyParser.json());
 
 app.post('/add/user', (req, res) => {
-     var user = new User(req.body);
-      user.save().then(() => {
+    var user = new User(req.body);
+    user.save().then(() => {
         return user.generateAuthToken();
-      }).then((token) => {
+    }).then((token) => {
         res.header('x-auth', token).send(user);
-      }).catch((e) => {
+    }).catch((e) => {
         res.status(400).send(e);
-      })
-    });
+    })
+});
 
+app.get('/allUsers', (req, res) => {
+    User.find({})
+        .then((users) => {
+            res.send({ users })
+        }, (e) => {
+            console.log(res);
+            res.status(400).send(e);
+        });
+});
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
 });
