@@ -22,8 +22,24 @@ app.use((request, response, next) => {
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 })
-
 app.use(bodyParser.json());
+
+//access when a user login .. token is generated every time he does
+app.post('/users/login', (req, res) => {
+    var body = _.pick(req.body, ['username', 'password']);
+    User.findByCredentials(body.username, body.password).then((user) => {
+        return user.generateAuthToken().then((token) => {
+            res.header('x-auth', token).send(user);
+        });
+    }, (e) => {
+        console.log(e);
+        if (e === 'wrong-password') {
+            res.status(404).send()
+        } else {
+            res.status(400).send();
+        }
+    });
+});
 
 app.post('/add/user', (req, res) => {
     var user = new User(req.body);

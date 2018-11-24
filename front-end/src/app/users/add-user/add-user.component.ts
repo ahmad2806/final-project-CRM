@@ -28,16 +28,7 @@ export class AddUserComponent {
   added = false;
   disappear = true;
   constructor(private UserService: UserService, private router: Router, private serverService: ServerService) {
-    this.UserService.usersList = [];
-    serverService.getAllUsers()
-      .subscribe((res) => {
-        let allUsers = res.json().users;
-        for (let index = 0; index < allUsers.length; index++) {
-          this.UserService.usersList.push(allUsers[index]);
-        }
-      }, (e) => {
-        alert('error while fetching users');
-      });
+   
   }
   onSumbit(reset, exit) {
     let newUser: User;

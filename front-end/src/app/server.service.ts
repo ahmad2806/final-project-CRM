@@ -5,8 +5,9 @@ import { User } from "./users/user.model";
 //at  https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi/related?hl=en
 @Injectable()
 export class ServerService {
-    url = 'http://localhost:3000';
-
+    localhost_url = 'http://localhost:3000';
+    heroku_url = 'https://stormy-plains-63553.herokuapp.com';
+    url = this.localhost_url
     constructor(private http: Http) {
     }
     addNewUser(user: User) {
@@ -14,5 +15,8 @@ export class ServerService {
     }
     getAllUsers() {
         return this.http.get(`${this.url}/allUsers`)
+    }
+    login(user){
+        return this.http.post(`${this.url}/users/login`,user)
     }
 } 

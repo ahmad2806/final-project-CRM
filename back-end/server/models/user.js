@@ -81,8 +81,23 @@ UserSchema.methods.toJSON = function () {
         'VolPer',
         'password',
         '_id',
-     ]);
-    };
+    ]);
+};
+
+//checking if user in the DB and allowed to access based on the username and password
+UserSchema.statics.findByCredentials = function (username, password) {
+    var User = this;
+    return User.findOne({ username }).then((user) => {
+        if (!user) {
+            return Promise.reject();
+        }
+        if (password === user.password) {
+            return Promise.resolve(user);
+        } else {
+            return Promise.reject('wrong-password');
+        }
+    });
+};
 //fucntion used when user sign in
 UserSchema.methods.generateAuthToken = function () {
     var user = this;
