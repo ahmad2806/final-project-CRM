@@ -8,7 +8,7 @@ The purpose of the project is to help http://jspca.org.il/ to mange all the data
 ### [Project Diary](https://github.com/ahmad2806/CRM_final_project/diary)
 
 
-### [project documents](https://github.com/ahmad2806/CRM_final_project/documents)
+### [project documents](https://github.com/ahmad2806/final-project-CRM/wiki/documents)
 
 
 
