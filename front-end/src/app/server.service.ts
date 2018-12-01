@@ -16,13 +16,19 @@ export class ServerService {
     getAllUsers() {
         return this.http.get(`${this.url}/allUsers`)
     }
-    login(user){
-        return this.http.post(`${this.url}/users/login`,user)
+    login(user) {
+        return this.http.post(`${this.url}/users/login`, user)
     }
     editUser(user) {
         return this.http.patch(`${this.url}/user`, user);
     }
     deleteUser(user) {
         return this.http.post(`${this.url}/delete/user`, user);
+    }
+    addNewVolunteer(volunteer) {
+        return this.http.post(`${this.url}/volunteer`, volunteer);
+    }
+    getAllVolunteers() {
+        return this.http.get(`${this.url}/volunteers`);
     }
 } 
