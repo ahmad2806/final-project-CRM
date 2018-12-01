@@ -94,9 +94,9 @@ const volunteers = [{
 }];
 const wipeVolunteers = (done) => {
   Volunteer.remove({}).then(() => {
-    var volunteerOne = new User(volunteers[0]).save();
-    var volunteerTwo = new User(volunteers[1]).save();
-     return Promise.all([volunteerOne,volunteerTwo])
+    var volunterOne = new Volunteer(volunteers[0]).save();
+    var volunterTwo = new Volunteer(volunteers[1]).save();
+    return Promise.all([volunterOne, volunterTwo])
   }).then(() => done());
 };
 

@@ -4,10 +4,11 @@ const expect = require('expect');
 const request = require('supertest');
 const { ObjectID } = require('mongodb');
 
-const { wipeUsers, users } = require('./seed/seed');
+const { wipeUsers, users, volunteers, wipeVolunteers } = require('./seed/seed');
 const { User } = require('./../models/user')
 const { app } = require('./../server');
 beforeEach(wipeUsers)
+beforeEach(wipeVolunteers)
 
 describe('POST /user', () => {
     var username = 'ahmadhashem@gmail.com';
@@ -161,5 +162,21 @@ describe('PATCH /user', () => {
                     .end(done)
             })
         });
+    });
+});
+
+/**********************         Volunteers      ***********************/
+
+describe('GET /volunteers', () => {
+    it('should GET all volunteer', (done) => {
+        request(app)
+            .get('/volunteers')
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.volunteers.length).toBe(2);
+                expect(volunteers[0]).toBeTruthy();
+                expect(volunteers[1]).toBeTruthy();
+            })
+            .end(done);
     });
 });
