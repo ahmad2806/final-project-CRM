@@ -4,6 +4,7 @@ import { AppboolService } from '../appbool.service';
 import { UserService } from '../users/user.service';
 import { AuthService } from '../auth.service';
 import { ServerService } from '../server.service';
+import { VolunteersService } from '../volunteer/volunteers.service';
 
 //TODO
 @Component({
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
     private app: AppboolService,
     private UserService: UserService,
     private auth: AuthService,
-    private serverService: ServerService
+    private serverService: ServerService,
+    private volservice: VolunteersService
   ) { }
 
   ngOnInit() {
@@ -71,15 +73,28 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["/Header/main"]);
           this.UserService.activeUser = res.json();
           this.auth.login();
+          if (this.UserService.activeUser.VolPer == true) {
+            console.log(this.UserService.activeUser)
+            this.serverService.getAllVolunteers()
+              .subscribe((res) => {
+                this.volservice.volunteers = [];
+                var allVolunteers = res.json().volunteers;
+                for (let i = 0; i < allVolunteers.length; i++)
+                  this.volservice.volunteers.push(allVolunteers[i]);
+                // console.log(this.volservice.volunteers)
+              }, (e) => alert("בעיה צד שרת"))
+          }
+
         }
-      }, (e) =>{
-          if (e.status === 400) {
-            return alert("אתה לא מיחובר")
-          }
-          if (e.status === 404) {
-            return alert("אחד או יותר מהנתונים שגויים");
-          }
+      }, (e) => {
+        if (e.status === 400) {
+          return alert("אתה לא מיחובר")
+        }
+        if (e.status === 404) {
+          return alert("אחד או יותר מהנתונים שגויים");
+        }
       });
+
   }
 
 
