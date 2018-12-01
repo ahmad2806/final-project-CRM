@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 
 var { User } = require('./models/user');
+var { Volunteer } = require('./models/volunteer')
 var { mongoose } = require('./db/mongoose');
 
 var { authenticate } = require('./middleware/authenticate');
@@ -23,7 +24,7 @@ app.use((request, response, next) => {
     next();
 })
 app.use(bodyParser.json());
-
+/*******************        User        **********************/
 //access when a user login .. token is generated every time he does
 app.post('/users/login', (req, res) => {
     var body = _.pick(req.body, ['username', 'password']);
@@ -86,6 +87,15 @@ app.post('/delete/user', (req, res) => {
         res.send({user})
     }, (e) => res.status(400).send());
 });
+
+/*******************        Volunteer        **********************/
+app.post('/volunteer', (req, res) => {
+    var volunteerToAdd = new Volunteer(req.body);
+    volunteerToAdd.save().then((volunteer) => {
+        res.send(volunteer);
+    }, (e) => res.status(400).send(e));
+});
+
 
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
