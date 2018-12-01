@@ -96,6 +96,13 @@ app.post('/volunteer', (req, res) => {
     }, (e) => res.status(400).send(e));
 });
 
+app.get('/volunteers', (req, res) => {
+    Volunteer.find({})
+        .then((volunteers) => {
+            res.send({volunteers});
+        }, (e) => res.status(400).send(e));
+});
+
 
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
