@@ -180,3 +180,28 @@ describe('GET /volunteers', () => {
             .end(done);
     });
 });
+
+describe('POST /volunteer', () => {
+    var newVolunteer = volunteers[0];
+    newVolunteer.id = '123456789123';
+    newVolunteer._id = new ObjectID();
+    it('should add new volunteer', (done) => {
+        request(app)
+            .post('/volunteer')
+            .send({ newVolunteer })
+            .expect(200)
+            .expect((res) => {
+                expect(newVolunteer).toBeTruthy();
+                expect(volunteers[0]).toBeTruthy();
+                expect(volunteers[1]).toBeTruthy();
+            })
+            .end(done);
+    });
+    it('should not add volunteers with the same id', (done) => {
+        request(app)
+            .post('/volunteer')
+            .send(volunteers[0])
+            .expect(400)
+            .end(done);
+    });
+});
