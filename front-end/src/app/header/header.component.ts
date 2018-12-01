@@ -9,11 +9,12 @@ import { EventService } from '../event/event.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  badge=false;
-  constructor(private auth: AuthService, private router: Router,public events: EventService) {   
-    if(this.events.inProgressEvents.length>0){
-      this.badge=true;
-  }}
+  badge = false;
+  constructor(private auth: AuthService, private router: Router, public events: EventService) {
+    if (this.events.inProgressEvents.length > 0) {
+      this.badge = true;
+    }
+  }
 
 
   ngOnInit() {

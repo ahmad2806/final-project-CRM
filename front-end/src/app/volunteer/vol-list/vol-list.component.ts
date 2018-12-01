@@ -147,7 +147,7 @@ export class VolListComponent implements OnInit {
     this.editingVolunteer.hasCar = car;
     this.editingVolunteer.agreeToLeft = incar;
 
-//TODO bug in volunteering days for volunteer when editing
+    //TODO bug in volunteering days for volunteer when editing
     this.volservice.volunteers[this.index] = this.editingVolunteer;
     back.click();
   }

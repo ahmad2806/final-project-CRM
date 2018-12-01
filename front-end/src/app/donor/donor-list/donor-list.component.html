@@ -37,7 +37,7 @@
           <h5 *ngIf="item.donorType ==='פרטי'">ת"ז: {{item.id}}</h5>
           <h5>תאריך תרומה: {{item.donateDate | date:"dd/MM/yyyy"}}</h5>
         </div>
-       
+
       </div>
       <div class="pull-left">
         <button class="btn btn-warning" (click)="edit(item)" data-toggle="modal" data-target="#edit">עדכן</button>
@@ -117,7 +117,7 @@
             <input type="date" matInput placeholder="תאריך התרומה" [(ngModel)]="newAmountDate">
           </mat-form-field>
           <button mat-raised-button (click)="saveNewAmount()" data-dismiss="modal">שמור</button>
-        
+
         </ol>
       </div>
     </div>
@@ -125,7 +125,7 @@
 </div>
 
 <div class="modal" id="add" tabindex="-1" role="dialog" dir="rtl">
-  <div class="modal-dialog modal-dialog-centered" role="document" >
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-body">
         <app-add-donor></app-add-donor>
@@ -134,55 +134,55 @@
   </div>
 </div>
 
-<div class="modal" id="disc" tabindex="-1" role="dialog" dir="rtl" >
+<div class="modal" id="disc" tabindex="-1" role="dialog" dir="rtl">
   <div class="modal-dialog modal-dialog-centered" role="document" style="padding: -50px;">
     <div class="modal-content">
       <div class="modal-body">
-          <b>
-              <h4>הערות:</h4>
-            </b>
-            {{description}}
-            <br>
-            <hr>
-            <b>
-              <h4>סכומי התרומה:</h4>
-            </b>
-            <div class="container" *ngFor="let item of donate">
-              סכום:{{item.donateAmount}} בתאריך: {{item.donateDate | date:'yyyy-MM-dd'}}
-              <br>
+        <b>
+          <h4>הערות:</h4>
+        </b>
+        {{description}}
+        <br>
+        <hr>
+        <b>
+          <h4>סכומי התרומה:</h4>
+        </b>
+        <div class="container" *ngFor="let item of donate">
+          סכום:{{item.donateAmount}} בתאריך: {{item.donateDate | date:'yyyy-MM-dd'}}
+          <br>
+        </div>
+        <hr>
+        <!-- <button class="btn btn-info" data-toggle="modal" data-target="#events" data-dismiss="modal">כל האירועים</button> -->
+
+        <b>
+          <h4>כל האירועים </h4>
+        </b>
+
+        <div *ngFor="let item of hisEvent">
+          <div class="row">
+            <div class="col-sm-4">
+              הערות: {{item.description}}
             </div>
-            <hr>
-            <!-- <button class="btn btn-info" data-toggle="modal" data-target="#events" data-dismiss="modal">כל האירועים</button> -->
-    
-            <b>
-                <h4>כל האירועים </h4>
-              </b>
-      
-              <div *ngFor="let item of hisEvent">
-                <div class="row">
-                  <div class="col-sm-4">
-                    הערות: {{item.description}}
-                  </div>
-                  <div class="col-sm-4">
-                    תאריך האירוע: {{item.date | date:'yyyy-MM-dd'}}
-                  </div>
-                  <div class="col-sm-4">
-                    שם האירוע: {{item.name}}
-                  </div>
-                </div>
-                <br>
-              </div>
+            <div class="col-sm-4">
+              תאריך האירוע: {{item.date | date:'yyyy-MM-dd'}}
+            </div>
+            <div class="col-sm-4">
+              שם האירוע: {{item.name}}
+            </div>
+          </div>
+          <br>
+        </div>
 
       </div>
     </div>
   </div>
 </div>
 <div class="modal" id="events" tabindex="-1" role="dialog" dir="rtl">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <app-events-list></app-events-list>
-        </div>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <app-events-list></app-events-list>
       </div>
     </div>
   </div>
+</div>

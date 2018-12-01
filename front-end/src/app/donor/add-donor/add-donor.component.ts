@@ -15,11 +15,11 @@ import { Donate } from '../donate.model';
 export class AddDonorComponent implements OnInit {
 
   name = "";
-  donateDate=new Date(2016,2,2);
+  donateDate = new Date(2016, 2, 2);
   id = "";
   address = "";
   phone = "";
-  email ;
+  email;
   extraphone = "";
   birthday: Date;
   amount;
@@ -46,14 +46,14 @@ export class AddDonorComponent implements OnInit {
   }
   reset() {
     this.name = "";
-    this.donateDate=new Date();;
+    this.donateDate = new Date();;
     this.id = "";
     this.address = "";
     this.phone = "";
     this.email = undefined;
     this.extraphone = "";
     this.birthday;
-    this.amount = "" ;
+    this.amount = "";
     this.discription = "";
     this.private_donor = false;
     this.Foundation = false;
@@ -61,23 +61,23 @@ export class AddDonorComponent implements OnInit {
 
   save(exit) {
     let newDonor: DonorModel;
-    this.donateDate=new Date(this.donateDate);
-    
-    newDonor = new DonorModel(this.name,this.donateDate, this.id, this.birthday, this.address, this.phone, this.extraphone, this.email, "קרן", this.amount, [], this.discription, [new Donate(this.amount,this.date2)]);
-   
+    this.donateDate = new Date(this.donateDate);
+
+    newDonor = new DonorModel(this.name, this.donateDate, this.id, this.birthday, this.address, this.phone, this.extraphone, this.email, "קרן", this.amount, [], this.discription, [new Donate(this.amount, this.date2)]);
+
     if (this.Foundation == true) {
       this.date2 = new Date();
       this.date2.setDate(this.donateDate.getDate() + 365);
       this.donor.donor.push(newDonor);
     }
     if (this.private_donor == true) {
-      newDonor = new DonorModel(this.name,this.donateDate, this.id, this.birthday, this.address, this.phone, this.extraphone, this.email, "פרטי", this.amount, [], this.discription, [new Donate(this.amount,this.date2)]);
+      newDonor = new DonorModel(this.name, this.donateDate, this.id, this.birthday, this.address, this.phone, this.extraphone, this.email, "פרטי", this.amount, [], this.discription, [new Donate(this.amount, this.date2)]);
       this.date2 = new Date();
       this.date2.setDate(this.donateDate.getDate() + 365);
       this.donor.donor.push(newDonor);
-    }	
+    }
     // this.newEvent.add(new EventModel("לתרום שוב", "donor-Model", new Date(2018, 0, 8), "האם רוצה לתרום שוב",[] , [],[]));	
-    
+
     this.reset();
     exit.click();
 

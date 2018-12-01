@@ -28,7 +28,7 @@ export class AddUserComponent {
   added = false;
   disappear = true;
   constructor(private UserService: UserService, private router: Router, private serverService: ServerService) {
-   
+
   }
   onSumbit(reset, exit) {
     let newUser: User;

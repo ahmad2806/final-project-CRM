@@ -9,7 +9,8 @@ export class UserService {
   constructor() {
     this.usersList = [ // users collection
     ]
-    this.UserEditing = this.usersList[0];	  }
+    this.UserEditing = this.usersList[0];
+  }
   public get UsersList() {
     return this.usersList;
   }

@@ -7,7 +7,7 @@ import { AppboolService } from './appbool.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private app:AppboolService){}
+  constructor(private app: AppboolService) { }
   panelOpenState: boolean = false;
 
 }

@@ -64,7 +64,7 @@ export class DonorListComponent implements OnInit {
     this.email = item.email;
     this.extraphone = item.homePhone;
     this.donate = item.donate;
-    
+
     this.description = item.description;
     if (item.donorType === 'פרטי') {
       this.privateDonor = true;
@@ -82,7 +82,7 @@ export class DonorListComponent implements OnInit {
     this.donate = item.donate
   }
 
-  
+
   save() {
 
     this.donorList.donor[this.i].name = this.name;
@@ -99,7 +99,7 @@ export class DonorListComponent implements OnInit {
 
   delete(item) {
     const index = this.donorList.donor.indexOf(item);
-    this.donorList.donor.splice(index, 1);	
+    this.donorList.donor.splice(index, 1);
   }
 
 

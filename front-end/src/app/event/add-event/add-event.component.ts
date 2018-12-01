@@ -45,7 +45,7 @@ export class AddEventComponent implements OnInit {
   addToList(item) {
     const index = this.arrayToView.indexOf(item);
     this.relatedTo.push(this.arrayToView[index]);
-    this.arrayToView.splice(index, 1);	
+    this.arrayToView.splice(index, 1);
   }
   delFromList(item) {
     const index = this.relatedTo.indexOf(item);
@@ -75,7 +75,7 @@ export class AddEventComponent implements OnInit {
           this.relatedTo[i].hisEvent.push(eventAdded);
         }
 
-      }	
+      }
       if (this.router.url != "/Header/donor/donorEvent") {
         // for (let i = 0; i < this.relatedTo.length; i++) {
         //   this.relatedTo[i].myEvents.push(eventAdded);
@@ -88,7 +88,7 @@ export class AddEventComponent implements OnInit {
       //TODO
 
 
-     
+
       dis.click();
     }
 

@@ -5,16 +5,16 @@ import { EmailValidator } from '@angular/forms';
 
 @Injectable()
 export class VolunteersService {
-  volunteers:VolunteerModel[]=[                      
+  volunteers: VolunteerModel[] = [
   ];
-  constructor() { 
+  constructor() {
   }
-  public get Volunteers(){
+  public get Volunteers() {
     return this.volunteers.slice;
   }
-  
-   public add(vol:VolunteerModel){
+
+  public add(vol: VolunteerModel) {
     this.volunteers.push(vol);
-   }
+  }
 
 }

@@ -10,7 +10,7 @@ export class VolunteerModel {
         public email: string,
         public volunteerType: string,
         public freeDays, public hasCar: boolean,
-        public agreeToLeft: boolean, public job: string,public avatar, public my_events: EventModel[]) {
+        public agreeToLeft: boolean, public job: string, public avatar, public my_events: EventModel[]) {
 
     }
 }
