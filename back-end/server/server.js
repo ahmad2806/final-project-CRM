@@ -114,6 +114,15 @@ app.put('/volunteer', (req, res) => {
         }, (e) => res.status(400).send(e));
 });
 
+app.post('/delete/volunteer', (req, res) => {
+    Volunteer.findOneAndRemove({
+        _id: body._id
+    }).then((volunteer) => {
+        if (!volunteer)
+            return res.status(404).send();
+        res.status(200).send({ volunteer })
+    }, (e) => res.status(400).send());
+});
 
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
