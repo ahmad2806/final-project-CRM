@@ -116,7 +116,7 @@ app.put('/volunteer', (req, res) => {
 
 app.post('/delete/volunteer', (req, res) => {
     Volunteer.findOneAndRemove({
-        _id: body._id
+        _id: req.body._id
     }).then((volunteer) => {
         if (!volunteer)
             return res.status(404).send();

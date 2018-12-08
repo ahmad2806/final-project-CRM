@@ -6,6 +6,8 @@ const { ObjectID } = require('mongodb');
 
 const { wipeUsers, users, volunteers, wipeVolunteers } = require('./seed/seed');
 const { User } = require('./../models/user')
+const { Volunteer } = require('./../models/volunteer')
+
 const { app } = require('./../server');
 beforeEach(wipeUsers)
 beforeEach(wipeVolunteers)
@@ -220,3 +222,32 @@ describe('PUT /volunteer', () => {
             .end(done);
     });
 });
+
+describe('DELETE /delete/volunteer', () => {
+    var volunteerToDelete = volunteers[0];
+    it('should delete volunteer', (done) => {
+         request(app)
+             .post('/delete/volunteer')
+             .send(volunteerToDelete)
+             .expect(200)
+             .expect((res) => {
+                 expect(res.body.volunteer._id).toBe(volunteerToDelete._id.toHexString());
+             })
+             .end((err, res) => {
+                 if(err) {
+                     return done(err);
+                 }
+                  Volunteer.findById(volunteerToDelete._id.toHexString()).then((volunteer) => {
+                     expect(volunteer).toBeFalsy();
+                     done();
+                 }, (e) => done(e));
+             });
+    });
+     it('should not delete volunteer not in the DB', (done) => {
+         request(app)
+             .post('/delete/volunteer')
+             .send(volunteers._id+'1')
+             .expect(404)
+             .end(done);
+    });
+ }); 
