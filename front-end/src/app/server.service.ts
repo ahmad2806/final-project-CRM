@@ -25,6 +25,8 @@ export class ServerService {
     deleteUser(user) {
         return this.http.post(`${this.url}/delete/user`, user);
     }
+
+    
     addNewVolunteer(volunteer) {
         return this.http.post(`${this.url}/volunteer`, volunteer);
     }

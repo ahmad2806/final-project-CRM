@@ -67,25 +67,25 @@ app.patch('/user', (req, res) => {
     var updateUser = req.body;
     User.findOneAndUpdate({
         username: updateUser.username
-    }, {$set: updateUser}, {new: true})
-    .then((user) => {
-        if(!user) {
-            return res.status(400).send();
-        }
-        res.send({user})
-    }, (e) => res.status(400).send())
+    }, { $set: updateUser }, { new: true })
+        .then((user) => {
+            if (!user) {
+                return res.status(400).send();
+            }
+            res.send({ user })
+        }, (e) => res.status(400).send())
 });
 
 app.post('/delete/user', (req, res) => {
     User.findOneAndRemove({
         username: req.body.username
     })
-    .then((user) => {
-        if (!user) {
-            return res.status(404).send();   
-        }
-        res.send({user})
-    }, (e) => res.status(400).send());
+        .then((user) => {
+            if (!user) {
+                return res.status(404).send();
+            }
+            res.send({ user })
+        }, (e) => res.status(400).send());
 });
 
 /*******************        Volunteer        **********************/
@@ -99,7 +99,18 @@ app.post('/volunteer', (req, res) => {
 app.get('/volunteers', (req, res) => {
     Volunteer.find({})
         .then((volunteers) => {
-            res.send({volunteers});
+            res.send({ volunteers });
+        }, (e) => res.status(400).send(e));
+});
+
+app.put('/volunteer', (req, res) => {
+    Volunteer.findOneAndUpdate({
+        _id: req.body._id
+    }, { $set: req.body }, { new: true })
+        .then((volunteer) => {
+            if (!volunteer)
+                return res.status(404).send();
+            res.send({ volunteer });
         }, (e) => res.status(400).send(e));
 });
 
