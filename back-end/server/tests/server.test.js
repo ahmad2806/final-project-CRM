@@ -221,33 +221,41 @@ describe('PUT /volunteer', () => {
             })
             .end(done);
     });
+    it('should not update volunteer not in the DB', (done) => {
+        volunteerID = new ObjectID()
+        request(app)
+            .put('/volunteer')
+            .send({ volunteerID })
+            .expect(404)
+            .end(done);
+    });
 });
 
 describe('DELETE /delete/volunteer', () => {
     var volunteerToDelete = volunteers[0];
     it('should delete volunteer', (done) => {
-         request(app)
-             .post('/delete/volunteer')
-             .send(volunteerToDelete)
-             .expect(200)
-             .expect((res) => {
-                 expect(res.body.volunteer._id).toBe(volunteerToDelete._id.toHexString());
-             })
-             .end((err, res) => {
-                 if(err) {
-                     return done(err);
-                 }
-                  Volunteer.findById(volunteerToDelete._id.toHexString()).then((volunteer) => {
-                     expect(volunteer).toBeFalsy();
-                     done();
-                 }, (e) => done(e));
-             });
+        request(app)
+            .post('/delete/volunteer')
+            .send(volunteerToDelete)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.volunteer._id).toBe(volunteerToDelete._id.toHexString());
+            })
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+                Volunteer.findById(volunteerToDelete._id.toHexString()).then((volunteer) => {
+                    expect(volunteer).toBeFalsy();
+                    done();
+                }, (e) => done(e));
+            });
     });
-     it('should not delete volunteer not in the DB', (done) => {
-         request(app)
-             .post('/delete/volunteer')
-             .send(volunteers._id+'1')
-             .expect(404)
-             .end(done);
+    it('should not delete volunteer not in the DB', (done) => {
+        request(app)
+            .post('/delete/volunteer')
+            .send(volunteers._id + '1')
+            .expect(404)
+            .end(done);
     });
- }); 
+}); 
