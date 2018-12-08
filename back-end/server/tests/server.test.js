@@ -205,3 +205,18 @@ describe('POST /volunteer', () => {
             .end(done);
     });
 });
+
+describe('PUT /volunteer', () => {
+    var editvolunteer = volunteers[0];
+    editvolunteer.name = 'shouldEdit';
+    it('should edit volunteer from the DB', (done) => {
+        request(app)
+            .put('/volunteer')
+            .send(editvolunteer)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.volunteer.name).toBe('shouldEdit');
+            })
+            .end(done);
+    });
+});
