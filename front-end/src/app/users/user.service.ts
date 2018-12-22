@@ -8,8 +8,9 @@ export class UserService {
   public usersList: User[] = [];
   constructor() {
     this.usersList = [ // users collection
+
     ]
-    this.UserEditing = this.usersList[0];
+  this.activeUser=  this.UserEditing =   new User("omar","0987098709","omar.b__95@hotmail.com","bsdasd","123456",true,true,true,true);
   }
   public get UsersList() {
     return this.usersList;
