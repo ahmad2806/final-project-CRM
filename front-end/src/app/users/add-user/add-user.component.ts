@@ -48,17 +48,15 @@ export class AddUserComponent {
     }
     else {
       newUser = new User(this.name, this.tel, this.email, this.username, this.password, this.Vper, this.Dper, this.Aper, false);
-
-      // this.UserService.usersList.push(newUser);//TODO
-      console.log(JSON.stringify(newUser, undefined, 2));
       this.serverService.addNewUser(newUser)
         .subscribe((res) => {
           this.UserService.usersList.push(newUser);
+          reset.click();
+          exit.click();
         }, (e) => {
-          alert("מספר טליפון לא תקין \n נשה שוב");
+          console.log(e)
+          alert("מספר טליפון לא תקין \n נסה שוב");
         });
-      reset.click();
-      exit.click();
     }
   }
 }
