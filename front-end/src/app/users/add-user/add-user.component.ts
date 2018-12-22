@@ -21,7 +21,6 @@ export class AddUserComponent {
   password = "";
   password2 = "";
   Vper: boolean;
-  Aper: boolean;
   Dper: boolean;
 
   hide = true;
@@ -38,7 +37,7 @@ export class AddUserComponent {
         return;
       }
     }
-    if (this.Vper == false && this.Dper == false && this.Aper == false) {
+    if (this.Vper == false && this.Dper == false ) {
       alert("please give at least 1 permission for the new user");
       return;
     }
@@ -47,7 +46,7 @@ export class AddUserComponent {
       return;
     }
     else {
-      newUser = new User(this.name, this.tel, this.email, this.username, this.password, this.Vper, this.Dper, this.Aper, false);
+      newUser = new User(this.name, this.tel, this.email, this.username, this.password, this.Vper, this.Dper, false);
       this.serverService.addNewUser(newUser)
         .subscribe((res) => {
           this.UserService.usersList.push(newUser);

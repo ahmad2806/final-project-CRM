@@ -48,10 +48,6 @@ var UserSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    AdoptPer: {
-        type: Boolean,
-        default: false,
-    },
     Freeze: {
         type: Boolean,
         default: false,
@@ -76,7 +72,6 @@ UserSchema.methods.toJSON = function () {
         'phone',
         'email',
         'Freeze',
-        'AdoptPer',
         'DonorPer',
         'VolPer',
         'password',

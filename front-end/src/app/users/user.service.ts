@@ -10,7 +10,7 @@ export class UserService {
     this.usersList = [ // users collection
 
     ]
-  this.activeUser=  this.UserEditing =   new User("omar","0987098709","omar.b__95@hotmail.com","bsdasd","123456",true,true,true,true);
+  this.activeUser=  this.UserEditing =   new User("CREATER","0123456789","CREATOR@hotmail.com","CREATER123 ","ADMIN", true,true,true);
   }
   public get UsersList() {
     return this.usersList;
