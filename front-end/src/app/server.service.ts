@@ -11,6 +11,7 @@ export class ServerService {
     constructor(private http: Http) {
     }
     addNewUser(user: User) {
+        console.log(JSON.stringify(user, undefined, 2));
         return this.http.post(`${this.url}/add/user`, user);
     }
     getAllUsers() {
@@ -20,7 +21,9 @@ export class ServerService {
         return this.http.post(`${this.url}/users/login`, user)
     }
     editUser(user) {
-        return this.http.patch(`${this.url}/user`, user);
+        //tried to use patch but from some angular api problem
+        //it doesnt take patch or delete... so will replace all with post
+        return this.http.post(`${this.url}/edit/user`, user);
     }
     deleteUser(user) {
         return this.http.post(`${this.url}/delete/user`, user);

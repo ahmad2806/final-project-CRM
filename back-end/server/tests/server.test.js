@@ -12,12 +12,12 @@ const { app } = require('./../server');
 beforeEach(wipeUsers)
 beforeEach(wipeVolunteers)
 
-describe('POST /user', () => {
+describe('POST /add/user', () => {
     var username = 'ahmadhashem@gmail.com';
     var password = '12345679abc';
     it('should create a user', (done) => {
         request(app)
-            .post('/user')
+            .post('/add/user')
             .send({ username, password })
             .expect(200)
             .expect((res) => {
@@ -38,7 +38,7 @@ describe('POST /user', () => {
     });
     it('should return a validation error if request invalid', (done) => {
         request(app)
-            .post('/user')
+            .post('/add/user')
             .send({
                 username: 'Ahmad Hashem',
                 password: '123'
@@ -49,7 +49,7 @@ describe('POST /user', () => {
     it('should not create user if username in use', (done) => {
         var userInUse = users[0];
         request(app)
-            .post('/user')
+            .post('/add/user')
             .send({ userInUse })
             .expect(400)
             .end(done);
@@ -118,10 +118,10 @@ describe('POST /users/login', () => {
     });
 });
 
-describe('PATCH /user', () => {
+describe('POST /edit/user', () => {
     it('should update user', (done) => {
         request(app)
-            .patch('/user')
+            .post('/edit/user')
             .send({
                 username: users[0].username,
                 password: 'ahmadhashem',
@@ -208,12 +208,12 @@ describe('POST /volunteer', () => {
     });
 });
 
-describe('PUT /volunteer', () => {
+describe('POST /edit/volunteer', () => {
     var editvolunteer = volunteers[0];
     editvolunteer.name = 'shouldEdit';
     it('should edit volunteer from the DB', (done) => {
         request(app)
-            .put('/volunteer')
+            .post('/edit/volunteer')
             .send(editvolunteer)
             .expect(200)
             .expect((res) => {

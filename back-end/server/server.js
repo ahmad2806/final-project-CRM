@@ -42,7 +42,7 @@ app.post('/users/login', (req, res) => {
     });
 });
 
-app.post('/user', (req, res) => {
+app.post('/add/user', (req, res) => {
     var user = new User(req.body);
     user.save().then(() => {
         return user.generateAuthToken();
@@ -63,7 +63,7 @@ app.get('/allUsers', (req, res) => {
         });
 });
 
-app.patch('/user', (req, res) => {
+app.post('/edit/user', (req, res) => {
     var updateUser = req.body;
     User.findOneAndUpdate({
         username: updateUser.username
@@ -103,7 +103,7 @@ app.get('/volunteers', (req, res) => {
         }, (e) => res.status(400).send(e));
 });
 
-app.put('/volunteer', (req, res) => {
+app.post('/edit/volunteer', (req, res) => {
     Volunteer.findOneAndUpdate({
         _id: req.body._id
     }, { $set: req.body }, { new: true })
