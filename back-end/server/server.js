@@ -133,6 +133,12 @@ app.get('/allDonors', (req, res) => {
         res.send(donors);
     });
 });
+app.post('/donor', (req, res) => {
+  var donorToAdd = Donor(req.body);
+  donorToAdd.save().then((donor) => {
+    res.send({ donor });
+  }, (e) => res.status(400).send());
+});
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
 });
