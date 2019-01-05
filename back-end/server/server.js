@@ -133,12 +133,15 @@ app.get('/allDonors', (req, res) => {
         res.send(donors);
     });
 });
+/* adding new donor */
 app.post('/donor', (req, res) => {
     var donorToAdd = Donor(req.body);
     donorToAdd.save().then((donor) => {
         res.send({ donor });
     }, (e) => res.status(400).send());
 });
+
+/* editing  donor */
 app.post('/edit/donor', (req, res) => {
     Donor.findOneAndUpdate({
         _id: req.body._id
@@ -152,6 +155,7 @@ app.post('/edit/donor', (req, res) => {
     })
 });
 
+/* deleting  donor */
 app.post('/delete/donor', (req, res) => {
     Donor.findOneAndRemove({
         _id: req.body._id
