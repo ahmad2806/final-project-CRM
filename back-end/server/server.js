@@ -8,6 +8,8 @@ const { ObjectID } = require('mongodb');
 
 var { User } = require('./models/user');
 var { Volunteer } = require('./models/volunteer')
+var { Donor } = require('./models/donor')
+
 var { mongoose } = require('./db/mongoose');
 
 var { authenticate } = require('./middleware/authenticate');
@@ -123,7 +125,14 @@ app.post('/delete/volunteer', (req, res) => {
         res.status(200).send({ volunteer })
     }, (e) => res.status(400).send());
 });
-
+/**** Donors ****/
+app.get('/allDonors', (req, res) => {
+    Donor.find({}).then((donors) => {
+        if (!donors)
+            return res.status(404).send();
+        res.send(donors);
+    });
+});
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
 });
