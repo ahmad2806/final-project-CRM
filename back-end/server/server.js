@@ -151,6 +151,17 @@ app.post('/edit/donor', (req, res) => {
         res.status(400).send(e);
     })
 });
+
+app.post('/delete/donor', (req, res) => {
+    Donor.findOneAndRemove({
+        _id: req.body._id
+    }).then((donor) => {
+        if (!donor) {
+            return res.status(404).send();
+        }
+        res.send({ donor })
+    }, (e) => res.status(400).send());
+});
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
 });
