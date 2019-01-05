@@ -134,10 +134,22 @@ app.get('/allDonors', (req, res) => {
     });
 });
 app.post('/donor', (req, res) => {
-  var donorToAdd = Donor(req.body);
-  donorToAdd.save().then((donor) => {
-    res.send({ donor });
-  }, (e) => res.status(400).send());
+    var donorToAdd = Donor(req.body);
+    donorToAdd.save().then((donor) => {
+        res.send({ donor });
+    }, (e) => res.status(400).send());
+});
+app.post('/edit/donor', (req, res) => {
+    Donor.findOneAndUpdate({
+        _id: req.body._id
+    }, { $set: req.body }, { new: true }).then((donor) => {
+        if (!donor) {
+            return res.status(404).send(donor);
+        }
+        res.send({ donor });
+    }, (e) => {
+        res.status(400).send(e);
+    })
 });
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
