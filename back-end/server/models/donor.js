@@ -4,7 +4,7 @@ const validator = require('validator');
 const _ = require('lodash');
 
 var Schema = mongoose.Schema;
-
+// donor schema
 var DonorSchema = new Schema({
     email: {
         type: String,

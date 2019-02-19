@@ -12,6 +12,7 @@ const { app } = require('./../server');
 beforeEach(wipeUsers)
 beforeEach(wipeVolunteers)
 
+// this code is self explained code
 describe('POST /add/user', () => {
     var username = 'ahmadhashem@gmail.com';
     var password = '12345679abc';

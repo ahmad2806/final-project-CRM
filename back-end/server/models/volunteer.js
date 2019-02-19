@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const _ = require('lodash');
  var Schema = mongoose.Schema;
+ // schema for volunteers
  var VolunteerSchema = new Schema({
     email: {
         type: String,

@@ -43,7 +43,7 @@ app.post('/users/login', (req, res) => {
         }
     });
 });
-
+// adding new user
 app.post('/add/user', (req, res) => {
     var user = new User(req.body);
     user.save().then(() => {
@@ -54,7 +54,7 @@ app.post('/add/user', (req, res) => {
         res.status(400).send(e);
     })
 });
-
+// getting all users
 app.get('/allUsers', (req, res) => {
     User.find({})
         .then((users) => {
@@ -64,7 +64,7 @@ app.get('/allUsers', (req, res) => {
             res.status(400).send(e);
         });
 });
-
+//editing user 
 app.post('/edit/user', (req, res) => {
     var updateUser = req.body;
     User.findOneAndUpdate({
@@ -77,7 +77,7 @@ app.post('/edit/user', (req, res) => {
             res.send({ user })
         }, (e) => res.status(400).send())
 });
-
+// deleting user
 app.post('/delete/user', (req, res) => {
     User.findOneAndRemove({
         username: req.body.username
@@ -91,20 +91,21 @@ app.post('/delete/user', (req, res) => {
 });
 
 /*******************        Volunteer        **********************/
+// adding new volunteer
 app.post('/volunteer', (req, res) => {
     var volunteerToAdd = new Volunteer(req.body);
     volunteerToAdd.save().then((volunteer) => {
         res.send(volunteer);
     }, (e) => res.status(400).send(e));
 });
-
+// get all volunteers
 app.get('/volunteers', (req, res) => {
     Volunteer.find({})
         .then((volunteers) => {
             res.send({ volunteers });
         }, (e) => res.status(400).send(e));
 });
-
+// editing volunteer
 app.post('/edit/volunteer', (req, res) => {
     Volunteer.findOneAndUpdate({
         _id: req.body._id
@@ -115,7 +116,7 @@ app.post('/edit/volunteer', (req, res) => {
             res.send({ volunteer });
         }, (e) => res.status(400).send(e));
 });
-
+// deleting volunteer
 app.post('/delete/volunteer', (req, res) => {
     Volunteer.findOneAndRemove({
         _id: req.body._id

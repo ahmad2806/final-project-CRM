@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
+// creating user schema
 var UserSchema = new Schema({
     email: {
         type: String,
@@ -63,6 +64,7 @@ var UserSchema = new Schema({
         }
     }]
 }, { usePushEach: true });
+
 UserSchema.methods.toJSON = function () {
     var user = this;
     var userObject = user.toObject();

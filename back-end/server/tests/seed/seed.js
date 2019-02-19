@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { ObjectID } = require('mongodb')
 const userOneId = new ObjectID();
 const userTwoId = new ObjectID();
+// creating seeds user
 const users = [{
   _id: userOneId,
   email: 'ahmadhashem2806@gmail.com',
@@ -38,6 +39,7 @@ const volunteerOneID = new ObjectID();
 const volunteerOneDaysID = new ObjectID();
 const volunteerTwoDaysID = new ObjectID();
 const volunteerTwoID = new ObjectID();
+// creating seeds volunteers
 const volunteers = [{
   _id: volunteerOneID,
   name: 'ahmad',
@@ -92,6 +94,7 @@ const volunteers = [{
     }
   ]
 }];
+// reseting volunteers
 const wipeVolunteers = (done) => {
   Volunteer.remove({}).then(() => {
     var volunterOne = new Volunteer(volunteers[0]).save();
