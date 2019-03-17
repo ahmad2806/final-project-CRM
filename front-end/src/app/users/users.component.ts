@@ -10,16 +10,7 @@ import { ServerService } from '../server.service';
 export class UsersComponent implements OnInit {
 
   constructor(private userService: UserService, private serverService: ServerService) {
-    this.userService.usersList = [];
-    serverService.getAllUsers()
-      .subscribe((res) => {
-        let allUsers = res.json().users;
-        for (let index = 0; index < allUsers.length; index++) {
-          this.userService.usersList.push(allUsers[index]);
-        }
-      }, (e) => {
-        alert('error while fetching users');
-      });
+
   }
   ngOnInit() {
 

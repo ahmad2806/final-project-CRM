@@ -16,17 +16,7 @@ export class UsersListComponent implements OnInit {
   today = Date.now();
 
   constructor(private userService: UserService, private serverService: ServerService) {
-    this.serverService.getAllUsers()
-      .subscribe((res) => {
-        this.userService.usersList = [];
-        let allUsers = res.json().users;
-        for (let index = 0; index < allUsers.length; index++) {
-          this.userService.usersList.push(allUsers[index]);
-        }
 
-      }, (e) => {
-        alert('error while fetching users');
-      });
   }
   ngOnInit() {
 

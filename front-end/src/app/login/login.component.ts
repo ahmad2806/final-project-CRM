@@ -43,6 +43,27 @@ export class LoginComponent implements OnInit {
   clk() {
 
   }
+  loadVolunteers() {
+    this.serverService.getAllVolunteers()
+      .subscribe((res) => {
+        this.volservice.volunteers = [];
+        let volunteersList = res.json().volunteers
+        for (let i = 0; i < volunteersList.length; i++)
+          this.volservice.volunteers.push(volunteersList[i]);
+      }, (e) => alert("בעיה צד שרת"))
+  }
+  loadUsers() {
+    this.UserService.usersList = [];
+    this.serverService.getAllUsers()
+      .subscribe((res) => {
+        let allUsers = res.json().users;
+        for (let index = 0; index < allUsers.length; index++) {
+          this.UserService.usersList.push(allUsers[index]);
+        }
+      }, (e) => {
+        alert('error while fetching users');
+      });
+  }
   onSubmit() {
     // for (let index = 0; index < this.UserService.usersList.length; index++) {
     //   if (this.UserService.usersList[index].username == this.username) {
@@ -73,14 +94,12 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["/Header/main"]);
           this.UserService.activeUser = res.json();
           this.auth.login();
+          
           if (this.UserService.activeUser.VolPer == true) {
-            this.serverService.getAllVolunteers()
-              .subscribe((res) => {
-                this.volservice.volunteers = [];
-                var allVolunteers = res.json().volunteers;
-                for (let i = 0; i < allVolunteers.length; i++)
-                  this.volservice.volunteers.push(allVolunteers[i]);
-              }, (e) => alert("בעיה צד שרת"))
+            this.loadVolunteers()
+          }
+          if (this.UserService.activeUser.username == "admin") {
+            this.loadUsers();
           }
 
         }
