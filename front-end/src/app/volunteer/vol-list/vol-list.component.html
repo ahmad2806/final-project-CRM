@@ -34,12 +34,13 @@
                 <mat-accordion>
                         <mat-expansion-panel *ngFor="let item of volunteersToView | filter:queryIn:volservice.volunteers:searchFor ">
 
+
                                 <mat-expansion-panel-header dir="rtl" cols="2">
 
-                                        <mat-panel-title>
+                                        <mat-panel-title class="col-xs-3">
                                                 {{item.name}}
                                         </mat-panel-title>
-                                        <mat-panel-description>
+                                        <mat-panel-description class="col-xs-6">
                                                 {{item.id}}
                                         </mat-panel-description>
 
