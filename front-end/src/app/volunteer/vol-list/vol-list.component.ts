@@ -9,12 +9,13 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./vol-list.component.css']
 })
 export class VolListComponent implements OnInit {
+  elementsPerPage = 10
   volunteersToView: VolunteerModel[] = [];
   pdisabled = "previous disabled";
   ndisabled = "next"
   lenght = this.volservice.volunteers.length;
-  number = this.lenght / 15;
-  bakiNumber = this.lenght % 15;
+  number = this.lenght / this.elementsPerPage;
+  bakiNumber = this.lenght % this.elementsPerPage;
   CurrentPageNumber = 0;
   previousPage = 0;
   nextPage = 1;
@@ -63,7 +64,7 @@ export class VolListComponent implements OnInit {
         }
       }
       else {
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < this.elementsPerPage; i++) {
           this.volunteersToView[i] = this.volservice.volunteers[i];
 
         }
@@ -169,23 +170,29 @@ export class VolListComponent implements OnInit {
 
   ChangePage(pressedPage) {
     //TODO bug in next and prev page...index out of range
-    this.CurrentPageNumber = pressedPage;
-    this.previousPage = pressedPage - 1;
-    this.nextPage = pressedPage + 1;
-
+    
+  
+  
+    console.log(pressedPage)
+    console.log(this.Pages.length)
+    
     if (pressedPage == this.Pages.length - 1) {
       this.ndisabled = "next disabled";
     }
     else {
       this.ndisabled = "next";
+      this.nextPage = pressedPage + 1;
+      this.CurrentPageNumber = pressedPage;
     }
-    if (this.CurrentPageNumber == 0) {
+    if (pressedPage == 0) {
       this.pdisabled = "previous disabled";
     } else {
       this.pdisabled = "previous";
+      this.previousPage = pressedPage - 1;
+      this.CurrentPageNumber = pressedPage;
     }
 
-    let n = 15;
+    let n = this.elementsPerPage;
     if (pressedPage == this.Pages.length - 1) {
       if (this.thereIsBaki == true) {
         n = this.bakiNumber;
@@ -193,8 +200,8 @@ export class VolListComponent implements OnInit {
     }
     this.volunteersToView = [];
     for (let i = 0; i < n; i++) {
-      if (this.volservice.volunteers[i + (pressedPage * 15)] != undefined)
-        this.volunteersToView[i] = this.volservice.volunteers[i + (pressedPage * 15)];
+      if (this.volservice.volunteers[i + (pressedPage * n)] != undefined)
+        this.volunteersToView[i] = this.volservice.volunteers[i + (pressedPage * n)];
 
     }
 
