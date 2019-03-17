@@ -9,7 +9,7 @@
         <ul class="nav nav-tabs nav-justified" role="tablist">
             <li ><a [routerLink]="['/Header/main']">דף הבית</a></li><br>
             <!-- <li><a >אירועים</a></li><br> -->
-            <li><a [routerLink]="['/Header/users']">משתמשים</a></li>
+            <li><a *ngIf="users.activeUser.username == 'admin'" [routerLink]="['/Header/users']">משתמשים</a></li>
             <hr>
             <li><a *ngIf="users.activeUser.VolPer" (click)="setVolunteers()">מתנדבים</a></li> <br>
             <li><a *ngIf="users.activeUser.DonorPer" [routerLink]="['/Header/donor/donorList']">תורמים</a></li> <br>
