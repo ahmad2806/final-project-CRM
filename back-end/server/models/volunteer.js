@@ -42,7 +42,7 @@ const _ = require('lodash');
     volunteerType: {
         type: String,
     },
-    freeDays: [{
+    freeDays: {
         sunday: {
             type: Boolean,
             default: false
@@ -71,7 +71,7 @@ const _ = require('lodash');
             type: Boolean,
             default: false
         },
-    }],
+    },
      agreeToLeft: {
         type: Boolean,
         default: false
