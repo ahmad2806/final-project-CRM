@@ -5,7 +5,7 @@
                         <div class="all-Div col-xs-4">
                                 <div class=" changethisone">
                                         <div class=" input-group changethisone">
-                                                <input type="text" title="חפס שם" class="form-control text-right" #search placeholder="...חפס" [(ngModel)]="queryIn" name="search-query-in">
+                                                <input type="text" title="חפס שם" class="form-control text-right" #search placeholder="...חפש" [(ngModel)]="queryIn" name="search-query-in">
                                                 <span class="input-group-addon">
                                                         <i class="glyphicon glyphicon-search"></i>
                                                 </span>
@@ -365,15 +365,8 @@
 
                                                                 <div class="col-md-8">
 
-
-
-
-
-
                                                                         <mat-checkbox [checked]="editingVolunteer.freeDays.sunday" #sunday>ראשון</mat-checkbox>
-
                                                                         <mat-checkbox [checked]="editingVolunteer.freeDays.monday" #monday>שני</mat-checkbox>
-
                                                                         <mat-checkbox [checked]="editingVolunteer.freeDays.tuesday" #tuesday>שלישי</mat-checkbox>
                                                                         <mat-checkbox [checked]="editingVolunteer.freeDays.wednesday" #wednesday>רביעי</mat-checkbox>
                                                                         <mat-checkbox [checked]="editingVolunteer.freeDays.thursday" #thursday>חמישי</mat-checkbox>
@@ -416,7 +409,7 @@
                                                         <div class="modal-footer ">
                                                                 <div class="row text-center">
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" #back>חזור</button>
-                                                                        <button type="submit" class="btn btn-primary" (click)="days(car.checked,incar.checked,back)">שמור</button>
+                                                                        <button type="submit" class="btn btn-primary" (click)="days(sunday, monday,tuesday, wednesday, thursday, friday, car.checked,incar.checked,back)">שמור</button>
                                                                 </div>
                                                         </div>
                                                 </form>

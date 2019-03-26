@@ -65,6 +65,7 @@ export class VolListComponent implements OnInit {
       }
       else {
         for (let i = 0; i < this.elementsPerPage; i++) {
+          console.log("SSSS", this.volservice.volunteers[i]);
           this.volunteersToView[i] = this.volservice.volunteers[i];
 
         }
@@ -138,18 +139,28 @@ export class VolListComponent implements OnInit {
 
   days(sunday, monday, tuesday, wednesday, thursday, friday, car, incar, back) {
 
-    this.editingVolunteer.freeDays.sunday = sunday;
-    this.editingVolunteer.freeDays.monday = monday;
-    this.editingVolunteer.freeDays.tuesday = tuesday;
-    this.editingVolunteer.freeDays.wednesday = wednesday;
-    this.editingVolunteer.freeDays.thursday = thursday;
-    this.editingVolunteer.freeDays.friday = friday;
+    console.log(sunday)
+    console.log(monday)
+    console.log(tuesday)
+    console.log(wednesday)
+    console.log(thursday)
+    console.log(friday)
+    console.log(this.editingVolunteer)
+
+
+    console.log(this.editingVolunteer.freeDays)
+    this.editingVolunteer.freeDays.sunday = sunday.checked;
+    this.editingVolunteer.freeDays.monday = monday.checked;
+    this.editingVolunteer.freeDays.tuesday = tuesday.checked;
+    this.editingVolunteer.freeDays.wednesday = wednesday.checked;
+    this.editingVolunteer.freeDays.thursday = thursday.checked;
+    this.editingVolunteer.freeDays.friday = friday.checked;
 
     this.editingVolunteer.hasCar = car;
     this.editingVolunteer.agreeToLeft = incar;
 
     //TODO bug in volunteering days for volunteer when editing
-    this.volservice.volunteers[this.index] = this.editingVolunteer;
+    // this.volservice.volunteers[this.index] = this.editingVolunteer;
     back.click();
   }
   onSubmit(form: NgForm) {
@@ -169,13 +180,7 @@ export class VolListComponent implements OnInit {
   }
 
   ChangePage(pressedPage) {
-    //TODO bug in next and prev page...index out of range
-    
-  
-  
-    console.log(pressedPage)
-    console.log(this.Pages.length)
-    
+
     if (pressedPage == this.Pages.length - 1) {
       this.ndisabled = "next disabled";
     }

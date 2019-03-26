@@ -111,7 +111,7 @@ export class CreateVolComponent implements OnInit {
     // this.friday=friday;
     this.car = car;
     this.incar = incar;
-    this.week = [new FreeDayes(sunday, monday, tuesday, wednesday, thursday, friday, false)];
+    this.week = new FreeDayes(sunday, monday, tuesday, wednesday, thursday, friday, false);
   }
 
 
