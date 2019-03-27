@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { VolunteersService } from '../volunteers.service';
 import { VolunteerModel } from '../volunteer.model';
 import { NgForm } from '@angular/forms';
+import { ServerService } from '../../server.service';
 @Component({
   selector: 'app-vol-list',
   templateUrl: './vol-list.component.html',
@@ -36,7 +37,7 @@ export class VolListComponent implements OnInit {
 
 
 
-  constructor(public volservice: VolunteersService) {
+  constructor(public volservice: VolunteersService, private serverService: ServerService) {
 
   }
 
@@ -106,8 +107,11 @@ export class VolListComponent implements OnInit {
 
   }
   removeVolunteer() {
-    this.volservice.volunteers.splice(this.DeletedVolunteer, 1);
-    this.ChangePage(this.CurrentPageNumber);
+    this.serverService.deleteVolunteer(this.volservice.volunteers[this.DeletedVolunteer])//*montaser* just put the volunteer you want to remove here
+      .subscribe((res) => {
+        this.volservice.volunteers.splice(this.DeletedVolunteer, 1);
+        this.ChangePage(this.CurrentPageNumber);
+      });
   }
 
   volunteerForEdit(item, button) {
@@ -140,6 +144,12 @@ export class VolListComponent implements OnInit {
     this.editingVolunteer.job = form.value.job;
     this.editingVolunteer.email = form.value.email;
     this.editingVolunteer.volunteerType = form.value.type;
+
+    this.serverService.editVolunteer(this.volservice.volunteers[this.index])
+
+    .subscribe((res) => {
+      this.volservice.volunteers[this.index] = res.json().volunteer;
+    }, (e) => alert(e));
   }
 
   ChangePage(pressedPage) {

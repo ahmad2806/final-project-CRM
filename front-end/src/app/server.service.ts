@@ -29,11 +29,18 @@ export class ServerService {
         return this.http.post(`${this.url}/delete/user`, user);
     }
 
-    
+    /*    Volunteers */    
     addNewVolunteer(volunteer) {
         return this.http.post(`${this.url}/volunteer`, volunteer);
     }
     getAllVolunteers() {
         return this.http.get(`${this.url}/volunteers`);
+    }
+    deleteVolunteer(volunteer) {
+        return this.http.post(`${this.url}/delete/volunteer`, volunteer);
+    }
+
+    editVolunteer(volunteer) {
+        return this.http.post(`${this.url}/edit/volunteer`, volunteer);
     }
 } 
