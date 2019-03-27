@@ -87,7 +87,7 @@ export class CreateVolComponent implements OnInit {
       , form.value.address, form.value.extranum, form.value.phonenum, form.value.homenum, form.value.email, form.value.type
       , this.week, this.car, this.incar, form.value.job, this.volunteerIMG, []);
     this.volservice.add(this.volunteer);
-
+      console.log(this.volunteer.birthday)
 
     this.serverService.addNewVolunteer(this.volunteer)
       .subscribe((res) => {
