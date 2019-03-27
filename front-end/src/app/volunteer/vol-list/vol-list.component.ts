@@ -42,7 +42,6 @@ export class VolListComponent implements OnInit {
 
   ngOnInit() {
     if (this.volservice.volunteers.length > 0) {
-
       this.imageVolunteer = this.volservice.volunteers[0];
 
       // this.lenght=this.volservice.volunteers.length;
@@ -65,7 +64,6 @@ export class VolListComponent implements OnInit {
         }
       }
       if (this.bakiNumber > 0) {
-        // this.number++;
         this.thereIsBaki = true;
       }
 
@@ -79,11 +77,6 @@ export class VolListComponent implements OnInit {
 
   }
 
-  // setArr(search){
-
-  //     this.volunteersToView=this.volservice.volunteers;
-
-  // }
 
   viewImage(ImageBtn, item) {
     this.imageClicked = item.avatar;
@@ -98,7 +91,6 @@ export class VolListComponent implements OnInit {
 
     reader.onload = (e: any) => {
       this.imageVolunteer.avatar = e.target.result;
-      // this.imageClicked  = e.target.result;
     }
 
     reader.readAsDataURL(im.target.files[0]);
@@ -106,12 +98,6 @@ export class VolListComponent implements OnInit {
 
 
     this.imageClicked = this.imageVolunteer.avatar;
-    // im.target.files=[];
-    //im.target.files[0]="";
-    // this.form.get('avatar').setValue(null);
-    // this.fileInput.nativeElement.value = '';
-
-    //this.imageVolunteer.avatar  =this.imageClicked;;
 
 
   }
@@ -142,8 +128,6 @@ export class VolListComponent implements OnInit {
     this.editingVolunteer.hasCar = car;
     this.editingVolunteer.agreeToLeft = incar;
 
-    //TODO bug in volunteering days for volunteer when editing
-    // this.volservice.volunteers[this.index] = this.editingVolunteer;
     back.click();
   }
   onSubmit(form: NgForm) {
@@ -156,10 +140,6 @@ export class VolListComponent implements OnInit {
     this.editingVolunteer.job = form.value.job;
     this.editingVolunteer.email = form.value.email;
     this.editingVolunteer.volunteerType = form.value.type;
-
-
-
-
   }
 
   ChangePage(pressedPage) {
@@ -179,20 +159,13 @@ export class VolListComponent implements OnInit {
       this.previousPage = pressedPage - 1;
       this.CurrentPageNumber = pressedPage;
     }
-
-    let n = this.elementsPerPage;
-    if (pressedPage == this.Pages.length - 1) {
-      if (this.thereIsBaki == true) {
-        n = this.bakiNumber;
-      }
-    }
+// TODO when searching, if number of result is more than this.elementsPerPage, problem my accure
+    // git the vlounteer for pressed page
     this.volunteersToView = [];
-    for (let i = 0; i < n; i++) {
-      if (this.volservice.volunteers[i + (pressedPage * n)] != undefined)
-        this.volunteersToView[i] = this.volservice.volunteers[i + (pressedPage * n)];
-
+    for (let i = 0; i < this.elementsPerPage; i++) {
+      if (this.volservice.volunteers[i + (pressedPage * this.elementsPerPage)] != undefined)
+        this.volunteersToView[i] = this.volservice.volunteers[i + (pressedPage * this.elementsPerPage)];
     }
-
   }
 
 }
