@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const _ = require('lodash');
- var Schema = mongoose.Schema;
- // schema for volunteers
- var VolunteerSchema = new Schema({
+var Schema = mongoose.Schema;
+// schema for volunteers
+var VolunteerSchema = new Schema({
     email: {
         type: String,
         trim: true,
@@ -21,8 +21,8 @@ const _ = require('lodash');
         type: String,
         unique: true
     },
-    birthDay: {
-        type: Date
+    birthday: {
+        type: String
     },
     phone: {
         type: String,
@@ -72,26 +72,26 @@ const _ = require('lodash');
             default: false
         },
     },
-     agreeToLeft: {
+    agreeToLeft: {
         type: Boolean,
         default: false
     },
-     hasCar: {
+    hasCar: {
         type: Boolean,
         default: false
     },
-     job: {
+    job: {
         type: String
     },
-     address: {
+    address: {
         type: String
     },
-     avatar: {
+    avatar: {
         type: String
     },
-     myEvents: [{
-    
+    myEvents: [{
+
     }],
- }, { usePushEach: true });
- var Volunteer = mongoose.model('Volunteer', VolunteerSchema);
- module.exports = { Volunteer }
+}, { usePushEach: true });
+var Volunteer = mongoose.model('Volunteer', VolunteerSchema);
+module.exports = { Volunteer }

@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./vol-list.component.css']
 })
 export class VolListComponent implements OnInit {
-  elementsPerPage = 10
+  elementsPerPage = 5
   volunteersToView: VolunteerModel[] = [];
   pdisabled = "previous disabled";
   ndisabled = "next"
@@ -53,19 +53,13 @@ export class VolListComponent implements OnInit {
 
       if (this.number < 1) {
         if (this.bakiNumber > 0) {
-
-
           for (let i = 0; i < this.bakiNumber; i++) {
             this.volunteersToView[i] = this.volservice.volunteers[i];
-            // console.log(this.v)
-
-
           }
         }
       }
       else {
         for (let i = 0; i < this.elementsPerPage; i++) {
-          console.log("SSSS", this.volservice.volunteers[i]);
           this.volunteersToView[i] = this.volservice.volunteers[i];
 
         }
@@ -138,17 +132,6 @@ export class VolListComponent implements OnInit {
   }
 
   days(sunday, monday, tuesday, wednesday, thursday, friday, car, incar, back) {
-
-    console.log(sunday)
-    console.log(monday)
-    console.log(tuesday)
-    console.log(wednesday)
-    console.log(thursday)
-    console.log(friday)
-    console.log(this.editingVolunteer)
-
-
-    console.log(this.editingVolunteer.freeDays)
     this.editingVolunteer.freeDays.sunday = sunday.checked;
     this.editingVolunteer.freeDays.monday = monday.checked;
     this.editingVolunteer.freeDays.tuesday = tuesday.checked;
