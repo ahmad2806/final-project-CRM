@@ -16,9 +16,9 @@ export class FilterPipe implements PipeTransform {
         if (next != null) {
           if (searchFor === 'users') {
             if (next.name.includes(query)
-            || next.username.includes(query)
-            || next.phone.includes(query)
-            || next.email.includes(query)) { prev.push(next); }
+              || next.username.includes(query)
+              || next.phone.includes(query)
+              || next.email.includes(query)) { prev.push(next); }
           }
           else if (searchFor === 'event') {
             if (next.name.includes(query)) { prev.push(next); }
@@ -30,14 +30,15 @@ export class FilterPipe implements PipeTransform {
             || next.homePhone.includes(query)
             || next.email.includes(query)
             || next.job.includes(query)) { prev.push(next); }
-          if (searchFor == 'volunteer') {
-            if (next.telePhone.includes(query)
-              || next.volunteerType.includes(query)) { prev.push(next); }
+          else {
+            if (searchFor == 'volunteer') {
+              if (next.telePhone.includes(query)
+                || next.volunteerType.includes(query)) { prev.push(next); }
+            }
+            if (searchFor == 'donor') {
+              if (next.donorType.includes(query)) { prev.push(next); }
+            }
           }
-          if (searchFor == 'donor') {
-            if (next.donorType.includes(query)) { prev.push(next); }
-          }
-
           return prev;
         }
       }, []) : value;
