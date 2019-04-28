@@ -5,6 +5,7 @@ import { EventService } from '../event.service';
 import { VolunteerModel } from '../../volunteer/volunteer.model';
 import { Router } from '@angular/router';
 import { DonorService } from '../../donor/donor.service';
+import { ServerService } from '../../server.service';
 
 @Component({
   selector: 'app-events-list',
@@ -31,8 +32,7 @@ export class EventsListComponent implements OnInit, DoCheck {
   private volunteersList = [];
   private relevantVolunteersToEvent: VolunteerModel[] = [];
 
-  constructor(private volunteerService: VolunteersService, private eventService: EventService, private router: Router, private donors: DonorService) {
-    //TODO
+  constructor(private volunteerService: VolunteersService, private eventService: EventService, private router: Router, private donors: DonorService, private serverService:ServerService) {
 
   }
 
@@ -123,7 +123,9 @@ export class EventsListComponent implements OnInit, DoCheck {
       this.eventService.generalEvents = this.eventList;
 
 
-
+      this.serverService.editEvent(this.eventList[i])
+        .subscribe((res) => {
+        }, (e) => alert(e));
 
       back.click();
 
