@@ -6,6 +6,7 @@ import { EventModel } from '../event.model';
 import { VolunteersService } from '../../volunteer/volunteers.service';
 import { Router } from '@angular/router';
 import { DonorService } from '../../donor/donor.service';
+import { ServerService } from '../../server.service';
 
 @Component({
   selector: 'app-add-event',
@@ -27,7 +28,7 @@ export class AddEventComponent implements OnInit {
   arrayToView = [];
   tempArr = [];
 
-  constructor(private volunteerService: VolunteersService, private eventService: EventService, private router: Router, private donors: DonorService) {
+  constructor(private volunteerService: VolunteersService, private eventService: EventService, private router: Router, private donors: DonorService, private serverService: ServerService) {
     eventService.relatedTo = this.relatedTo;
 
     if (this.router.url == "/Header/donor/donorEvent") {
@@ -85,9 +86,12 @@ export class AddEventComponent implements OnInit {
       } else {
         this.eventService.add(eventAdded, "donor");
       }
-      //TODO
+ 
 
-
+      this.serverService.addNewEvent(eventAdded)
+        .subscribe((res) => {
+          
+        }, (e) => alert(e))
 
       dis.click();
     }
