@@ -9,6 +9,7 @@ const { ObjectID } = require('mongodb');
 var { User } = require('./models/user');
 var { Volunteer } = require('./models/volunteer')
 var { Donor } = require('./models/donor')
+var { Event } = require('./models/event')
 
 var { mongoose } = require('./db/mongoose');
 
@@ -167,6 +168,72 @@ app.post('/delete/donor', (req, res) => {
         res.send({ donor })
     }, (e) => res.status(400).send());
 });
+
+/************** Events ****************/
+app.post('/event', (req, res) => {
+    var EventToAdd = Event(req.body);
+    EventToAdd.save().then((event) => {
+        res.send({ event });
+    }, (e) => res.status(400).send());
+});
+
+app.get('/donor/events', (req, res) => {
+    Event.find({
+      type: 'donor-Model'
+    }).then((events) => {
+      if (events.length === 0) {
+        res.status(404).send()
+      } else {
+        res.send({ events })
+      }
+    }, (e) => res.status(400).send());
+  });
+  
+  app.get('/volunteer/events', (req, res) => {
+    Event.find({
+      type: 'volunteer-Model'
+    }).then((events) => {
+      if (events.length === 0) {
+        res.status(404).send()
+      } else {
+        res.send({ events })
+      }
+    }, (e) => res.status(400).send());
+  });
+  
+  app.post('/delete/event', (req, res) => {
+  //   var deletedEvent = new Event(req.body)
+  //   deletedEvent.status = 'deleted';
+  // console.log(req.body._id, req.body.status)
+  // console.log(deletedEvent._id, deletedEvent.status)
+  //   Event.findOneAndUpdate(
+  //     { id : req.body._id}, 
+  //     {$set: deletedEvent} , 
+  //     {new: true} 
+  //   ).then((event) => {
+  //     // if(event.status === 'deleted') {
+  //       console.log(event)
+  //       res.send(event);
+  //     // } else {
+  //       // res.send('didnt save to DB')
+  //     // }s
+  //   }, (e) => res.status(400).send(e));
+  
+  });
+  
+  app.post('/edit/event', (req, res) => {
+    Event.findOneAndUpdate({
+      _id: req.body._id
+    }, { $set: req.body }, { new: true }).then((event) => {
+      if (!event) {
+        return res.status(404).send();
+      }
+      res.send({ event });
+    }, (e) => {
+      res.status(400).send(e);
+    })
+  });
+  
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
 });
