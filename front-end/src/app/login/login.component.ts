@@ -5,6 +5,8 @@ import { UserService } from '../users/user.service';
 import { AuthService } from '../auth.service';
 import { ServerService } from '../server.service';
 import { VolunteersService } from '../volunteer/volunteers.service';
+import { EventService } from '../event/event.service';
+import { DonorService } from '../donor/donor.service';
 
 //TODO
 @Component({
@@ -25,7 +27,10 @@ export class LoginComponent implements OnInit {
     private UserService: UserService,
     private auth: AuthService,
     private serverService: ServerService,
-    private volservice: VolunteersService
+    private volservice: VolunteersService,
+    private events: EventService,
+    private eventService: EventService,
+    private donorList: DonorService,
   ) { }
 
   ngOnInit() {
@@ -44,6 +49,12 @@ export class LoginComponent implements OnInit {
 
   }
   loadVolunteers() {
+    this.serverService.getVolunteerEvents()
+    .subscribe((res) => {
+      this.eventService.commingSoonEvents = [];
+      this.eventService.commingSoonEvents.push.apply(this.eventService.commingSoonEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
+    });
+
     this.serverService.getAllVolunteers()
       .subscribe((res) => {
         this.volservice.volunteers = [];
@@ -63,6 +74,19 @@ export class LoginComponent implements OnInit {
       }, (e) => {
         alert('error while fetching users');
       });
+  }
+  loadDonors(){
+    this.serverService.getDonorEvents()
+    .subscribe((res) => {
+      this.events.donorEvents = [];
+      this.events.donorEvents.push.apply(this.events.donorEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
+    });
+    this.serverService.getAllDonors()
+    .subscribe((res) => {
+      // console.log(res.json());
+      this.donorList.donor.push.apply(this.donorList.donor, res.json())
+    }, (e) => alert(e));
+
   }
   onSubmit() {
     // for (let index = 0; index < this.UserService.usersList.length; index++) {
@@ -97,6 +121,9 @@ export class LoginComponent implements OnInit {
           
           if (this.UserService.activeUser.VolPer == true) {
             this.loadVolunteers()
+          }
+          if (this.UserService.activeUser.DonorPer == true) {
+            this.loadDonors()
           }
           if (this.UserService.activeUser.username == "admin") {
             this.loadUsers();
