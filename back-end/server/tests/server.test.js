@@ -260,8 +260,8 @@ describe('DELETE /delete/volunteer', () => {
             .expect(404)
             .end(done);
     });
-}); 
-x
+});
+
 
 describe('GET /donor/events', () => {
     it('should get all donor events', (done) => {
@@ -273,7 +273,7 @@ describe('GET /donor/events', () => {
                 expect(res.body.events[0].type).toBe(events[1].type);
             })
             .end(done);
-        });
+    });
     it('should get all volunteer events', (done) => {
         request(app)
             .get('/volunteer/events')
