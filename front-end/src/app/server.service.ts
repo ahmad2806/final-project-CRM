@@ -29,7 +29,7 @@ export class ServerService {
         return this.http.post(`${this.url}/delete/user`, user);
     }
 
-    /*    Volunteers */    
+    /*    Volunteers */
     addNewVolunteer(volunteer) {
         return this.http.post(`${this.url}/volunteer`, volunteer);
     }
@@ -43,4 +43,41 @@ export class ServerService {
     editVolunteer(volunteer) {
         return this.http.post(`${this.url}/edit/volunteer`, volunteer);
     }
+
+    /////////////////Event
+
+    addNewEvent(event) {
+        return this.http.post(`${this.url}/event`, event);
+    }
+    getDonorEvents() {
+        return this.http.get(`${this.url}/donor/events`);
+    }
+    getVolunteerEvents() {
+        return this.http.get(`${this.url}/volunteer/events`);
+    }
+
+    editEvent(event) {
+        return this.http.post(`${this.url}/edit/event`, event);
+    }
+
+    deleteEvent(event) {
+        return this.http.post(`${this.url}/delete/event`, event);
+    }
+    /************************Donor */
+    addNewDonor(donor) {
+        return this.http.post(`${this.url}/donor`, donor);
+    }
+
+    getAllDonors() {
+        return this.http.get(`${this.url}/allDonors`);
+    }
+
+    editDonor(donor) {
+        return this.http.post(`${this.url}/edit/donor`, donor);
+    }
+    deleteDonor(donor) {
+        return this.http.post(`${this.url}/delete/donor`, donor);
+    }
+
+
 } 
