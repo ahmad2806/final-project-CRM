@@ -4,13 +4,14 @@ const expect = require('expect');
 const request = require('supertest');
 const { ObjectID } = require('mongodb');
 
-const { wipeUsers, users, volunteers, wipeVolunteers } = require('./seed/seed');
+const { wipeUsers, users, volunteers, wipeVolunteers, events, wipeEvents } = require('./seed/seed');
 const { User } = require('./../models/user')
 const { Volunteer } = require('./../models/volunteer')
 
 const { app } = require('./../server');
 beforeEach(wipeUsers)
 beforeEach(wipeVolunteers)
+beforeEach(wipeEvents);
 
 // this code is self explained code
 describe('POST /add/user', () => {
@@ -260,3 +261,27 @@ describe('DELETE /delete/volunteer', () => {
             .end(done);
     });
 }); 
+x
+
+describe('GET /donor/events', () => {
+    it('should get all donor events', (done) => {
+        request(app)
+            .get('/donor/events')
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.events.length).toBe(1);
+                expect(res.body.events[0].type).toBe(events[1].type);
+            })
+            .end(done);
+        });
+    it('should get all volunteer events', (done) => {
+        request(app)
+            .get('/volunteer/events')
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.events.length).toBe(1);
+                expect(res.body.events[0].type).toBe(events[0].type);
+            })
+            .end(done);
+    });
+});
