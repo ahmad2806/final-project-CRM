@@ -1,90 +1,75 @@
 import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { EventService } from '../event/event.service';
-import { EventModel } from '../event/event.model';
-import { VolunteerModel } from "../volunteer/volunteer.model";
 import { UserService } from '../users/user.service';
+
+
+// import { DatePipe } from '@angular/common';
+
 //TODO
 @Component({
   selector: 'app-dash-board',
   templateUrl: './dash-board.component.html',
   styleUrls: ['./dash-board.component.css']
 })
+
 export class DashBoardComponent implements OnInit {
+
   @ViewChild('m') m: ElementRef;
   @Input() EventType: string = "";
-  // public OldEvents = this.events.oldEvents.length;
-  // public EventsInProgress = this.events.inProgressEvents.length;
-  // public DeletedEvents = this.events.deletedEvents.length;
-  // public CommingEvents = this.events.commingSoonEvents.length;
-  constructor(private events: EventService, private userService: UserService) {
 
+
+  constructor(private events: EventService, private userService: UserService) {
   }
   ngOnInit() {
-    let today: Date = new Date();
-    let year = today.getFullYear();
-    let month = today.getMonth();
-    let day = today.getDate();
+    let today = new Date();
+
+
     this.events.oldEvents = [];
     this.events.inProgressEvents = [];
-    this.events.CSEDB = [];
-    let choose;
-    if (this.userService.activeUser.VolPer == true) {
-      choose = this.events.commingSoonEvents;
-
-    } else {
-      choose = this.events.donorEvents;
-    }
+    this.events.commingSoonEvents = [];
+    this.events.deletedEvents = [];
 
 
-    for (let index = 0; index < choose.length; index++) {
-      if (typeof (choose[index].date) == "string") {
-        choose[index].date = new Date(choose[index].date);
-      }
-      if (choose[index].date.getFullYear() > year) {// comming soon
-        this.events.CSEDB.push(choose[index]);
-      } else if (choose[index].date.getFullYear() < year) { //  old events
-        this.events.oldEvents.push(choose[index]);
-      } else if (choose[index].date.getFullYear() == year) {
-        if (choose[index].date.getMonth() > month) { //comming soon
-          this.events.CSEDB.push(choose[index]);
-        }
-        else if (choose[index].date.getMonth() < month) { // old
-          this.events.oldEvents.push(choose[index]);
-        } else if (choose[index].date.getMonth() == month) {
-          if (choose[index].date.getDay() > day) { // comming soon
-          } else if (choose[index].date.getDate() < day) { //old
-            this.events.oldEvents.push(choose[index]);
-          } else if (choose[index].date.getDate() == day) { // ingprogress today
-            this.events.inProgressEvents.push(choose[index]);
-          }
-        }
-      }
+    this.events.generalEvents = this.events.volunteersEvents;
+    this.events.generalEvents = this.events.generalEvents.concat(this.events.donorsEvents);
+
+
+    for (let index = 0; index < this.events.generalEvents.length; index++) {
+      let d1 = new Date(today);
+      let d2 = new Date(this.events.generalEvents[index].date);
+
+      // Check if the dates are equal
+      let same = d1.getTime() === d2.getTime();
+      if (same) this.events.inProgressEvents.push(this.events.generalEvents[index]);
+
+      // Check if the first is greater than second
+      if (d1 > d2) this.events.oldEvents.push(this.events.generalEvents[index]);
+
+      // Check if the first is less than second
+      if (d1 < d2) this.events.commingSoonEvents.push(this.events.generalEvents[index]);
+
     }
   }
 
-  @Input() event: EventModel[] = [];
+
 
   View(type) {
     this.EventType = type;
-    this.event = [];
-    if (type == "done") {
-      this.events.setClicked('old');
-    }
 
-    else if (type == "donut_large") {
+    if (type == "done")
+      this.events.generalEvents = this.events.oldEvents;
 
-      this.events.setClicked('inProgress');
-    }
 
-    else if (type == "clear") {
+    else if (type == "donut_large")
+      this.events.generalEvents = this.events.inProgressEvents;
 
-      this.events.setClicked('deleted');
-    }
 
-    else if (type == "alarm") {
+    else if (type == "clear")
+      this.events.generalEvents = this.events.deletedEvents;
 
-      this.events.setClicked('commingSoon');
-    }
+
+    else if (type == "alarm")
+      this.events.generalEvents = this.events.commingSoonEvents;
 
 
     this.m.nativeElement;

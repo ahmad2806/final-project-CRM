@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private serverService: ServerService,
     private volservice: VolunteersService,
-    private events: EventService,
+
     private eventService: EventService,
     private donorList: DonorService,
   ) { }
@@ -51,8 +51,8 @@ export class LoginComponent implements OnInit {
   loadVolunteers() {
     this.serverService.getVolunteerEvents()
     .subscribe((res) => {
-      this.eventService.commingSoonEvents = [];
-      this.eventService.commingSoonEvents.push.apply(this.eventService.commingSoonEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
+      this.eventService.volunteersEvents = [];
+      this.eventService.volunteersEvents.push.apply(this.eventService.volunteersEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
     });
 
     this.serverService.getAllVolunteers()
@@ -78,8 +78,8 @@ export class LoginComponent implements OnInit {
   loadDonors(){
     this.serverService.getDonorEvents()
     .subscribe((res) => {
-      this.events.donorEvents = [];
-      this.events.donorEvents.push.apply(this.events.donorEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
+      this.eventService.donorsEvents = [];
+      this.eventService.donorsEvents.push.apply(this.eventService.donorsEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
     });
     this.serverService.getAllDonors()
     .subscribe((res) => {

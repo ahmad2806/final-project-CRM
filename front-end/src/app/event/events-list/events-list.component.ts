@@ -18,6 +18,7 @@ export class EventsListComponent implements OnInit, DoCheck {
   @ViewChild('descriptionInput') desInputRef: ElementRef;
   @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
   i = 0;
+  searchFor = "event-list"
   // for edit modal
   name = "";
   date;
@@ -37,17 +38,19 @@ export class EventsListComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    if (this.router.url != "/Header/donor/donorEvent") {
-      if (this.eventService.generalEvents != this.eventListOnSearch) {
-        this.eventList = this.eventService.generalEvents;
-
-        this.eventListOnSearch = this.eventService.generalEvents;
-      }
-    }
+    
   }
 
 
   ngOnInit() {
+    // console.log(this.router.url)
+    // TODO way too much time to copy all that data, fix it later
+    if (this.router.url == "/Header/donor/donorEvent") {
+      this.eventService.generalEvents = this.eventService.donorsEvents;
+    }
+    else if (this.router.url == "/Header/volenteer/VolunteerEvents/eventsList") {
+      this.eventService.generalEvents = this.eventService.volunteersEvents;
+    }
 
   }
 
@@ -143,9 +146,14 @@ export class EventsListComponent implements OnInit, DoCheck {
     this.eventService.generalEvents = this.eventList;
   }
 
-  update(thisdate) {
+  update(m_date) {
+    console.log(m_date.value[0])
+    console.log(this.eventService.generalEvents[0].date[0])
+    console.log(m_date.value)
+    console.log(this.eventService.generalEvents[0].date)
+
     this.eventList = [];
-    if (thisdate.value == "") {
+    if (m_date.value == "") {
 
       this.eventList = this.eventListOnSearch;
     }
@@ -155,7 +163,7 @@ export class EventsListComponent implements OnInit, DoCheck {
 
           if (this.eventListOnSearch[i].date == undefined)
             break;
-          if (thisdate.value[j] != this.eventListOnSearch[i].date[j] && thisdate.value[j] != '-')
+          if (m_date.value[j] != this.eventListOnSearch[i].date[j] && m_date.value[j] != '-')
             break;
           else if (j == 9) {
             this.eventList.push(this.eventListOnSearch[i]);
@@ -167,7 +175,7 @@ export class EventsListComponent implements OnInit, DoCheck {
     //     for(let i=0;i<this.eventList[0].date.length;i++){
 
     //     }
-    //     for(let i=0;i<thisdate.value.length;i++){
+    //     for(let i=0;i<m_date.value.length;i++){
 
     //     }
     //  let  time = this.eventList[0].date[0];
