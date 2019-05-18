@@ -30,8 +30,8 @@ export class EventsListComponent implements OnInit, DoCheck {
 
 
   private eventListOnSearch: EventModel[] = [];
-  private volunteersList = [];
-  private relevantVolunteersToEvent: VolunteerModel[] = [];
+  
+  private relevant_persons_to_event: any[] = [];
 
   constructor(
     private volunteerService: VolunteersService,
@@ -73,41 +73,47 @@ export class EventsListComponent implements OnInit, DoCheck {
   }
   
   addToRelativeList(item, i) {
-    const index = this.relevantVolunteersToEvent.indexOf(item);
+    const index = this.relevant_persons_to_event.indexOf(item);
     console.log(index, "AddtoRelat")
-    this.m_relatedTo.push(this.relevantVolunteersToEvent[index]);
-    this.relevantVolunteersToEvent.splice(index, 1);
+    this.m_relatedTo.push(this.relevant_persons_to_event[index]);
+    this.relevant_persons_to_event.splice(index, 1);
     
     
   }
   delFromRelativeList(item, i) {
     const index = this.m_relatedTo.indexOf(item);
     console.log(index, "delFromRela")
-    this.relevantVolunteersToEvent.push(this.m_relatedTo[index]);
+    this.relevant_persons_to_event.push(this.m_relatedTo[index]);
     this.m_relatedTo.splice(index, 1);
 
 
   }
 
-  arrayOfVolunteers(i) {
+  arrayOfPersons(i) {
     this.i = i;
-    this.name = this.eventService.generalEvents[i].name;
-    this.m_date = this.eventService.generalEvents[i].date;
-    this.description = this.eventService.generalEvents[i].description;
+    let m_event = this.eventService.generalEvents[i] 
+    this.name = m_event.name;
+    this.m_date = m_event.date;
+    this.description = m_event.description;
 
-    this.relevantVolunteersToEvent = [];// left
-    this.m_relatedTo = this.eventService.generalEvents[i].relativeTo; // right
+    this.relevant_persons_to_event = [];// left
+    this.m_relatedTo = m_event.relativeTo; // right
 
-    
+    let every_one = [];
+    if (m_event.type == "donor-Model")
+      every_one =this.donors.donor
+    else
+      every_one = this.volunteerService.volunteers
+
     
     // TODO see why this line doesnt work, when it works, it can replace the two fors
     // this.relevantVolunteersToEvent = this.volunteerService.volunteers.filter(item => this.m_relatedTo.indexOf(item) < 0);
-    for (let i = 0; i < this.volunteerService.volunteers.length; i++) {
+    for (let i = 0; i < every_one.length; i++) {
       for (let j = 0; j < this.m_relatedTo.length; j++) {
-        if (this.volunteerService.volunteers[i].id == this.m_relatedTo[j].id)
+        if (every_one[i].id == this.m_relatedTo[j].id)
           break;
-        else if (this.volunteerService.volunteers[i].id != this.m_relatedTo[j].id && j == this.m_relatedTo.length - 1)
-          this.relevantVolunteersToEvent.push(this.volunteerService.volunteers[i]);
+        else if (every_one[i].id != this.m_relatedTo[j].id && j == this.m_relatedTo.length - 1)
+          this.relevant_persons_to_event.push(every_one[i]);
       }
     }
   }

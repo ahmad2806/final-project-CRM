@@ -35,7 +35,8 @@ export class VolunteerComponent implements OnInit {
   }
   onclick() {
     this.eventService.clicked = 'mainList';
-    this.eventService.setClicked(' ');
+    // TODO
+    // this.eventService.setClicked(' ');
     this.router.navigate(['/Header/volenteer/VolunteerEvents/eventsList']);
 
   }

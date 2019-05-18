@@ -61,10 +61,10 @@
                                 <div class=" pre-scrollable">
 
                                     <div class="col-xs-10"
-                                        *ngFor="let volunteer of event.didntArrived  | filter:this['queryIn'+ i]:event.didntArrived:searchFor"
-                                        (click)="addToList(volunteer,i)" (mouseover)="hover=true"
+                                        *ngFor="let person of event.didntArrived  | filter:this['queryIn'+ i]:event.didntArrived:searchFor"
+                                        (click)="addToList(person,i)" (mouseover)="hover=true"
                                         (mouseleave)="hover=false">
-                                        {{ volunteer.name }}
+                                        {{ person.name }}
                                         <span class="glyphicon glyphicon-arrow-right pull-right text-success"
                                             [ngStyle]="{opacity: hover==true ? '1' : '0'}">
                                         </span>
@@ -88,10 +88,10 @@
                                 </div>
                                 <div class=" pre-scrollable">
                                     <div class=" col-xs-10 "
-                                        *ngFor="let volunteer of event.arrived | filter:queryOut:event.arrived:searchFor"
-                                        (click)="delFromList(volunteer,i)" (mouseover)="hover=true"
+                                        *ngFor="let person of event.arrived | filter:queryOut:event.arrived:searchFor"
+                                        (click)="delFromList(person,i)" (mouseover)="hover=true"
                                         (mouseleave)="hover=false">
-                                        {{ volunteer.name }}
+                                        {{ person.name }}
                                         <span class="glyphicon glyphicon-arrow-left pull-left text-danger"
                                             [ngStyle]="{opacity: hover==true ? '1' : '0'}">
                                         </span>
@@ -103,7 +103,7 @@
                 </div>
                 <div class="row">
                     <button type="button" class="btn btn-warning" data-toggle="modal"
-                        *ngIf="router.url != '/Header/main'" (click)="arrayOfVolunteers(i)"
+                        *ngIf="router.url != '/Header/main'" (click)="arrayOfPersons(i)"
                         data-target="#editModal">עדכן</button>
                     <button type="button" class="btn btn-danger" data-toggle="modal" (click)="index(i)"
                         data-target="#exampleModalCenter">מחק</button>
@@ -228,7 +228,7 @@
                                     </div>
                                     <div class=" pre-scrollable">
                                         <div class="col-xs-10"
-                                            *ngFor="let item of relevantVolunteersToEvent  | filter:queryIn:relevantVolunteersToEvent:searchFor"
+                                            *ngFor="let item of relevant_persons_to_event  | filter:queryIn:relevant_persons_to_event:searchFor"
                                             (click)="addToRelativeList(item,i)" (mouseover)="hover=true"
                                             (mouseleave)="hover=false">
                                             {{ item.name }}
