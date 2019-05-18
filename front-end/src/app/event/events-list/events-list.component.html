@@ -7,7 +7,8 @@
                 class="btn btn-primary col-xs-1   	glyphicon glyphicon-plus"></button>
             <div class="all-Div col-xs-4">
                 <div class='input-group date' id='datetimepicker1'>
-                    <input type="date" (change)="update(thisdate)" #thisdate class="date-time form-control">
+                    <input type="date" (change)="update(thisdate)" #thisdate class="date-time form-control"
+                        [(ngModel)]="DateQuery" name="search-query-in">
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-search"></span>
                     </span>
@@ -24,7 +25,8 @@
         </mat-toolbar>
 
         <mat-accordion>
-            <mat-expansion-panel *ngFor="let event of eventsToView;let i=index">
+            <mat-expansion-panel
+                *ngFor="let event of this.eventService.generalEvents | filter:DateQuery:this.eventService.generalEvents:searchFor; index as i">
                 <mat-expansion-panel-header dir="rtl" cols="2">
 
                     <mat-panel-title class="col-xs-3">
@@ -43,17 +45,23 @@
                     </div>
                     <div>
                         <div class="all-Div col-xs-4 col-xs-offset-2">
+                            <div class="row">
+                                <div class="text-center">
+                                    בעלי עניין
+                                </div>
+                            </div>
                             <div class="form-group changethisone">
                                 <div class=" input-group changethisone">
                                     <input type="text" title="חפש שם" class="form-control text-right"
-                                        placeholder="...חפש" [(ngModel)]="queryIn" name="search-query-in">
+                                        placeholder="...חפש" [(ngModel)]="this['queryIn'+ i]" name="search-query-in">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-search"></i>
                                     </span>
                                 </div>
                                 <div class=" pre-scrollable">
+
                                     <div class="col-xs-10"
-                                        *ngFor="let volunteer of event.didntArrived  | filter:queryIn"
+                                        *ngFor="let volunteer of event.didntArrived  | filter:this['queryIn'+ i]:event.didntArrived:searchFor"
                                         (click)="addToList(volunteer,i)" (mouseover)="hover=true"
                                         (mouseleave)="hover=false">
                                         {{ volunteer.name }}
@@ -66,6 +74,11 @@
                         </div>
                         <div class="selected-Div col-xs-4">
                             <div class=" form-group">
+                                <div class="row">
+                                    <div class="text-center">
+                                        קיבלו
+                                    </div>
+                                </div>
                                 <div class=" input-group changethisone">
                                     <input type="text" title="חפש שם" class="form-control text-right"
                                         placeholder="...חפש" [(ngModel)]="queryOut" name="search-query-out">
@@ -74,7 +87,8 @@
                                     </span>
                                 </div>
                                 <div class=" pre-scrollable">
-                                    <div class=" col-xs-10 " *ngFor="let volunteer of event.arrived | filter:queryOut"
+                                    <div class=" col-xs-10 "
+                                        *ngFor="let volunteer of event.arrived | filter:queryOut:event.arrived:searchFor"
                                         (click)="delFromList(volunteer,i)" (mouseover)="hover=true"
                                         (mouseleave)="hover=false">
                                         {{ volunteer.name }}
@@ -103,26 +117,26 @@
 </div>
 
 <div class="container">
-        <ul class="pager">
+    <ul class="pager">
 
-                <li [class]="pdisabled" (click)="ChangePage(previousPage)">
-                        <a>Previous</a>
-                </li>
-                <ul class="pagination">
-                        <li *ngFor="let item of Pages;index as i" (click)="ChangePage(i)">
-                                <a>{{Pages[i]}}</a>
-                        </li>
-
-
-                </ul>
-
-                <li [class]="ndisabled " (click)="ChangePage(nextPage)">
-                        <a>Next</a>
-                </li>
-
+        <li [class]="pdisabled" (click)="ChangePage(previousPage)">
+            <a>Previous</a>
+        </li>
+        <ul class="pagination">
+            <li *ngFor="let item of Pages;index as j" (click)="ChangePage(j)">
+                <a>{{Pages[i]}}</a>
+            </li>
 
 
         </ul>
+
+        <li [class]="ndisabled " (click)="ChangePage(nextPage)">
+            <a>Next</a>
+        </li>
+
+
+
+    </ul>
 </div>
 
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -148,7 +162,7 @@
                 <div class="col-xs-10 col-xs-offset-1  text-center btn-primary">
                     מידע על האירוע
                 </div>
-                <form (ngSubmit)="onAddEvent(back)" #form>
+                <form (ngSubmit)="onEditEvent(back)" #form>
                     <div class="form-group">
                         <div class="col-md-9 col-md-offset-1">
                             <div class="customDiv ">
@@ -174,9 +188,10 @@
                                 <div class="pull-right">
                                     <span class="pull-right " dir="rtl">תאריך האירוע</span>
                                     <span class="text-danger">*</span>
-                                </div>
-                                <input type="date" value="{{date}}" class="col-xs-6 pull-right date-time form-control"
-                                    required #dateInput>
+                                </div>`
+
+                                <input type="date" value="{{m_date | date:'yyyy-MM-dd'}}"
+                                    class="col-xs-6 pull-right date-time form-control" required #dateInput>
                             </div>
                         </div>
                     </div>
@@ -198,6 +213,11 @@
                         </div>
                         <div class="row">
                             <div class="all-Div col-xs-4 col-xs-offset-2">
+                                <div class="row">
+                                    <div class="text-center">
+                                        כל הרשימה
+                                    </div>
+                                </div>
                                 <div class="form-group changethisone">
                                     <div class=" input-group changethisone">
                                         <input type="text" title="חפש שם" class="form-control text-right"
@@ -208,7 +228,7 @@
                                     </div>
                                     <div class=" pre-scrollable">
                                         <div class="col-xs-10"
-                                            *ngFor="let item of relevantVolunteersToEvent  | filter:queryIn"
+                                            *ngFor="let item of relevantVolunteersToEvent  | filter:queryIn:relevantVolunteersToEvent:searchFor"
                                             (click)="addToRelativeList(item,i)" (mouseover)="hover=true"
                                             (mouseleave)="hover=false">
                                             {{ item.name }}
@@ -221,6 +241,11 @@
                             </div>
                             <div class="selected-Div col-xs-4">
                                 <div class=" form-group">
+                                    <div class="row">
+                                        <div class="text-center">
+                                            בעלי עניין
+                                        </div>
+                                    </div>
                                     <div class=" input-group changethisone">
                                         <input type="text" title="חפש שם" class="form-control text-right"
                                             placeholder="...חפש" [(ngModel)]="queryOut" name="search-query-out">
@@ -229,7 +254,8 @@
                                         </span>
                                     </div>
                                     <div class=" pre-scrollable">
-                                        <div class=" col-xs-10 " *ngFor="let item of relatedTo| filter:queryOut"
+                                        <div class=" col-xs-10 "
+                                            *ngFor="let item of m_relatedTo | filter:queryOut:m_relatedTo:searchFor"
                                             (click)="delFromRelativeList(item,i)" (mouseover)="hover=true"
                                             (mouseleave)="hover=false">
                                             <div class="pull-right ">{{ item.name }} </div>

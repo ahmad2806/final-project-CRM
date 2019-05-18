@@ -21,24 +21,28 @@ export class EventsListComponent implements OnInit, DoCheck {
   searchFor = "event-list"
   // for edit modal
   name = "";
-  date;
+  m_date;
   description = "";
   // *************************
   modelType = '';
   dismissModal = false;
-  relatedTo: VolunteerModel[] = [];
+  m_relatedTo: VolunteerModel[] = [];
 
-  private eventList: EventModel[] = [];
+
   private eventListOnSearch: EventModel[] = [];
   private volunteersList = [];
   private relevantVolunteersToEvent: VolunteerModel[] = [];
 
-  constructor(private volunteerService: VolunteersService, private eventService: EventService, private router: Router, private donors: DonorService, private serverService:ServerService) {
+  constructor(
+    private volunteerService: VolunteersService,
+    private eventService: EventService,
+    private router: Router,
+    private donors: DonorService,
+    private serverService: ServerService) { }
 
-  }
 
   ngDoCheck() {
-    
+
   }
 
 
@@ -55,58 +59,60 @@ export class EventsListComponent implements OnInit, DoCheck {
   }
 
   addToList(item, i) {
-    const index = this.eventList[i].didntArrived.indexOf(item);
-    this.eventList[i].arrived.push(this.eventList[i].didntArrived[index]);
-    this.eventList[i].didntArrived.splice(index, 1);
-    this.eventService.generalEvents = this.eventList;
+    const index = this.eventService.generalEvents[i].didntArrived.indexOf(item);
+    console.log(index, "addToList")
+    this.eventService.generalEvents[i].arrived.push(this.eventService.generalEvents[i].didntArrived[index]);
+    this.eventService.generalEvents[i].didntArrived.splice(index, 1);
+    
   }
   delFromList(item, i) {
-    const index = this.eventList[i].arrived.indexOf(item);
-    this.eventList[i].didntArrived.push(this.eventList[i].arrived[index]);
-    this.eventList[i].arrived.splice(index, 1);
-    this.eventService.generalEvents = this.eventList;
+    const index = this.eventService.generalEvents[i].arrived.indexOf(item);
+    console.log(index, "deletFrom")
+    this.eventService.generalEvents[i].didntArrived.push(this.eventService.generalEvents[i].arrived[index]);
+    this.eventService.generalEvents[i].arrived.splice(index, 1);
   }
-
+  
   addToRelativeList(item, i) {
     const index = this.relevantVolunteersToEvent.indexOf(item);
-    this.relatedTo.push(this.relevantVolunteersToEvent[index]);
+    console.log(index, "AddtoRelat")
+    this.m_relatedTo.push(this.relevantVolunteersToEvent[index]);
     this.relevantVolunteersToEvent.splice(index, 1);
-
-
+    
+    
   }
   delFromRelativeList(item, i) {
-    const index = this.relatedTo.indexOf(item);
-    this.relevantVolunteersToEvent.push(this.relatedTo[index]);
-    this.relatedTo.splice(index, 1);
+    const index = this.m_relatedTo.indexOf(item);
+    console.log(index, "delFromRela")
+    this.relevantVolunteersToEvent.push(this.m_relatedTo[index]);
+    this.m_relatedTo.splice(index, 1);
 
 
   }
 
   arrayOfVolunteers(i) {
-
     this.i = i;
-    this.name = this.eventList[i].name;
-    this.date = this.eventList[i].date;
-    this.description = this.eventList[i].description;
-    this.relevantVolunteersToEvent = [];
-    let related = this.eventList[i].relativeTo;
+    this.name = this.eventService.generalEvents[i].name;
+    this.m_date = this.eventService.generalEvents[i].date;
+    this.description = this.eventService.generalEvents[i].description;
 
-    for (let index = 0; index < this.volunteersList.length; index++) {
-      for (let index1 = 0; index1 < related.length; index1++) {
-        if (this.volunteersList[index].id == related[index1].id) {
+    this.relevantVolunteersToEvent = [];// left
+    this.m_relatedTo = this.eventService.generalEvents[i].relativeTo; // right
+
+    
+    
+    // TODO see why this line doesnt work, when it works, it can replace the two fors
+    // this.relevantVolunteersToEvent = this.volunteerService.volunteers.filter(item => this.m_relatedTo.indexOf(item) < 0);
+    for (let i = 0; i < this.volunteerService.volunteers.length; i++) {
+      for (let j = 0; j < this.m_relatedTo.length; j++) {
+        if (this.volunteerService.volunteers[i].id == this.m_relatedTo[j].id)
           break;
-        } else if (this.volunteersList[index].id != related[index1].id && index1 == related.length - 1) {
-          this.relevantVolunteersToEvent.push(this.volunteersList[index]);
-        }
-
+        else if (this.volunteerService.volunteers[i].id != this.m_relatedTo[j].id && j == this.m_relatedTo.length - 1)
+          this.relevantVolunteersToEvent.push(this.volunteerService.volunteers[i]);
       }
-
     }
-    this.relatedTo = related;
-
   }
 
-  onAddEvent(back) {
+  onEditEvent(back) {
 
     let i = this.i;
 
@@ -118,15 +124,19 @@ export class EventsListComponent implements OnInit, DoCheck {
     }
     else {
       this.dismissModal = true;
-      this.eventList[i].name = eventName;
-      this.eventList[i].date = eventDate;
-      this.eventList[i].description = eventDescription;
-      this.eventList[i].type = this.modelType;
-      this.eventList[i].relativeTo = this.relatedTo;
-      this.eventService.generalEvents = this.eventList;
+      this.eventService.generalEvents[i].name = eventName;
+      this.eventService.generalEvents[i].date = eventDate;
+      this.eventService.generalEvents[i].description = eventDescription;
+      // this.eventService.generalEvents[i].type = this.modelType;
+      this.eventService.generalEvents[i].relativeTo = this.m_relatedTo;
+      this.eventService.generalEvents[i].didntArrived = this.m_relatedTo
 
-
-      this.serverService.editEvent(this.eventList[i])
+      console.log(eventDate)
+      console.log(typeof(eventDate))
+      console.log(this.eventService.generalEvents[i].date)
+      console.log(this.eventService.generalEvents[i].type)
+      console.log(this.eventService.generalEvents[i])
+      this.serverService.editEvent(this.eventService.generalEvents[i])
         .subscribe((res) => {
         }, (e) => alert(e));
 
@@ -141,45 +151,13 @@ export class EventsListComponent implements OnInit, DoCheck {
     this.i = i;
   }
   removeEvent() {
-    this.eventService.deletedEvents.push(this.eventList[this.i]);
-    this.eventList.splice(this.i, 1);
-    this.eventService.generalEvents = this.eventList;
+    this.eventService.deletedEvents.push(this.eventService.generalEvents[this.i]);
+    this.eventService.generalEvents.splice(this.i, 1);
+    this.eventService.generalEvents = this.eventService.generalEvents;
   }
 
   update(m_date) {
-    console.log(m_date.value[0])
-    console.log(this.eventService.generalEvents[0].date[0])
-    console.log(m_date.value)
-    console.log(this.eventService.generalEvents[0].date)
-
-    this.eventList = [];
-    if (m_date.value == "") {
-
-      this.eventList = this.eventListOnSearch;
-    }
-    else {
-      for (let i = 0; i < this.eventListOnSearch.length; i++) {
-        for (let j = 0; j < 10; j++) {
-
-          if (this.eventListOnSearch[i].date == undefined)
-            break;
-          if (m_date.value[j] != this.eventListOnSearch[i].date[j] && m_date.value[j] != '-')
-            break;
-          else if (j == 9) {
-            this.eventList.push(this.eventListOnSearch[i]);
-          }
-        }
-      }
-
-    }
-    //     for(let i=0;i<this.eventList[0].date.length;i++){
-
-    //     }
-    //     for(let i=0;i<m_date.value.length;i++){
-
-    //     }
-    //  let  time = this.eventList[0].date[0];
-    this.eventService.generalEvents = this.eventList;
+  //  TODO replace filter pipe with function to make it faster
   }
 
 
