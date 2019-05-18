@@ -32,7 +32,7 @@
 
 
                 <mat-accordion>
-                        <mat-expansion-panel *ngFor="let item of volunteersToView | filter:queryIn:volservice.volunteers:searchFor ">
+                        <mat-expansion-panel *ngFor="let item of eventService.elementsToShow | filter:queryIn:volservice.volunteers:searchFor ">
 
 
                                 <mat-expansion-panel-header dir="rtl" cols="2">
@@ -157,13 +157,13 @@
                 </mat-accordion>
 
 
-                <p class="text-muted pull-left">page: {{CurrentPageNumber+1}}</p>
+                <p class="text-muted pull-left">page: {{eventService.CurrentPageNumber+1}}</p>
 
 
         </div>
 
 </div>
-<div *ngIf="noVolunteers" class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div *ngIf="!eventService.isEmpty" class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -428,23 +428,18 @@
 
 <div class="container">
         <ul class="pager">
-
-                <li [class]="pdisabled" (click)="ChangePage(previousPage)">
+                <li [class]="eventService.pdisabled" (click)="eventService.ChangePage(eventService.previousPage)">
                         <a>Previous</a>
                 </li>
+                
                 <ul class="pagination">
-                        <li *ngFor="let item of Pages;index as i" (click)="ChangePage(i)">
-                                <a>{{Pages[i]}}</a>
+                        <li *ngFor="let item of eventService.Pages;index as i" (click)="eventService.ChangePage(i)">
+                                <a>{{eventService.Pages[i]}}</a>
                         </li>
-
-
                 </ul>
 
-                <li [class]="ndisabled " (click)="ChangePage(nextPage)">
+                <li [class]="eventService.ndisabled " (click)="eventService.ChangePage(eventService.nextPage)">
                         <a>Next</a>
                 </li>
-
-
-
         </ul>
 </div>

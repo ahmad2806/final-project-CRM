@@ -9,6 +9,7 @@ export class FilterPipe implements PipeTransform {
   constructor() { }
 
   transform(value: any, query: string, arr: any, searchFor: string): any {
+    // TODO filter is called many time causing shakes in the page
     if (value === null)
       return null;
     else {
@@ -27,7 +28,6 @@ export class FilterPipe implements PipeTransform {
             if (next.date && (new Date(next.date).toDateString()) == (new Date(query).toDateString())) {prev.push(next); }
             
             else if (next.name && next.name.includes(query)) { 
-              console.log(next, "second") 
               prev.push(next);
             }
           }
