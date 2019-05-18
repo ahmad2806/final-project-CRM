@@ -26,7 +26,7 @@
 
         <mat-accordion>
             <mat-expansion-panel
-                *ngFor="let event of this.eventService.generalEvents | filter:DateQuery:this.eventService.generalEvents:searchFor; index as i">
+                *ngFor="let event of this.eventService.elementsToShow | filter:DateQuery:this.eventService.generalEvents:searchFor; index as i">
                 <mat-expansion-panel-header dir="rtl" cols="2">
 
                     <mat-panel-title class="col-xs-3">
@@ -112,31 +112,26 @@
             </mat-expansion-panel>
         </mat-accordion>
 
-        <p class="text-muted pull-left">page: {{CurrentPageNumber+1}}</p>
+        <p class="text-muted pull-left">page: {{eventService.CurrentPageNumber+1}}</p>
     </div>
 </div>
 
 <div class="container">
-    <ul class="pager">
+        <ul class="pager">
+                <li [class]="eventService.pdisabled" (click)="eventService.ChangePage(eventService.previousPage)">
+                        <a>Previous</a>
+                </li>
+                
+                <ul class="pagination">
+                        <li *ngFor="let item of eventService.Pages;index as i" (click)="eventService.ChangePage(i)">
+                                <a>{{eventService.Pages[i]}}</a>
+                        </li>
+                </ul>
 
-        <li [class]="pdisabled" (click)="ChangePage(previousPage)">
-            <a>Previous</a>
-        </li>
-        <ul class="pagination">
-            <li *ngFor="let item of Pages;index as j" (click)="ChangePage(j)">
-                <a>{{Pages[i]}}</a>
-            </li>
-
-
+                <li [class]="eventService.ndisabled " (click)="eventService.ChangePage(eventService.nextPage)">
+                        <a>Next</a>
+                </li>
         </ul>
-
-        <li [class]="ndisabled " (click)="ChangePage(nextPage)">
-            <a>Next</a>
-        </li>
-
-
-
-    </ul>
 </div>
 
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"

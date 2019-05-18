@@ -55,7 +55,7 @@ export class EventsListComponent implements OnInit, DoCheck {
     else if (this.router.url == "/Header/volenteer/VolunteerEvents/eventsList") {
       this.eventService.generalEvents = this.eventService.volunteersEvents;
     }
-
+    this.eventService.pageDivider(this.eventService.generalEvents);
   }
 
   addToList(item, i) {
@@ -137,19 +137,11 @@ export class EventsListComponent implements OnInit, DoCheck {
       this.eventService.generalEvents[i].relativeTo = this.m_relatedTo;
       this.eventService.generalEvents[i].didntArrived = this.m_relatedTo
 
-      console.log(eventDate)
-      console.log(typeof(eventDate))
-      console.log(this.eventService.generalEvents[i].date)
-      console.log(this.eventService.generalEvents[i].type)
-      console.log(this.eventService.generalEvents[i])
       this.serverService.editEvent(this.eventService.generalEvents[i])
         .subscribe((res) => {
         }, (e) => alert(e));
 
       back.click();
-
-
-
     }
 
   }
