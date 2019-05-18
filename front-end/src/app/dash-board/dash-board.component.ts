@@ -71,7 +71,7 @@ export class DashBoardComponent implements OnInit {
     else if (type == "alarm")
       this.events.generalEvents = this.events.commingSoonEvents;
 
-
+    this.events.pageDivider(this.events.generalEvents)
     this.m.nativeElement;
 
   }

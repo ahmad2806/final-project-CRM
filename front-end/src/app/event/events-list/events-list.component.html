@@ -111,12 +111,12 @@
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
-
-        <p class="text-muted pull-left">page: {{eventService.CurrentPageNumber+1}}</p>
+        <p></p>
+        <p class="text-muted pull-left" style="background-color: white">page: {{eventService.CurrentPageNumber+1}}</p>
     </div>
 </div>
 
-<div class="container">
+<div class="container" >
         <ul class="pager">
                 <li [class]="eventService.pdisabled" (click)="eventService.ChangePage(eventService.previousPage)">
                         <a>Previous</a>

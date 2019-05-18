@@ -5,7 +5,9 @@
                         <div class="all-Div col-xs-4">
                                 <div class=" changethisone">
                                         <div class=" input-group changethisone">
-                                                <input type="text" title="חפס שם" class="form-control text-right" #search placeholder="...חפש" [(ngModel)]="queryIn" name="search-query-in">
+                                                <input type="text" title="חפס שם" class="form-control text-right"
+                                                        #search placeholder="...חפש" [(ngModel)]="queryIn"
+                                                        name="search-query-in">
                                                 <span class="input-group-addon">
                                                         <i class="glyphicon glyphicon-search"></i>
                                                 </span>
@@ -32,7 +34,8 @@
 
 
                 <mat-accordion>
-                        <mat-expansion-panel *ngFor="let item of eventService.elementsToShow | filter:queryIn:volservice.volunteers:searchFor ">
+                        <mat-expansion-panel
+                                *ngFor="let item of eventService.elementsToShow | filter:queryIn:volservice.volunteers:searchFor ">
 
 
                                 <mat-expansion-panel-header dir="rtl" cols="2">
@@ -51,10 +54,13 @@
                                         <div class="col-sm-12 text-right ">
                                                 <div class="col-sm-3 pull-right">
                                                         <div class="row">
-                                                                <img src="{{item.avatar}}" (click)="viewImage(ImageBtn,item)" #img class="img-circle img-responsive center-block">
+                                                                <img src="{{item.avatar}}"
+                                                                        (click)="viewImage(ImageBtn,item)" #img
+                                                                        class="img-circle img-responsive center-block">
 
                                                         </div>
-                                                        <button class="invisible" data-toggle="modal" data-target="#imageModal" #ImageBtn></button>
+                                                        <button class="invisible" data-toggle="modal"
+                                                                data-target="#imageModal" #ImageBtn></button>
 
 
                                                 </div>
@@ -64,49 +70,59 @@
                                                                 <div class="col-sm-2 pull-right">
                                                                         :שמ
                                                                 </div>
-                                                                <div class="col-sm-4 pull-left text-left">{{item.name}}</div>
+                                                                <div class="col-sm-4 pull-left text-left">{{item.name}}
+                                                                </div>
 
                                                         </div>
                                                         <div class="row">
                                                                 <div class="col-sm-2 pull-right">:ת"ז</div>
-                                                                <div class="col-sm-4 pull-left text-left">{{item.id}}</div>
+                                                                <div class="col-sm-4 pull-left text-left">{{item.id}}
+                                                                </div>
 
                                                         </div>
                                                         <div class="row">
                                                                 <div class="col-sm-2 pull-right">:דוא"ל</div>
-                                                                <div class="col-sm-4 pull-left text-left">{{item.email}}</div>
+                                                                <div class="col-sm-4 pull-left text-left">{{item.email}}
+                                                                </div>
 
                                                         </div>
 
 
                                                         <div class="row ">
                                                                 <div class="col-sm-3 pull-right">:תאריך לידה</div>
-                                                                <div class="col-sm-3 pull-left text-left">{{item.birthday | date:"dd/MM/yyyy"}}</div>
+                                                                <div class="col-sm-3 pull-left text-left">
+                                                                        {{item.birthday | date:"dd/MM/yyyy"}}</div>
                                                         </div>
                                                         <div class="row ">
                                                                 <div class="col-sm-3 pull-right">:טל נוסף</div>
-                                                                <div class="col-sm-3 pull-left text-left">{{item.telePhone}}</div>
+                                                                <div class="col-sm-3 pull-left text-left">
+                                                                        {{item.telePhone}}</div>
                                                         </div>
                                                         <div class="row ">
                                                                 <div class="col-sm-3 pull-right">:טל נייח</div>
-                                                                <div class="col-sm-3 pull-left text-left">{{item.homePhone}}</div>
+                                                                <div class="col-sm-3 pull-left text-left">
+                                                                        {{item.homePhone}}</div>
                                                         </div>
 
                                                         <div class="row ">
                                                                 <div class="col-sm-3 pull-right">:טל נייד</div>
-                                                                <div class="col-sm-3 pull-left text-left">{{item.phone}}</div>
+                                                                <div class="col-sm-3 pull-left text-left">{{item.phone}}
+                                                                </div>
                                                         </div>
                                                         <div class="row ">
                                                                 <div class="col-sm-3 pull-right">:כתובת</div>
-                                                                <div class="col-sm-3 pull-left text-left">{{item.address}}</div>
+                                                                <div class="col-sm-3 pull-left text-left">
+                                                                        {{item.address}}</div>
                                                         </div>
                                                         <div class="row ">
                                                                 <div class="col-sm-3 pull-right">:סוג התנדבות</div>
-                                                                <div class="col-sm-3 pull-left text-left">{{item.volunteerType}}</div>
+                                                                <div class="col-sm-3 pull-left text-left">
+                                                                        {{item.volunteerType}}</div>
                                                         </div>
                                                         <div class="row ">
                                                                 <div class="col-sm-2 pull-right">:עיסוק</div>
-                                                                <div class="col-sm-4 pull-left text-left">{{item.job}}</div>
+                                                                <div class="col-sm-4 pull-left text-left">{{item.job}}
+                                                                </div>
                                                         </div>
                                                         <div class="row ">
                                                                 <div class="col-sm-3 pull-right">:ברשותו רכב</div>
@@ -116,9 +132,11 @@
                                                                 </div>
                                                         </div>
                                                         <div class="row ">
-                                                                <div class="col-sm-5 pull-right">:האם הוא מעלה חיות ברכב</div>
+                                                                <div class="col-sm-5 pull-right">:האם הוא מעלה חיות ברכב
+                                                                </div>
                                                                 <div class="col-sm-1 pull-left text-left">
-                                                                        <div *ngIf="item.agreeToLeft;else notagree">yes</div>
+                                                                        <div *ngIf="item.agreeToLeft;else notagree">yes
+                                                                        </div>
                                                                         <ng-template #notagree>no</ng-template>
                                                                 </div>
                                                         </div>
@@ -129,13 +147,20 @@
                                                 <div class="col-sm-3 pull-left">
                                                         <div class="row text-center">ימים הוא יכול להתנדב</div>
                                                         <hr>
-                                                        <div *ngIf="item.freeDays.sunday" class="col-sm-12 text-center">ראשון</div>
-                                                        <div *ngIf="item.freeDays.monday" class="col-sm-12 text-center">שני</div>
-                                                        <div *ngIf="item.freeDays.tuesday" class="col-sm-12 text-center">שלישי</div>
-                                                        <div *ngIf="item.freeDays.wednesday" class="col-sm-12 text-center">רביעי</div>
-                                                        <div *ngIf="item.freeDays.thursday" class="col-sm-12 text-center">חמישי</div>
-                                                        <div *ngIf="item.freeDays.friday" class="col-sm-12 text-center">שישי</div>
-                                                        <div *ngIf="item.freeDays.saturday" class="col-sm-12 text-center">שבת</div>
+                                                        <div *ngIf="item.freeDays.sunday" class="col-sm-12 text-center">
+                                                                ראשון</div>
+                                                        <div *ngIf="item.freeDays.monday" class="col-sm-12 text-center">
+                                                                שני</div>
+                                                        <div *ngIf="item.freeDays.tuesday"
+                                                                class="col-sm-12 text-center">שלישי</div>
+                                                        <div *ngIf="item.freeDays.wednesday"
+                                                                class="col-sm-12 text-center">רביעי</div>
+                                                        <div *ngIf="item.freeDays.thursday"
+                                                                class="col-sm-12 text-center">חמישי</div>
+                                                        <div *ngIf="item.freeDays.friday" class="col-sm-12 text-center">
+                                                                שישי</div>
+                                                        <div *ngIf="item.freeDays.saturday"
+                                                                class="col-sm-12 text-center">שבת</div>
 
                                                 </div>
                                         </div>
@@ -144,10 +169,14 @@
                                 <div class="row">
                                         <div class="col-sm-12">
 
-                                                <button type="button" class="btn btn-warning" data-toggle="modal" (click)="volunteerForEdit(item,hideEditeButton)">עדכן</button>
+                                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                        (click)="volunteerForEdit(item,hideEditeButton)">עדכן</button>
 
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" (click)="setDeletedVolunteer(item)" data-target="#exampleModalCenter">מחק</button>
-                                                <button type="button" #hideEditeButton class="invisible" data-toggle="modal" data-target="#editModal">עדכן</button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                        (click)="setDeletedVolunteer(item)"
+                                                        data-target="#exampleModalCenter">מחק</button>
+                                                <button type="button" #hideEditeButton class="invisible"
+                                                        data-toggle="modal" data-target="#editModal">עדכן</button>
                                         </div>
                                 </div>
 
@@ -156,15 +185,15 @@
                         </mat-expansion-panel>
                 </mat-accordion>
 
-
-                <p class="text-muted pull-left">page: {{eventService.CurrentPageNumber+1}}</p>
+                <p></p>
+                <p class="text-muted pull-left" style="background-color: white">page: {{eventService.CurrentPageNumber+1}}</p>
 
 
         </div>
 
 </div>
-<div *ngIf="!eventService.isEmpty" class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
+<div *ngIf="!eventService.isEmpty" class="modal fade" id="imageModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                         <div class="modal-body">
@@ -173,7 +202,8 @@
                         <div class="modal-footer">
                                 <br>
                                 <div class="row text-center">
-                                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+                                        <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                                data-target="#collapseExample" aria-expanded="false"
                                                 aria-controls="collapseExample">
                                                 החלף תמונה
                                         </button>
@@ -184,8 +214,9 @@
                                         <div class="card card-body">
 
 
-                                                <image-upload (change)="image($event)" [buttonCaption]="'בחר תמונה'" [fileTooLargeMessage]="'Image too large!'" [dropBoxMessage]="'גרור את התמונה פה'"
-                                                        #jj></image-upload>
+                                                <image-upload (change)="image($event)" [buttonCaption]="'בחר תמונה'"
+                                                        [fileTooLargeMessage]="'Image too large!'"
+                                                        [dropBoxMessage]="'גרור את התמונה פה'" #jj></image-upload>
 
                                         </div>
                                 </div>
@@ -194,7 +225,8 @@
         </div>
 </div>
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
 
@@ -203,13 +235,14 @@
                         </div>
                         <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">לא</button>
-                                <button type="button" class="btn btn-primary" (click)="removeVolunteer()" data-dismiss="modal">כן</button>
+                                <button type="button" class="btn btn-primary" (click)="removeVolunteer()"
+                                        data-dismiss="modal">כן</button>
                         </div>
                 </div>
         </div>
 </div>
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
-        #closeAddExpenseModal>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" #closeAddExpenseModal>
         <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                         <div class="modal-body">
@@ -222,16 +255,23 @@
 
 
                                                 <hr>
-                                                <form class="form-horizontal" (ngSubmit)="onSubmit(f)" #f="ngForm" method="post" name="signup" id="signup" enctype="multipart/form-data">
+                                                <form class="form-horizontal" (ngSubmit)="onSubmit(f)" #f="ngForm"
+                                                        method="post" name="signup" id="signup"
+                                                        enctype="multipart/form-data">
                                                         <div class="form-group">
 
 
                                                                 <div class="col-md-8 col-md-offset-3">
                                                                         <div class="input-group">
-                                                                                <input type="text" class="form-control text-right" name="name" id="nameid" required ngModel [ngModel]="editingVolunteer.name"
+                                                                                <input type="text"
+                                                                                        class="form-control text-right"
+                                                                                        name="name" id="nameid" required
+                                                                                        ngModel
+                                                                                        [ngModel]="editingVolunteer.name"
                                                                                         value="">
                                                                                 <span class="input-group-addon">
-                                                                                        <i class="	glyphicon glyphicon-user"></i>
+                                                                                        <i
+                                                                                                class="	glyphicon glyphicon-user"></i>
                                                                                 </span>
                                                                         </div>
                                                                 </div>
@@ -241,11 +281,15 @@
 
                                                                 <div class="col-md-8 col-md-offset-3">
                                                                         <div class="input-group">
-                                                                                <input type="text" required ngModel class="form-control text-right" name="ID" id="nameid" [ngModel]="editingVolunteer.id"
+                                                                                <input type="text" required ngModel
+                                                                                        class="form-control text-right"
+                                                                                        name="ID" id="nameid"
+                                                                                        [ngModel]="editingVolunteer.id"
                                                                                         value="">
 
                                                                                 <span class="input-group-addon">
-                                                                                        <i class="glyphicon glyphicon-user"></i>
+                                                                                        <i
+                                                                                                class="glyphicon glyphicon-user"></i>
                                                                                 </span>
                                                                         </div>
 
@@ -255,15 +299,23 @@
 
                                                                 <div class="col-md-8 col-md-offset-3">
                                                                         <div class="input-group">
-                                                                                <input type="email" email ngModel required class="form-control text-right" #email="ngModel" name="email" id="emailid" [ngModel]="editingVolunteer.email"
+                                                                                <input type="email" email ngModel
+                                                                                        required
+                                                                                        class="form-control text-right"
+                                                                                        #email="ngModel" name="email"
+                                                                                        id="emailid"
+                                                                                        [ngModel]="editingVolunteer.email"
                                                                                         value="">
                                                                                 <span class="input-group-addon">
-                                                                                        <i class="glyphicon glyphicon-envelope"></i>
+                                                                                        <i
+                                                                                                class="glyphicon glyphicon-envelope"></i>
                                                                                 </span>
 
 
                                                                         </div>
-                                                                        <span class="help-block pull-right" *ngIf="!email.valid && email.touched">דוא"ל לא תקין</span>
+                                                                        <span class="help-block pull-right"
+                                                                                *ngIf="!email.valid && email.touched">דוא"ל
+                                                                                לא תקין</span>
                                                                 </div>
                                                         </div>
 
@@ -283,10 +335,14 @@
 
                                                                 <div class="col-md-8 col-md-offset-3">
                                                                         <div class="input-group">
-                                                                                <input type="text" required ngModel class="form-control text-right" name="address" id="mem_name" [ngModel]="editingVolunteer.address"
+                                                                                <input type="text" required ngModel
+                                                                                        class="form-control text-right"
+                                                                                        name="address" id="mem_name"
+                                                                                        [ngModel]="editingVolunteer.address"
                                                                                         value="">
                                                                                 <span class="input-group-addon">
-                                                                                        <i class="	glyphicon glyphicon-road"></i>
+                                                                                        <i
+                                                                                                class="	glyphicon glyphicon-road"></i>
                                                                                 </span>
                                                                         </div>
                                                                 </div>
@@ -295,14 +351,27 @@
 
                                                                 <div class="col-md-8 col-md-offset-3 ">
                                                                         <div class="input-group">
-                                                                                <input type="text" class="form-control text-right" required ngModel name="phonenum" id="PhoneNumber" [ngModel]="editingVolunteer.telephone"
+                                                                                <input type="text"
+                                                                                        class="form-control text-right"
+                                                                                        required ngModel name="phonenum"
+                                                                                        id="PhoneNumber"
+                                                                                        [ngModel]="editingVolunteer.telephone"
                                                                                         value="">
-                                                                                <input type="text" class="form-control text-right" required ngModel name="homenum" id="HomeNumber" [ngModel]="editingVolunteer.homePhone"
+                                                                                <input type="text"
+                                                                                        class="form-control text-right"
+                                                                                        required ngModel name="homenum"
+                                                                                        id="HomeNumber"
+                                                                                        [ngModel]="editingVolunteer.homePhone"
                                                                                         value="">
-                                                                                <input type="text" class="form-control text-right" ngModel name="extranum" id="ExtraNumber" [ngModel]="editingVolunteer.phone"
+                                                                                <input type="text"
+                                                                                        class="form-control text-right"
+                                                                                        ngModel name="extranum"
+                                                                                        id="ExtraNumber"
+                                                                                        [ngModel]="editingVolunteer.phone"
                                                                                         value="">
                                                                                 <span class="input-group-addon">
-                                                                                        <i class="glyphicon glyphicon-phone"></i>
+                                                                                        <i
+                                                                                                class="glyphicon glyphicon-phone"></i>
                                                                                 </span>
 
                                                                         </div>
@@ -313,10 +382,14 @@
 
                                                                 <div class="col-md-8 col-md-offset-3">
                                                                         <div class="input-group">
-                                                                                <input type="text" required ngModel class="form-control text-right" name="job" id="job" [ngModel]="editingVolunteer.job"
+                                                                                <input type="text" required ngModel
+                                                                                        class="form-control text-right"
+                                                                                        name="job" id="job"
+                                                                                        [ngModel]="editingVolunteer.job"
                                                                                         value="">
                                                                                 <span class="input-group-addon">
-                                                                                        <i class="	glyphicon glyphicon-briefcase"></i>
+                                                                                        <i
+                                                                                                class="	glyphicon glyphicon-briefcase"></i>
                                                                                 </span>
                                                                         </div>
                                                                 </div>
@@ -326,7 +399,10 @@
 
                                                                 <div class="col-md-8 col-md-offset-3">
 
-                                                                        <input type="text" required ngModel class="form-control text-right" name="type" id="type" [ngModel]="editingVolunteer.volunteerType"
+                                                                        <input type="text" required ngModel
+                                                                                class="form-control text-right"
+                                                                                name="type" id="type"
+                                                                                [ngModel]="editingVolunteer.volunteerType"
                                                                                 value="">
 
                                                                 </div>
@@ -365,12 +441,24 @@
 
                                                                 <div class="col-md-8">
 
-                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.sunday" #sunday>ראשון</mat-checkbox>
-                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.monday" #monday>שני</mat-checkbox>
-                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.tuesday" #tuesday>שלישי</mat-checkbox>
-                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.wednesday" #wednesday>רביעי</mat-checkbox>
-                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.thursday" #thursday>חמישי</mat-checkbox>
-                                                                        <mat-checkbox [checked]="editingVolunteer.freeDays.friday" #friday>שישי</mat-checkbox>
+                                                                        <mat-checkbox
+                                                                                [checked]="editingVolunteer.freeDays.sunday"
+                                                                                #sunday>ראשון</mat-checkbox>
+                                                                        <mat-checkbox
+                                                                                [checked]="editingVolunteer.freeDays.monday"
+                                                                                #monday>שני</mat-checkbox>
+                                                                        <mat-checkbox
+                                                                                [checked]="editingVolunteer.freeDays.tuesday"
+                                                                                #tuesday>שלישי</mat-checkbox>
+                                                                        <mat-checkbox
+                                                                                [checked]="editingVolunteer.freeDays.wednesday"
+                                                                                #wednesday>רביעי</mat-checkbox>
+                                                                        <mat-checkbox
+                                                                                [checked]="editingVolunteer.freeDays.thursday"
+                                                                                #thursday>חמישי</mat-checkbox>
+                                                                        <mat-checkbox
+                                                                                [checked]="editingVolunteer.freeDays.friday"
+                                                                                #friday>שישי</mat-checkbox>
 
                                                                 </div>
                                                         </div>
@@ -379,10 +467,16 @@
 
                                                                 <div class="col-md-8  text-right">
                                                                         <label>
-                                                                                <input name="type" type="radio" #car value="yes" [checked]="editingVolunteer.hasCar" #car> כן </label>
+                                                                                <input name="type" type="radio" #car
+                                                                                        value="yes"
+                                                                                        [checked]="editingVolunteer.hasCar"
+                                                                                        #car> כן </label>
 
                                                                         <label>
-                                                                                <input name="type" type="radio" value="no" [checked]="!editingVolunteer.hasCar"> לא </label>
+                                                                                <input name="type" type="radio"
+                                                                                        value="no"
+                                                                                        [checked]="!editingVolunteer.hasCar">
+                                                                                לא </label>
                                                                 </div>
                                                                 <label class="control-label col-md-4">*ברושתו רכב
                                                                         <span class="text-danger"></span>
@@ -392,12 +486,19 @@
 
                                                                 <div class="col-md-8 text-right">
                                                                         <label>
-                                                                                <input name="incar" type="radio" #incar value="yes" [checked]="editingVolunteer.agreeToLeft" #incar> כן </label>
+                                                                                <input name="incar" type="radio" #incar
+                                                                                        value="yes"
+                                                                                        [checked]="editingVolunteer.agreeToLeft"
+                                                                                        #incar> כן </label>
 
                                                                         <label>
-                                                                                <input name="incar" type="radio" value="no" [checked]="!editingVolunteer.agreeToLeft"> לא </label>
+                                                                                <input name="incar" type="radio"
+                                                                                        value="no"
+                                                                                        [checked]="!editingVolunteer.agreeToLeft">
+                                                                                לא </label>
                                                                 </div>
-                                                                <label class="control-label col-md-4">*האם הוא מכניס חיות ברכב
+                                                                <label class="control-label col-md-4">*האם הוא מכניס
+                                                                        חיות ברכב
                                                                         <span class="text-danger"></span>
                                                                 </label>
                                                         </div>
@@ -408,8 +509,10 @@
 
                                                         <div class="modal-footer ">
                                                                 <div class="row text-center">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" #back>חזור</button>
-                                                                        <button type="submit" class="btn btn-primary" (click)="days(sunday, monday,tuesday, wednesday, thursday, friday, car.checked,incar.checked,back)">שמור</button>
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                                data-dismiss="modal" #back>חזור</button>
+                                                                        <button type="submit" class="btn btn-primary"
+                                                                                (click)="days(sunday, monday,tuesday, wednesday, thursday, friday, car.checked,incar.checked,back)">שמור</button>
                                                                 </div>
                                                         </div>
                                                 </form>
@@ -431,7 +534,7 @@
                 <li [class]="eventService.pdisabled" (click)="eventService.ChangePage(eventService.previousPage)">
                         <a>Previous</a>
                 </li>
-                
+
                 <ul class="pagination">
                         <li *ngFor="let item of eventService.Pages;index as i" (click)="eventService.ChangePage(i)">
                                 <a>{{eventService.Pages[i]}}</a>
