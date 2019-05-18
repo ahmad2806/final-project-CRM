@@ -24,7 +24,7 @@ export class FilterPipe implements PipeTransform {
             if (next.name.includes(query)) { prev.push(next); }
           }
           else if (searchFor == "event-list") {
-            if (next.date && (new Date(next.date).toDateString()) == (new Date(query).toDateString())) {console.log(prev.push(next); }
+            if (next.date && (new Date(next.date).toDateString()) == (new Date(query).toDateString())) {prev.push(next); }
             
             else if (next.name && next.name.includes(query)) { 
               console.log(next, "second") 
