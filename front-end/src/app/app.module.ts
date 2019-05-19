@@ -49,6 +49,7 @@ import { Ng2ImgMaxModule } from 'ng2-img-max';
 
 import { ServerService } from './server.service';
 import { HttpModule } from '@angular/http';
+import { DatePipe } from '@angular/common';
 const appRoutes: Routes = [
   {
     path: 'Header', canActivate: [AuthGuard], component: HeaderComponent, children: [
@@ -129,7 +130,7 @@ const appRoutes: Routes = [
     VolunteersService,
     AppboolService, EventService,
     AuthService, AuthGuard, DonorService,
-    ServerService,
+    ServerService,DatePipe
   ],
   bootstrap: [AppComponent]
 

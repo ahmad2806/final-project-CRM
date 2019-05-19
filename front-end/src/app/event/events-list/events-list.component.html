@@ -1,5 +1,8 @@
 <div class="container">
-
+    <div class="row" *ngIf="router.url == '/Header/main'">
+        <br>
+        <br>
+    </div>
 
     <div class="col-xs-12">
         <mat-toolbar>
@@ -116,22 +119,22 @@
     </div>
 </div>
 
-<div class="container" >
-        <ul class="pager">
-                <li [class]="eventService.pdisabled" (click)="eventService.ChangePage(eventService.previousPage)">
-                        <a>Previous</a>
-                </li>
-                
-                <ul class="pagination">
-                        <li *ngFor="let item of eventService.Pages;index as i" (click)="eventService.ChangePage(i)">
-                                <a>{{eventService.Pages[i]}}</a>
-                        </li>
-                </ul>
+<div class="container">
+    <ul class="pager">
+        <li [class]="eventService.pdisabled" (click)="eventService.ChangePage(eventService.previousPage)">
+            <a>Previous</a>
+        </li>
 
-                <li [class]="eventService.ndisabled " (click)="eventService.ChangePage(eventService.nextPage)">
-                        <a>Next</a>
-                </li>
+        <ul class="pagination">
+            <li *ngFor="let item of eventService.Pages;index as i" (click)="eventService.ChangePage(i)">
+                <a>{{eventService.Pages[i]}}</a>
+            </li>
         </ul>
+
+        <li [class]="eventService.ndisabled " (click)="eventService.ChangePage(eventService.nextPage)">
+            <a>Next</a>
+        </li>
+    </ul>
 </div>
 
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"

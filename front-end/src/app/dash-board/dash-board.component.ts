@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { EventService } from '../event/event.service';
 import { UserService } from '../users/user.service';
+import { DatePipe } from '@angular/common';
 
 
 // import { DatePipe } from '@angular/common';
@@ -18,7 +19,7 @@ export class DashBoardComponent implements OnInit {
   @Input() EventType: string = "";
 
 
-  constructor(private events: EventService, private userService: UserService) {
+  constructor(private events: EventService, private userService: UserService, private datePipe:DatePipe) {
   }
   ngOnInit() {
     let today = new Date();
@@ -37,9 +38,9 @@ export class DashBoardComponent implements OnInit {
     for (let index = 0; index < this.events.generalEvents.length; index++) {
       let d1 = new Date(today);
       let d2 = new Date(this.events.generalEvents[index].date);
-
+      
       // Check if the dates are equal
-      let same = d1.getTime() === d2.getTime();
+      let same = this.datePipe.transform(d1, 'yyyy-MM-dd') === this.datePipe.transform(d2, 'yyyy-MM-dd');
       if (same) this.events.inProgressEvents.push(this.events.generalEvents[index]);
 
       // Check if the first is greater than second

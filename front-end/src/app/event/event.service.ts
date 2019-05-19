@@ -45,7 +45,12 @@ export class EventService {
   constructor() {
 
   }
-  
+  public add(event: EventModel, type) {
+    if (type == "donor")
+      this.donorsEvents.push(event);
+    else
+      this.volunteersEvents.push(event);
+  }
 
   public get Clicked() {
     return this.clicked;

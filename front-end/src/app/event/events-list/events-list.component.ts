@@ -57,7 +57,7 @@ export class EventsListComponent implements OnInit, DoCheck {
     }
     this.eventService.pageDivider(this.eventService.generalEvents);
   }
-
+  // TODO editing the arrived and didnt arrived arrays needs to be sent to the server also
   addToList(item, i) {
     const index = this.eventService.generalEvents[i].didntArrived.indexOf(item);
     console.log(index, "addToList")
