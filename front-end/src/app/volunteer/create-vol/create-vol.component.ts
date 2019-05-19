@@ -38,7 +38,6 @@ export class CreateVolComponent implements OnInit {
       result => {
         this.volunteerIMG = result;
         this.getImagePreview(this.volunteerIMG);
-        // console.log(this.volunteerIMG);
       },
       error => {
         console.log('😢 Oh no!', error);
@@ -61,8 +60,7 @@ export class CreateVolComponent implements OnInit {
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.volunteerIMG = reader.result;
-      console.log(this.volunteerIMG);
+      this.volunteerIMG = reader.result.toString();
     };
   }
 
