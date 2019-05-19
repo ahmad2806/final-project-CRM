@@ -1,7 +1,9 @@
 <div class="container">
         <div class="col-xs-12">
                 <mat-toolbar>
-
+                        <button type="button" data-toggle="modal" data-target="#addModal"
+                                class="btn btn-primary col-xs-1 glyphicon glyphicon-plus">
+                        </button>
                         <div class="all-Div col-xs-4">
                                 <div class=" changethisone">
                                         <div class=" input-group changethisone">
@@ -91,7 +93,7 @@
                                                         <div class="row ">
                                                                 <div class="col-sm-3 pull-right">:תאריך לידה</div>
                                                                 <div class="col-sm-3 pull-left text-left">
-                                                                        {{item.birthday | date:"dd/MM/yyyy"}}</div>
+                                                                        {{item.birthday | date:'dd/MM/yyyy'}}</div>
                                                         </div>
                                                         <div class="row ">
                                                                 <div class="col-sm-3 pull-right">:טל נוסף</div>
@@ -186,7 +188,8 @@
                 </mat-accordion>
 
                 <p></p>
-                <p class="text-muted pull-left" style="background-color: white">page: {{eventService.CurrentPageNumber+1}}</p>
+                <p class="text-muted pull-left" style="background-color: white">page:
+                        {{eventService.CurrentPageNumber+1}}</p>
 
 
         </div>
@@ -250,7 +253,7 @@
                                 <!------ Include the above in your HEAD tag ---------->
 
 
-                                <div class="row " *ngIf="noVolunteers">
+                                <div class="row " *ngIf="!eventService.isEmpty">
                                         <div class="col-sm-12">
 
 
@@ -319,17 +322,21 @@
                                                                 </div>
                                                         </div>
 
-                                                        <!-- <div class="form-group">
-                         
-                                                <div class="col-xs-8 col-md-offset-3">
-                                                        <div class="input-group">
-                                                                <input type="date" required  ngModel name="date" [ngModel]="editingVolunteer.birthday"  class="date-time form-control pull-right col-xs-12 text-right">
-                                                                <span class="input-group-addon">
-                                                                        <i class="	glyphicon glyphicon-calendar"></i>
-                                                                </span>
+                                                        <div class="form-group">
+
+                                                                <div class="col-xs-8 col-md-offset-3">
+                                                                        <div class="input-group">
+                                                                                <input type="date" required ngModel
+                                                                                        name="birthday"
+                                                                                        [ngModel]="editingVolunteer.birthday"
+                                                                                        class="date-time form-control pull-right col-xs-12 text-right">
+                                                                                <span class="input-group-addon">
+                                                                                        <i
+                                                                                                class="	glyphicon glyphicon-calendar"></i>
+                                                                                </span>
+                                                                        </div>
+                                                                </div>
                                                         </div>
-                                                </div>
-                                        </div> -->
 
                                                         <div class="form-group">
 
@@ -355,7 +362,7 @@
                                                                                         class="form-control text-right"
                                                                                         required ngModel name="phonenum"
                                                                                         id="PhoneNumber"
-                                                                                        [ngModel]="editingVolunteer.telephone"
+                                                                                        [ngModel]="editingVolunteer.telePhone"
                                                                                         value="">
                                                                                 <input type="text"
                                                                                         class="form-control text-right"
@@ -463,9 +470,8 @@
                                                                 </div>
                                                         </div>
 
-                                                        <div class="form-group">
-
-                                                                <div class="col-md-8  text-right">
+                                                        <div class="form-group text-right">
+                                                                <div class="col-xs-8">
                                                                         <label>
                                                                                 <input name="type" type="radio" #car
                                                                                         value="yes"
@@ -478,13 +484,15 @@
                                                                                         [checked]="!editingVolunteer.hasCar">
                                                                                 לא </label>
                                                                 </div>
-                                                                <label class="control-label col-md-4">*ברושתו רכב
+                                                                <label class="control-label col-xs-4">*ברושתו
+                                                                        רכב
                                                                         <span class="text-danger"></span>
                                                                 </label>
-                                                        </div>
-                                                        <div class="form-group">
 
-                                                                <div class="col-md-8 text-right">
+                                                        </div>
+                                                        <div class="form-group text-right">
+
+                                                                <div class="col-xs-8 ">
                                                                         <label>
                                                                                 <input name="incar" type="radio" #incar
                                                                                         value="yes"
@@ -497,7 +505,7 @@
                                                                                         [checked]="!editingVolunteer.agreeToLeft">
                                                                                 לא </label>
                                                                 </div>
-                                                                <label class="control-label col-md-4">*האם הוא מכניס
+                                                                <label class="control-label col-xs-4">*האם הוא מכניס
                                                                         חיות ברכב
                                                                         <span class="text-danger"></span>
                                                                 </label>
@@ -545,4 +553,15 @@
                         <a>Next</a>
                 </li>
         </ul>
+</div>
+
+
+<div class="modal" id="addModal" tabindex="-1" role="dialog" dir="rtl">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+
+                <div class="modal-body">
+                        <app-create-vol></app-create-vol>
+                </div>
+
+        </div>
 </div>
