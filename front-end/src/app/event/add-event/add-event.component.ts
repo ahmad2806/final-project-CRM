@@ -29,6 +29,7 @@ export class AddEventComponent implements OnInit {
   tempArr = [];
 
   constructor(private volunteerService: VolunteersService, private eventService: EventService, private router: Router, private donors: DonorService, private serverService: ServerService) {
+    
     eventService.relatedTo = this.relatedTo;
 
     if (this.router.url == "/Header/donor/donorEvent") {
@@ -57,11 +58,18 @@ export class AddEventComponent implements OnInit {
 
   onAddEvent(dis) {
 
+    for (let i = 0; i < this.relatedTo.length; i++) {
+      this.relatedTo[i] = (({ name, id }) => ({ name, id }))(this.relatedTo[i]);
+    }
+    
     const eventName = this.nameInputRef.nativeElement.value;
     const eventDate = this.dateInputRef.nativeElement.value;
     let d = new Date(eventDate);
     const eventDescription = this.desInputRef.nativeElement.value;
-    if (eventName == "" || this.relatedTo.length == 0) {
+
+
+    
+    if (eventName == "" || this.relatedTo.length == 0 || d.toString() == "Invalid Date") {
       alert("תשלים את הנתונים הנדרשים");
     }
     else {
@@ -71,12 +79,13 @@ export class AddEventComponent implements OnInit {
         this.modelType = 'volunteer-Model';
       }
       const eventAdded = new EventModel(eventName, this.modelType, d, eventDescription, this.relatedTo, this.arrived, this.relatedTo);
-      if (this.router.url == "/Header/donor/donorEvent") {
-        for (let i = 0; i < this.relatedTo.length; i++) {
-          this.relatedTo[i].hisEvent.push(eventAdded);
-        }
+      // TODO person Events
+      // if (this.router.url == "/Header/donor/donorEvent") {
+      //   for (let i = 0; i < this.relatedTo.length; i++) {
+      //     this.relatedTo[i].hisEvent.push(eventAdded);
+      //   }
 
-      }
+      // }
       if (this.router.url != "/Header/donor/donorEvent") {
         // for (let i = 0; i < this.relatedTo.length; i++) {
         //   this.relatedTo[i].myEvents.push(eventAdded);
@@ -87,15 +96,18 @@ export class AddEventComponent implements OnInit {
         this.eventService.add(eventAdded, "donor");
       }
  
-
       this.serverService.addNewEvent(eventAdded)
-        .subscribe((res) => {
-          
+      .subscribe((res) => {
         }, (e) => alert(e))
-
       dis.click();
     }
+    this.clearInputs();
 
+  }
+  clearInputs(){
+    this.nameInputRef.nativeElement.value = '';
+    this.dateInputRef.nativeElement.value = '';
+    this.desInputRef.nativeElement.value = '';
   }
 
 

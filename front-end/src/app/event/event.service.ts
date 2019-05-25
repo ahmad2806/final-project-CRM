@@ -50,6 +50,7 @@ export class EventService {
       this.donorsEvents.push(event);
     else
       this.volunteersEvents.push(event);
+    this.elementsToShow.push(event)
   }
 
   public get Clicked() {

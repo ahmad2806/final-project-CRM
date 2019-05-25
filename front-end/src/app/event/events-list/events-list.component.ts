@@ -59,17 +59,21 @@ export class EventsListComponent implements OnInit, DoCheck {
   }
   // TODO editing the arrived and didnt arrived arrays needs to be sent to the server also
   addToList(item, i) {
-    const index = this.eventService.generalEvents[i].didntArrived.indexOf(item);
+    
+    const index = this.eventService.elementsToShow[i].didntArrived.indexOf(item);
     console.log(index, "addToList")
-    this.eventService.generalEvents[i].arrived.push(this.eventService.generalEvents[i].didntArrived[index]);
-    this.eventService.generalEvents[i].didntArrived.splice(index, 1);
+    console.log(this.eventService.elementsToShow[i], "addToList")
+    console.log(i, "addToList")
+    console.log(item, "addToList")
+    this.eventService.elementsToShow[i].arrived.push(this.eventService.generalEvents[i].didntArrived[index]);
+    this.eventService.elementsToShow[i].didntArrived.splice(index, 1);
     
   }
   delFromList(item, i) {
-    const index = this.eventService.generalEvents[i].arrived.indexOf(item);
+    const index = this.eventService.elementsToShow[i].arrived.indexOf(item);
     console.log(index, "deletFrom")
-    this.eventService.generalEvents[i].didntArrived.push(this.eventService.generalEvents[i].arrived[index]);
-    this.eventService.generalEvents[i].arrived.splice(index, 1);
+    this.eventService.elementsToShow[i].didntArrived.push(this.eventService.elementsToShow[i].arrived[index]);
+    this.eventService.elementsToShow[i].arrived.splice(index, 1);
   }
   
   addToRelativeList(item, i) {
@@ -91,7 +95,7 @@ export class EventsListComponent implements OnInit, DoCheck {
 
   arrayOfPersons(i) {
     this.i = i;
-    let m_event = this.eventService.generalEvents[i] 
+    let m_event = this.eventService.elementsToShow[i] 
     this.name = m_event.name;
     this.m_date = m_event.date;
     this.description = m_event.description;
@@ -130,14 +134,14 @@ export class EventsListComponent implements OnInit, DoCheck {
     }
     else {
       this.dismissModal = true;
-      this.eventService.generalEvents[i].name = eventName;
-      this.eventService.generalEvents[i].date = eventDate;
-      this.eventService.generalEvents[i].description = eventDescription;
+      this.eventService.elementsToShow[i].name = eventName;
+      this.eventService.elementsToShow[i].date = eventDate;
+      this.eventService.elementsToShow[i].description = eventDescription;
       // this.eventService.generalEvents[i].type = this.modelType;
-      this.eventService.generalEvents[i].relativeTo = this.m_relatedTo;
-      this.eventService.generalEvents[i].didntArrived = this.m_relatedTo
+      this.eventService.elementsToShow[i].relativeTo = this.m_relatedTo;
+      this.eventService.elementsToShow[i].didntArrived = this.m_relatedTo
 
-      this.serverService.editEvent(this.eventService.generalEvents[i])
+      this.serverService.editEvent(this.eventService.elementsToShow[i])
         .subscribe((res) => {
         }, (e) => alert(e));
 
