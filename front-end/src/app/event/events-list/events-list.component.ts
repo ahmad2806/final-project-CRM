@@ -18,6 +18,7 @@ export class EventsListComponent implements OnInit, DoCheck {
   @ViewChild('descriptionInput') desInputRef: ElementRef;
   @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
   i = 0;
+  validToSave = []
   searchFor = "event-list"
   // for edit modal
   name = "";
@@ -38,7 +39,11 @@ export class EventsListComponent implements OnInit, DoCheck {
     private eventService: EventService,
     private router: Router,
     private donors: DonorService,
-    private serverService: ServerService) { }
+    private serverService: ServerService) {
+      for (let i = 0; i < this.eventService.generalEvents.length; ++i){
+        this.validToSave.push(false);
+      }
+     }
 
 
   ngDoCheck() {
@@ -59,17 +64,21 @@ export class EventsListComponent implements OnInit, DoCheck {
   }
   // TODO editing the arrived and didnt arrived arrays needs to be sent to the server also
   addToList(item, i) {
-    
     const index = this.eventService.elementsToShow[i].didntArrived.indexOf(item);
+    
+    this.validToSave[i] = true
     console.log(index, "addToList")
     console.log(this.eventService.elementsToShow[i], "addToList")
     console.log(i, "addToList")
     console.log(item, "addToList")
+    console.log(this.validToSave)
     this.eventService.elementsToShow[i].arrived.push(this.eventService.generalEvents[i].didntArrived[index]);
     this.eventService.elementsToShow[i].didntArrived.splice(index, 1);
     
   }
   delFromList(item, i) {
+    this.validToSave[i] = true
+    console.log(this.validToSave)
     const index = this.eventService.elementsToShow[i].arrived.indexOf(item);
     console.log(index, "deletFrom")
     this.eventService.elementsToShow[i].didntArrived.push(this.eventService.elementsToShow[i].arrived[index]);
@@ -162,5 +171,11 @@ export class EventsListComponent implements OnInit, DoCheck {
   //  TODO replace filter pipe with function to make it faster
   }
 
-
+  saveChanges(i){
+    console.log(this.eventService.elementsToShow[i])
+    this.serverService.editEvent(this.eventService.elementsToShow[i])
+    .subscribe((res) => {
+      this.validToSave[i] = false
+    }, (e) => alert(e));
+  }
 }

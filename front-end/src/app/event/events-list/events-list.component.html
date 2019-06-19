@@ -108,14 +108,16 @@
                     <button type="button" class="btn btn-warning" data-toggle="modal"
                         *ngIf="router.url != '/Header/main'" (click)="arrayOfPersons(i)"
                         data-target="#editModal">עדכן</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" (click)="index(i)"
+                        <button type="button" class="btn btn-danger" data-toggle="modal" (click)="index(i)"
                         data-target="#exampleModalCenter">מחק</button>
+                        <button type="button" class="btn btn-success pull-right" [disabled]="!validToSave[i]" (click)="saveChanges(i)"
+                        >שמור</button>
 
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
         <p></p>
-        <p class="text-muted pull-left" style="background-color: white">page: {{eventService.CurrentPageNumber+1}}</p>
+        <p class="text-muted pull-left" >page: {{eventService.CurrentPageNumber+1}}</p>
     </div>
 </div>
 
