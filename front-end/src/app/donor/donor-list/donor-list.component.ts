@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { Donate } from '../donate.model';
 import { EventModel } from '../../event/event.model';
 import { EventService } from '../../event/event.service';
+import { ServerService } from '../../server.service';
 
 //TODO
 @Component({
@@ -31,7 +32,7 @@ export class DonorListComponent implements OnInit {
   donate: Donate[] = [];
   newAmount;
   newAmountDate;
-  constructor(private donorList: DonorService, private donorEvents: EventService) {
+  constructor(private donorList: DonorService, private donorEvents: EventService, private serverService: ServerService) {
 
   }
 
@@ -40,32 +41,39 @@ export class DonorListComponent implements OnInit {
   }
 
   saveNewAmount() {
+    
     let newDonate: Donate = new Donate(0, new Date);
-    let date2 = new Date(this.newAmountDate);
 
     newDonate.donateAmount = this.newAmount;
     newDonate.donateDate = this.newAmountDate;
-    date2.setDate(date2.getDate() + 365);
+
+    this.donorEvents.addNewEvent(this.donorList.donor[this.i], this.newAmountDate)
 
     this.donorList.donor[this.i].donate.push(newDonate);
-    this.donorEvents.add(new EventModel("לתרום שוב", "donor-Model", date2, "האם רוצה לתרום שוב", [this.donorList.donor[this.i]], [], [this.donorList.donor[this.i]]), "donor");
-    this.donorList.donor[this.i].hisEvent.push(new EventModel("לתרום שוב", "donor-Model", date2, "האם רוצה לתרום שוב", [this.donorList.donor[this.i]], [], [this.donorList.donor[this.i]]));
-
     this.newAmount = "";
     this.newAmountDate = "";
   }
 
   edit(item) {
     this.i = this.donorList.donor.indexOf(item);
-    this.name = item.name;
-    this.id = item.id;
-    this.address = item.address;
-    this.phone = item.phone;
-    this.email = item.email;
-    this.extraphone = item.homePhone;
-    this.donate = item.donate;
+    if (item.name)
+      this.name = item.name;
 
-    this.description = item.description;
+    if (item.id)
+      this.id = item.id;
+    if (item.address)
+      this.address = item.address;
+    if (item.phone)
+      this.phone = item.phone;
+    if (item.email)
+      this.email = item.email;
+    if (item.homePhone)
+      this.extraphone = item.homePhone;
+    if (item.donate)
+      this.donate = item.donate;
+    if (item.description)
+
+      this.description = item.description;
     if (item.donorType === 'פרטי') {
       this.privateDonor = true;
       this.FoundationDonor = false;
@@ -78,8 +86,18 @@ export class DonorListComponent implements OnInit {
   }
   disc(item) {
     this.i = this.donorList.donor.indexOf(item)
-    this.description = item.description;
-    this.donate = item.donate
+    if (item.description){
+      console.log("inn");
+      this.description = item.description;
+    }
+    if (item.donate[0] != null){
+      
+      console.log("inn");
+      console.log(item.donate)
+      this.donate = item.donate
+    }
+    console.log(item.donate)
+    console.log(item.description)
   }
 
 
@@ -95,10 +113,17 @@ export class DonorListComponent implements OnInit {
     this.donorList.donor[this.i].address = this.address;
     this.donorList.donor[this.i].description = this.description;
 
+    this.serverService.editDonor(this.donorList.donor[this.i]).subscribe((res) => {
+      console.log(res.json());
+    }, (e) => alert(e));
+
   }
 
   delete(item) {
     const index = this.donorList.donor.indexOf(item);
+    this.serverService.deleteDonor(this.donorList.donor[index]).subscribe((res) => {
+      console.log(res.json())
+    }, (e) => alert(e))
     this.donorList.donor.splice(index, 1);
   }
 

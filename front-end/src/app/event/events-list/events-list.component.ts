@@ -27,7 +27,7 @@ export class EventsListComponent implements OnInit, DoCheck {
   // *************************
   modelType = '';
   dismissModal = false;
-  m_relatedTo: VolunteerModel[] = [];
+  m_relatedTo = [];
 
 
   private eventListOnSearch: EventModel[] = [];
@@ -162,8 +162,16 @@ export class EventsListComponent implements OnInit, DoCheck {
     this.i = i;
   }
   removeEvent() {
-    this.eventService.deletedEvents.push(this.eventService.generalEvents[this.i]);
-    this.eventService.generalEvents.splice(this.i, 1);
+    console.log("in remove event")
+    let m_index = (this.eventService.CurrentPageNumber * this.eventService.elementsPerPage) + this.i
+    this.eventService.deletedEvents.push(this.eventService.generalEvents[m_index]);
+    let event_to_remove = this.eventService.generalEvents[m_index];
+    this.eventService.generalEvents.splice(m_index, 1);
+    this.eventService.elementsToShow.splice(this.i, 1);
+    console.log(event_to_remove, this.i);
+    this.serverService.deleteEvent(event_to_remove).subscribe((res) => {
+        console.log(res.json())
+    }, (e) => alert(e));
     this.eventService.generalEvents = this.eventService.generalEvents;
   }
 

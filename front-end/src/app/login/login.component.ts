@@ -7,6 +7,7 @@ import { ServerService } from '../server.service';
 import { VolunteersService } from '../volunteer/volunteers.service';
 import { EventService } from '../event/event.service';
 import { DonorService } from '../donor/donor.service';
+import { EMLINK } from 'constants';
 
 //TODO
 @Component({
@@ -83,7 +84,13 @@ export class LoginComponent implements OnInit {
     });
     this.serverService.getAllDonors()
     .subscribe((res) => {
-      // console.log(res.json());
+      res.json().forEach(element => {
+        if (element.donorType == "פרטי"){
+          this.donorList.private_donor.push(element)
+        } else {
+          this.donorList.org_donor.push(element)
+        }
+      });
       this.donorList.donor.push.apply(this.donorList.donor, res.json())
     }, (e) => alert(e));
 

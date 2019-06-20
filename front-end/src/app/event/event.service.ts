@@ -4,6 +4,7 @@ import { VolunteerModel } from '../volunteer/volunteer.model';
 import { empty } from 'rxjs/Observer';
 import { FreeDayes } from '../volunteer/free-days.model';
 import { EventEmitter } from 'protractor';
+import { ServerService } from '../server.service';
 
 @Injectable()
 export class EventService {
@@ -42,7 +43,7 @@ export class EventService {
   isEmpty = false;
 
 
-  constructor() {
+  constructor(private serverService: ServerService) {
 
   }
   public add(event: EventModel, type) {
@@ -51,6 +52,25 @@ export class EventService {
     else
       this.volunteersEvents.push(event);
     this.elementsToShow.push(event)
+  }
+
+  public addNewEvent(donor, donation_date){
+    
+    let date2 = new Date(donation_date);
+    date2.setDate(date2.getDate() + 365);
+
+    console.log(donor);
+    let donor_to_add = {name: donor.name}
+    let m_new_event = new EventModel("לתרום שוב", "donor-Model", date2, "האם רוצה לתרום שוב", [donor_to_add], [], [donor_to_add])
+    console.log(m_new_event);    
+
+    this.add(m_new_event, "donor");
+    // maybe need to be moved
+    donor.hisEvent.push(m_new_event);
+
+    this.serverService.addNewEvent(m_new_event).subscribe((res) => {
+      console.log(res.json())
+    }, (e) => alert(e));
   }
 
   public get Clicked() {
