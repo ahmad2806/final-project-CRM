@@ -87,7 +87,7 @@ export class AddDonorComponent implements OnInit {
 
 
       this.serverService.addNewDonor(newDonor).subscribe((res) => {
-        this.donor.donor.push(res.json());
+        this.donor.donor.push(res.json().donor);
       }, (e) => alert(e));
       // this.newEvent.add(new EventModel("לתרום שוב", "donor-Model", new Date(2018, 0, 8), "האם רוצה לתרום שוב",[] , [],[]));	
 
