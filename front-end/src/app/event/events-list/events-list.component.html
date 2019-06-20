@@ -4,7 +4,7 @@
         <br>
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-xs-12" >
         <mat-toolbar>
             <button type="button" *ngIf="router.url != '/Header/main'" data-toggle="modal" data-target="#addModal"
                 class="btn btn-primary col-xs-1   	glyphicon glyphicon-plus"></button>
@@ -115,9 +115,9 @@
 
                 </div>
             </mat-expansion-panel>
+            <!-- <p class="text-muted pull-left" >page: {{eventService.CurrentPageNumber+1}}</p> -->
         </mat-accordion>
         <p></p>
-        <p class="text-muted pull-left" >page: {{eventService.CurrentPageNumber+1}}</p>
     </div>
 </div>
 
@@ -127,8 +127,8 @@
             <a>Previous</a>
         </li>
 
-        <ul class="pagination">
-            <li *ngFor="let item of eventService.Pages;index as i" (click)="eventService.ChangePage(i)">
+        <ul class="pagination custom_pegnation">
+            <li *ngFor="let item of eventService.Pages;index as i"  [ngClass] = "{'active':eventService.CurrentPageNumber == i}"(click)="eventService.ChangePage(i)" >
                 <a>{{eventService.Pages[i]}}</a>
             </li>
         </ul>
