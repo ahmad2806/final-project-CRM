@@ -44,7 +44,7 @@ export class UsersListComponent implements OnInit {
           } else {
             alert(`משתמש ${userToDelete} לא נמחק, נא לנסות שוב`)
           }
-        }, (e) => console.log(JSON.stringify(e, undefined, 2)));
+        }, (e) => alert(JSON.stringify(e, undefined, 2)));
     }
 
 

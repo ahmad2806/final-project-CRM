@@ -186,10 +186,10 @@
 
                         </mat-expansion-panel>
                 </mat-accordion>
-
+<!-- 
                 <p></p>
                 <p class="text-muted pull-left" style="background-color: white">page:
-                        {{eventService.CurrentPageNumber+1}}</p>
+                        {{eventService.CurrentPageNumber+1}}</p> -->
 
 
         </div>
@@ -543,8 +543,10 @@
                         <a>Previous</a>
                 </li>
 
-                <ul class="pagination">
-                        <li *ngFor="let item of eventService.Pages;index as i" (click)="eventService.ChangePage(i)">
+                <ul class="pagination custom_pegnation">
+                        <li *ngFor="let item of eventService.Pages;index as i"
+                                [ngClass]="{'active':eventService.CurrentPageNumber == i}"
+                                (click)="eventService.ChangePage(i)">
                                 <a>{{eventService.Pages[i]}}</a>
                         </li>
                 </ul>

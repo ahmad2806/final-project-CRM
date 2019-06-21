@@ -7,11 +7,11 @@
   <ul class="nav nav-pills">
 
     <li class="nav-item">
-      <a class="nav-link" (click)="onclick()">רשימת האירועים</a>
+      <a class="nav-link" [ngClass] = "{'active':eventService.clicked == 'mainList'}" (click)="onclick()">רשימת האירועים</a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="['/Header/volenteer/VolunteersList']">רשימת המתנדבים</a>
+      <a class="nav-link" [routerLink]="['/Header/volenteer/VolunteersList']" [ngClass] = "{'active':eventService.clicked == 'volunteer_list'}" (click)="change_color()">רשימת המתנדבים</a>
     </li>
   </ul>
   <br>

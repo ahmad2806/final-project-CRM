@@ -179,7 +179,7 @@ app.post('/event', (req, res) => {
 
 app.get('/donor/events', (req, res) => {
     Event.find({
-      type: 'donor-Model'
+      type: { $in: [ 'private-donor-Model', 'organization-donor-Model' ] } 
     }).then((events) => {
       if (events.length === 0) {
         res.status(404).send()

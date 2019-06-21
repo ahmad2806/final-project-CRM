@@ -73,6 +73,7 @@ export class DashBoardComponent implements OnInit {
       this.events.generalEvents = this.events.commingSoonEvents;
 
     this.events.pageDivider(this.events.generalEvents)
+
     this.m.nativeElement;
 
   }

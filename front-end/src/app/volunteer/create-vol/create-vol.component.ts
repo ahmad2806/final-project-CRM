@@ -40,7 +40,7 @@ export class CreateVolComponent implements OnInit {
         this.getImagePreview(this.volunteerIMG);
       },
       error => {
-        console.log('😢 Oh no!', error);
+        alert(`😢 Oh no! ${error}`);
       }
     );
 
@@ -52,7 +52,6 @@ export class CreateVolComponent implements OnInit {
     // }
 
     // reader.readAsDataURL(im.target.files[0]);
-    console.log(this.volunteerIMG);
 
   }
 
@@ -84,13 +83,15 @@ export class CreateVolComponent implements OnInit {
     this.volunteer = new VolunteerModel(form.value.name, form.value.ID, form.value.date
       , form.value.address, form.value.extranum, form.value.phonenum, form.value.homenum, form.value.email, form.value.type
       , this.week, this.car, this.incar, form.value.job, this.volunteerIMG, []);
-    this.volservice.add(this.volunteer);
-      console.log(this.volunteer.birthday)
-
-    this.serverService.addNewVolunteer(this.volunteer)
+      
+      
+      this.serverService.addNewVolunteer(this.volunteer)
       .subscribe((res) => {
-        this.router.navigate(['/Header/volenteer/VolunteersList']);
-      }, (e) => alert(e));
+        console.log(res.json())
+        this.volservice.add(res.json());
+      }, (e) => {
+        alert('תוודא שהמייל חוקי, מספר ת"ז לא תפוס, מספר טלפון 10 ספרות')
+      });
 
 
     // }else{

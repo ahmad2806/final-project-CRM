@@ -87,17 +87,12 @@ export class DonorListComponent implements OnInit {
   disc(item) {
     this.i = this.donorList.donor.indexOf(item)
     if (item.description){
-      console.log("inn");
       this.description = item.description;
     }
     if (item.donate[0] != null){
-      
-      console.log("inn");
-      console.log(item.donate)
       this.donate = item.donate
     }
-    console.log(item.donate)
-    console.log(item.description)
+
   }
 
 
@@ -114,7 +109,7 @@ export class DonorListComponent implements OnInit {
     this.donorList.donor[this.i].description = this.description;
 
     this.serverService.editDonor(this.donorList.donor[this.i]).subscribe((res) => {
-      console.log(res.json());
+      
     }, (e) => alert(e));
 
   }
@@ -122,7 +117,6 @@ export class DonorListComponent implements OnInit {
   delete(item) {
     const index = this.donorList.donor.indexOf(item);
     this.serverService.deleteDonor(this.donorList.donor[index]).subscribe((res) => {
-      console.log(res.json())
     }, (e) => alert(e))
     this.donorList.donor.splice(index, 1);
   }

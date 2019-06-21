@@ -1,3 +1,18 @@
 #button{
     cursor: pointer;
 }
+
+.nav{
+    float: right;
+}
+
+li{
+    cursor: pointer;
+}
+
+.active{
+    background-color: #f5f5f5;
+}
+.navlink:hover{
+    background-color: #f5f5f5;
+}

@@ -51,10 +51,10 @@ export class LoginComponent implements OnInit {
   }
   loadVolunteers() {
     this.serverService.getVolunteerEvents()
-    .subscribe((res) => {
-      this.eventService.volunteersEvents = [];
-      this.eventService.volunteersEvents.push.apply(this.eventService.volunteersEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
-    });
+      .subscribe((res) => {
+        this.eventService.volunteersEvents = [];
+        this.eventService.volunteersEvents.push.apply(this.eventService.volunteersEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
+      });
 
     this.serverService.getAllVolunteers()
       .subscribe((res) => {
@@ -76,23 +76,35 @@ export class LoginComponent implements OnInit {
         alert('error while fetching users');
       });
   }
-  loadDonors(){
+  loadDonors() {
     this.serverService.getDonorEvents()
-    .subscribe((res) => {
-      this.eventService.donorsEvents = [];
-      this.eventService.donorsEvents.push.apply(this.eventService.donorsEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
-    });
+      .subscribe((res) => {
+
+        this.eventService.donorsEvents = [];
+        let donorsEvents = res.json().events;
+
+        for (let i = 0; i < donorsEvents.length; ++i) {
+          
+          if (donorsEvents[i].type == this.eventService.privateDonorType) 
+            this.eventService.privateDonorEvents.push(donorsEvents[i])
+            
+            if (donorsEvents[i].type == this.eventService.organizationDonorType) 
+            this.eventService.donorsEvents.push(donorsEvents[i])
+          }
+        
+        // this.eventService.donorsEvents.push.apply(this.eventService.donorsEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
+      }, (e) => alert(e));
     this.serverService.getAllDonors()
-    .subscribe((res) => {
-      res.json().forEach(element => {
-        if (element.donorType == "פרטי"){
-          this.donorList.private_donor.push(element)
-        } else {
-          this.donorList.org_donor.push(element)
-        }
-      });
-      this.donorList.donor.push.apply(this.donorList.donor, res.json())
-    }, (e) => alert(e));
+      .subscribe((res) => {
+        res.json().forEach(element => {
+          if (element.donorType == "פרטי") {
+            this.donorList.private_donor.push(element)
+          } else {
+            this.donorList.org_donor.push(element)
+          }
+        });
+        this.donorList.donor.push.apply(this.donorList.donor, res.json())
+      }, (e) => alert(e));
 
   }
   onSubmit() {
@@ -125,7 +137,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["/Header/main"]);
           this.UserService.activeUser = res.json();
           this.auth.login();
-          
+
           if (this.UserService.activeUser.VolPer == true) {
             this.loadVolunteers()
           }

@@ -34,7 +34,6 @@
       if (this.volservice.volunteers.length > 0) {
         this.imageVolunteer = this.volservice.volunteers[0];
         this.editingVolunteer = this.volservice.volunteers[0];
-        this.eventService.pageDivider(this.volservice.volunteers)
       }
   
     }
@@ -58,7 +57,7 @@
           
         },
         error => {
-          console.log('😢 Oh no!', error);
+          alert(`😢 Oh no! ${error}`);
         }
       );
       
@@ -119,7 +118,7 @@
       this.editingVolunteer.job = form.value.job;
       this.editingVolunteer.email = form.value.email;
       this.editingVolunteer.volunteerType = form.value.type;
-      console.log(this.editingVolunteer)
+
       this.serverService.editVolunteer(this.volservice.volunteers[this.index])
   
         .subscribe((res) => {

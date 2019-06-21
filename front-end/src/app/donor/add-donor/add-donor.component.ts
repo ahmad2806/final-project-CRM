@@ -94,7 +94,7 @@ export class AddDonorComponent implements OnInit {
       this.reset();
       exit.click();
     }
-    console.log("out")
+
 
   }
 }

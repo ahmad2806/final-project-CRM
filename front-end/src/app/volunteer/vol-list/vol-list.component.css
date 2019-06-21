@@ -5,3 +5,31 @@
     width: 100px;
 }
 
+.pager {
+    margin: 0;
+    margin-right: 15px;
+    margin-left: 15px;
+    position: relative;
+    top: -10px;
+    border: none;
+    background: white;
+    border-radius: 0px 0px 10px 10px;
+}
+.active{
+    background:#ddd;
+}
+.pager li a
+{
+    border : none;
+}
+.custom_pegnation li a
+{
+    border-top: none;
+    border-bottom: none;
+    border-radius: 100px;
+    margin: 0px 10px;
+}
+.pagination {
+    margin: 0px;
+    padding: 0px;
+}

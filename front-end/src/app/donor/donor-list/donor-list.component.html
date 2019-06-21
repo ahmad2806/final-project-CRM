@@ -1,53 +1,68 @@
-<div class="container" dir="rtl">
-  <div class="row">
-    <div class="col-xs-4">
-      <button type="button" style="width: 50%;" data-toggle="modal" data-target="#add" class="btn btn-primary col-xs-2 glyphicon glyphicon-plus"></button>
-    </div>
+<div class="container">
+  <div class="div col-xs-12">
+    <mat-toolbar>
+      <button type="button" data-toggle="modal" data-target="#addModal"
+        class="btn btn-primary col-xs-1 glyphicon glyphicon-plus">
+      </button>
+      <div class="all-Div col-xs-4">
+        <div class=" changethisone">
+          <div class=" input-group changethisone">
+            <input type="text" title="חפש שם" class="form-control text-right" #search placeholder="...חפש"
+              [(ngModel)]="queryIn" name="search-query-in">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-search"></i>
+            </span>
+          </div>
+        </div>
+      </div>
 
-    <div class="col-xs-4">
-      <h3>סוג תורם</h3>
-    </div>
-    <div class="col-xs-4">
-      <h3>שם</h3>
-    </div>
+      <div class="col-xs-4  text-right">
+        <label for="Type">סוג תורם</label>
+      </div>
+      <div class="col-xs-4 text-right ">
+        <label for="Name">שם</label>
+      </div>
+
+    
+
+    </mat-toolbar>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let item of donorEvents.elementsToShow ">
+          <mat-expansion-panel-header dir="rtl" cols="2">
+            <mat-panel-title class="col-xs-3">
+              {{item.name}} {{item.lastName}}
+            </mat-panel-title>
+            <mat-panel-description class="col-xs-6">
+              {{item.donorType}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <hr>
+          <div class="row">
+            <div class="col-sm-4 pull-right">
+              <h5>דוא"ל: {{item.email }}</h5>
+              <h5>פלפון: {{item.phone}}</h5>
+              <h5>מספר נוסף: {{item.homePhone}}</h5>
+            </div>
+            <div class="col-sm-4 pull-right">
+              <h5 *ngIf="item.donorType ==='פרטי'">תאריך לידה: {{ item.birthday | date:"dd/MM/yyyy" }}</h5>
+              <h5>כתובת: {{item.address}}</h5>
+              <h5 *ngIf="item.donorType ==='פרטי'">ת"ז: {{item.id}}</h5>
+              <h5>תאריך תרומה: {{item.donateDate | date:"dd/MM/yyyy"}}</h5>
+            </div>
+    
+          </div>
+          <div class="pull-left">
+            <button class="btn btn-warning" (click)="edit(item)" data-toggle="modal" data-target="#edit">עדכן</button>
+            <button class="btn btn-danger" (click)="delete(item)">מחק</button>
+            <button class="btn btn-info" (click)="disc(item)" data-toggle="modal" data-target="#disc">הצג</button>
+          </div>
+          <br>
+        </mat-expansion-panel>
+      </mat-accordion>
   </div>
 </div>
 
 
-<div class="container">
-  <mat-accordion dir="rtl" class="example-headers-align">
-    <mat-expansion-panel *ngFor="let item of donorList.donor">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{item.name}} {{item.lastName}}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{item.donorType}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div class="row">
-        <div class="col-sm-4 pull-right">
-          <h5>דוא"ל: {{item.email }}</h5>
-          <h5>פלפון: {{item.phone}}</h5>
-          <h5>מספר נוסף: {{item.homePhone}}</h5>
-        </div>
-        <div class="col-sm-4 pull-right">
-          <h5 *ngIf="item.donorType ==='פרטי'">תאריך לידה: {{ item.birthday | date:"dd/MM/yyyy" }}</h5>
-          <h5>כתובת: {{item.address}}</h5>
-          <h5 *ngIf="item.donorType ==='פרטי'">ת"ז: {{item.id}}</h5>
-          <h5>תאריך תרומה: {{item.donateDate | date:"dd/MM/yyyy"}}</h5>
-        </div>
-
-      </div>
-      <div class="pull-left">
-        <button class="btn btn-warning" (click)="edit(item)" data-toggle="modal" data-target="#edit">עדכן</button>
-        <button class="btn btn-danger" (click)="delete(item)">מחק</button>
-        <button class="btn btn-info" (click)="disc(item)" data-toggle="modal" data-target="#disc">הצג</button>
-      </div>
-      <br>
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>
 
 <div class="modal" id="add" tabindex="-1" role="dialog" dir="rtl">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -124,7 +139,7 @@
   </div>
 </div>
 
-<div class="modal" id="add" tabindex="-1" role="dialog" dir="rtl">
+<div class="modal" id="addModal" tabindex="-1" role="dialog" dir="rtl">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-body">
@@ -185,4 +200,24 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div class="container">
+  <ul class="pager">
+    <li [class]="donorEvents.pdisabled" (click)="donorEvents.ChangePage(donorEvents.previousPage)">
+      <a>Previous</a>
+    </li>
+
+    <ul class="pagination custom_pegnation">
+      <li *ngFor="let item of donorEvents.Pages;index as i" [ngClass]="{'active':donorEvents.CurrentPageNumber == i}"
+        (click)="donorEvents.ChangePage(i)">
+        <a>{{donorEvents.Pages[i]}}</a>
+      </li>
+    </ul>
+
+    <li [class]="donorEvents.ndisabled " (click)="donorEvents.ChangePage(donorEvents.nextPage)">
+      <a>Next</a>
+    </li>
+  </ul>
 </div>

@@ -53,7 +53,6 @@ export class AddUserComponent {
           reset.click();
           exit.click();
         }, (e) => {
-          console.log(e)
           alert("מספר טליפון לא תקין \n נסה שוב");
         });
     }

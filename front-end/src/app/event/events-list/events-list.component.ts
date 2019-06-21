@@ -52,7 +52,7 @@ export class EventsListComponent implements OnInit, DoCheck {
 
 
   ngOnInit() {
-    // console.log(this.router.url)
+    
     // TODO way too much time to copy all that data, fix it later
     if (this.router.url == "/Header/donor/donorEvent") {
       this.eventService.generalEvents = this.eventService.donorsEvents;
@@ -60,34 +60,27 @@ export class EventsListComponent implements OnInit, DoCheck {
     else if (this.router.url == "/Header/volenteer/VolunteerEvents/eventsList") {
       this.eventService.generalEvents = this.eventService.volunteersEvents;
     }
-    this.eventService.pageDivider(this.eventService.generalEvents);
+    // this.eventService.pageDivider(this.eventService.generalEvents);
   }
   // TODO editing the arrived and didnt arrived arrays needs to be sent to the server also
   addToList(item, i) {
     const index = this.eventService.elementsToShow[i].didntArrived.indexOf(item);
     
     this.validToSave[i] = true
-    console.log(index, "addToList")
-    console.log(this.eventService.elementsToShow[i], "addToList")
-    console.log(i, "addToList")
-    console.log(item, "addToList")
-    console.log(this.validToSave)
+    
     this.eventService.elementsToShow[i].arrived.push(this.eventService.generalEvents[i].didntArrived[index]);
     this.eventService.elementsToShow[i].didntArrived.splice(index, 1);
     
   }
   delFromList(item, i) {
     this.validToSave[i] = true
-    console.log(this.validToSave)
     const index = this.eventService.elementsToShow[i].arrived.indexOf(item);
-    console.log(index, "deletFrom")
     this.eventService.elementsToShow[i].didntArrived.push(this.eventService.elementsToShow[i].arrived[index]);
     this.eventService.elementsToShow[i].arrived.splice(index, 1);
   }
   
   addToRelativeList(item, i) {
     const index = this.relevant_persons_to_event.indexOf(item);
-    console.log(index, "AddtoRelat")
     this.m_relatedTo.push(this.relevant_persons_to_event[index]);
     this.relevant_persons_to_event.splice(index, 1);
     
@@ -95,7 +88,6 @@ export class EventsListComponent implements OnInit, DoCheck {
   }
   delFromRelativeList(item, i) {
     const index = this.m_relatedTo.indexOf(item);
-    console.log(index, "delFromRela")
     this.relevant_persons_to_event.push(this.m_relatedTo[index]);
     this.m_relatedTo.splice(index, 1);
 
@@ -162,15 +154,12 @@ export class EventsListComponent implements OnInit, DoCheck {
     this.i = i;
   }
   removeEvent() {
-    console.log("in remove event")
     let m_index = (this.eventService.CurrentPageNumber * this.eventService.elementsPerPage) + this.i
     this.eventService.deletedEvents.push(this.eventService.generalEvents[m_index]);
     let event_to_remove = this.eventService.generalEvents[m_index];
     this.eventService.generalEvents.splice(m_index, 1);
     this.eventService.elementsToShow.splice(this.i, 1);
-    console.log(event_to_remove, this.i);
     this.serverService.deleteEvent(event_to_remove).subscribe((res) => {
-        console.log(res.json())
     }, (e) => alert(e));
     this.eventService.generalEvents = this.eventService.generalEvents;
   }
@@ -180,7 +169,6 @@ export class EventsListComponent implements OnInit, DoCheck {
   }
 
   saveChanges(i){
-    console.log(this.eventService.elementsToShow[i])
     this.serverService.editEvent(this.eventService.elementsToShow[i])
     .subscribe((res) => {
       this.validToSave[i] = false
