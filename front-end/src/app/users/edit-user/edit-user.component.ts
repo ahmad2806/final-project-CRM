@@ -10,7 +10,7 @@ import { ServerService } from '../../server.service';
   styleUrls: ['./edit-user.component.css']
 })
 export class EditUserComponent implements OnInit {
-  constructor(private userService: UserService, private serverService: ServerService) {
+  constructor(public userService: UserService, private serverService: ServerService) {
     // this.userService.UserEditing =   new User("omar","0987098709","omar.b__95@hotmail.com","bsdasd","123456",true,true,true,true);
 
   }

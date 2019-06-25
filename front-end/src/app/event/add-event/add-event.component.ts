@@ -28,6 +28,8 @@ export class AddEventComponent implements OnInit {
   arrayToView = [];
   tempArr = [];
 
+  queryIn = ""
+  queryOut = ""
   constructor(private volunteerService: VolunteersService, private eventService: EventService, private router: Router, private donors: DonorService, private serverService: ServerService) {
 
     eventService.relatedTo = this.relatedTo;

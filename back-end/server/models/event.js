@@ -10,6 +10,9 @@ var EventSchema = new Schema({
     name: {
         type: String
     },
+    status: {
+        type: String
+    },
     type: {
         type: String
     },

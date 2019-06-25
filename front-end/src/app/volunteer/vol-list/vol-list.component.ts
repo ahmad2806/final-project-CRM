@@ -23,9 +23,9 @@
     imageClicked;
     imageVolunteer;
     searchFor = 'volunteer';
-    
+    queryIn = ""
   
-    constructor(public volservice: VolunteersService, private serverService: ServerService, private eventService: EventService, private router: Router,  private ng2ImgMax: Ng2ImgMaxService) {
+    constructor(public volservice: VolunteersService, private serverService: ServerService, public eventService: EventService, private router: Router,  private ng2ImgMax: Ng2ImgMaxService) {
   
     }
   

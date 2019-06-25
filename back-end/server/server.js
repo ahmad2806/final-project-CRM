@@ -36,7 +36,6 @@ app.post('/users/login', (req, res) => {
             res.header('x-auth', token).send(user);
         });
     }, (e) => {
-        console.log(e);
         if (e === 'wrong-password') {
             res.status(404).send()
         } else {
@@ -61,7 +60,6 @@ app.get('/allUsers', (req, res) => {
         .then((users) => {
             res.send({ users })
         }, (e) => {
-            console.log(res);
             res.status(400).send(e);
         });
 });
@@ -162,9 +160,6 @@ app.post('/delete/donor', (req, res) => {
     Donor.findOneAndRemove({
         _id: req.body._id
     }).then((donor) => {
-        if (!donor) {
-            return res.status(404).send();
-        }
         res.send({ donor })
     }, (e) => res.status(400).send());
 });
@@ -173,67 +168,69 @@ app.post('/delete/donor', (req, res) => {
 app.post('/event', (req, res) => {
     var EventToAdd = Event(req.body);
     EventToAdd.save().then((event) => {
+        console.log(event)
         res.send({ event });
     }, (e) => res.status(400).send());
 });
 
 app.get('/donor/events', (req, res) => {
     Event.find({
-      type: { $in: [ 'private-donor-Model', 'organization-donor-Model' ] } 
+        type: { $in: ['private-donor-Model', 'organization-donor-Model'] }
     }).then((events) => {
-      if (events.length === 0) {
-        res.status(404).send()
-      } else {
-        res.send({ events })
-      }
+        if (events.length === 0) {
+            res.status(404).send()
+        } else {
+            res.send({ events })
+        }
     }, (e) => res.status(400).send());
-  });
-  
-  app.get('/volunteer/events', (req, res) => {
+});
+
+app.get('/volunteer/events', (req, res) => {
     Event.find({
-      type: 'volunteer-Model'
+        type: 'volunteer-Model'
     }).then((events) => {
-      if (events.length === 0) {
-        res.status(404).send()
-      } else {
-        res.send({ events })
-      }
+        if (events.length === 0) {
+            res.status(404).send()
+        } else {
+            res.send({ events })
+        }
     }, (e) => res.status(400).send());
-  });
-  
-  app.post('/delete/event', (req, res) => {
-  //   var deletedEvent = new Event(req.body)
-  //   deletedEvent.status = 'deleted';
-  // console.log(req.body._id, req.body.status)
-  // console.log(deletedEvent._id, deletedEvent.status)
-  //   Event.findOneAndUpdate(
-  //     { id : req.body._id}, 
-  //     {$set: deletedEvent} , 
-  //     {new: true} 
-  //   ).then((event) => {
-  //     // if(event.status === 'deleted') {
-  //       console.log(event)
-  //       res.send(event);
-  //     // } else {
-  //       // res.send('didnt save to DB')
-  //     // }s
-  //   }, (e) => res.status(400).send(e));
-  
-  });
-  
-  app.post('/edit/event', (req, res) => {
+});
+
+app.post('/delete/event', (req, res) => {
+    var deletedEvent = new Event(req.body)
+    deletedEvent.type = 'deleted';
     Event.findOneAndUpdate({
-      _id: req.body._id
+        _id: req.body._id
+    }, { $set: deletedEvent }, { new: true }).then((event) => {        
+        res.send(deletedEvent);
+    }, (e) => res.status(400).send(e));
+
+});
+
+app.get('/deleted/event', (req, res) => {
+    Event.find({
+        type: 'deleted'
+    }).then((events) => {
+
+        res.send({ events })
+
+    }, (e) => res.status(400).send());
+});
+
+app.post('/edit/event', (req, res) => {
+    Event.findOneAndUpdate({
+        _id: req.body._id
     }, { $set: req.body }, { new: true }).then((event) => {
-      if (!event) {
-        return res.status(404).send();
-      }
-      res.send({ event });
+        if (!event) {
+            return res.status(404).send();
+        }
+        res.send({ event });
     }, (e) => {
-      res.status(400).send(e);
+        res.status(400).send(e);
     })
-  });
-  
+});
+
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);
 });

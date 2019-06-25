@@ -7,7 +7,7 @@ import { User } from "./users/user.model";
 export class ServerService {
     localhost_url = 'http://localhost:3000';
     heroku_url = 'https://stormy-plains-63553.herokuapp.com';
-    url = this.localhost_url
+    url = this.heroku_url
     constructor(private http: Http) {
     }
     addNewUser(user: User) {

@@ -14,8 +14,8 @@ import { ServerService } from '../../server.service';
 export class UsersListComponent implements OnInit {
   searchFor = 'users'
   today = Date.now();
-
-  constructor(private userService: UserService, private serverService: ServerService) {
+  queryIn = ""
+  constructor(public userService: UserService, private serverService: ServerService) {
 
   }
   ngOnInit() {

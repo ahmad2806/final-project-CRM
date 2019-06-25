@@ -27,7 +27,7 @@ var DonorSchema = new Schema({
         trim: true
     },
     birthday: {
-        type: Date
+        type: String
     },
     address: {
         type: String

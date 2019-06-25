@@ -28,16 +28,17 @@ export class EventsListComponent implements OnInit, DoCheck {
   modelType = '';
   dismissModal = false;
   m_relatedTo = [];
-
-
+  queryIn = ""
+  queryOut = ""
+  DateQuery = ""
   private eventListOnSearch: EventModel[] = [];
 
-  private relevant_persons_to_event: any[] = [];
+  public relevant_persons_to_event: any[] = [];
 
   constructor(
     private volunteerService: VolunteersService,
-    private eventService: EventService,
-    private router: Router,
+    public eventService: EventService,
+    public router: Router,
     private donors: DonorService,
     private serverService: ServerService) {
     for (let i = 0; i < this.eventService.generalEvents.length; ++i) {

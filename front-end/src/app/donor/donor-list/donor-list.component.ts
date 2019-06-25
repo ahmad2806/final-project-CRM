@@ -34,8 +34,9 @@ export class DonorListComponent implements OnInit {
   newAmountDate;
   tempDonor = []
   searchFor = "donor"
+  queryIn = ""
   
-  constructor(private donorList: DonorService, private donorEvents: EventService, private serverService: ServerService) {
+  constructor(private donorList: DonorService, public donorEvents: EventService, private serverService: ServerService) {
     
 
   }

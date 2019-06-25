@@ -10,7 +10,7 @@ import { DonorService } from './donor.service';
 })
 export class DonorComponent implements OnInit {
 
-  constructor(private eventService: EventService, private router: Router, private donorService: DonorService) {
+  constructor(public eventService: EventService, private router: Router, private donorService: DonorService) {
     this.eventService.clicked = "donor_list";
   }
 
