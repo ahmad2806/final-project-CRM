@@ -14,7 +14,7 @@ import { DonorService } from '../../donor/donor.service';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(private router: Router, private users:UserService,private eventService: EventService, private donorService: DonorService, private volunteerService: VolunteersService) { }
+  constructor(private router: Router, public users:UserService,private eventService: EventService, private donorService: DonorService, private volunteerService: VolunteersService) { }
 
   ngOnInit() {
   }

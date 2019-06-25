@@ -33,7 +33,7 @@ export class EventService {
   clicked: string = "";
 
   m_all_items: any[] = []
-  elementsPerPage = 3
+  elementsPerPage = 5
   pdisabled = "previous disabled";
   ndisabled = "next"
   elementsToShow: any[];

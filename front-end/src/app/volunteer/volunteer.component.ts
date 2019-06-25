@@ -13,7 +13,7 @@ export class VolunteerComponent implements OnInit {
   VolList = true;
   eventList = false;
   
-  constructor(private eventService: EventService, private router: Router, private volunteerService: VolunteersService) {
+  constructor(public eventService: EventService, private router: Router, private volunteerService: VolunteersService) {
     this.eventService.clicked = 'volunteer_list';
   }
 

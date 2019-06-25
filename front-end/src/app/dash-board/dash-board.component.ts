@@ -19,7 +19,7 @@ export class DashBoardComponent implements OnInit {
   @Input() EventType: string = "";
 
 
-  constructor(private events: EventService, private userService: UserService, private datePipe: DatePipe) {
+  constructor(public events: EventService, private userService: UserService, private datePipe: DatePipe) {
 
 
   }

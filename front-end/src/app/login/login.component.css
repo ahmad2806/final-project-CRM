@@ -102,7 +102,7 @@
   }
   
   div.card {
-  
+  min-width: 210px;
   display:
   block;
   
@@ -148,4 +148,7 @@
   
   }
   
-  
+  .padd_me{
+    padding-left: 5px;
+    padding-right: 5px;
+  }
