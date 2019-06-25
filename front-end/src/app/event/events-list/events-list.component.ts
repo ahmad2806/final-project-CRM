@@ -31,7 +31,7 @@ export class EventsListComponent implements OnInit, DoCheck {
 
 
   private eventListOnSearch: EventModel[] = [];
-  
+
   private relevant_persons_to_event: any[] = [];
 
   constructor(
@@ -40,10 +40,10 @@ export class EventsListComponent implements OnInit, DoCheck {
     private router: Router,
     private donors: DonorService,
     private serverService: ServerService) {
-      for (let i = 0; i < this.eventService.generalEvents.length; ++i){
-        this.validToSave.push(false);
-      }
-     }
+    for (let i = 0; i < this.eventService.generalEvents.length; ++i) {
+      this.validToSave.push(false);
+    }
+  }
 
 
   ngDoCheck() {
@@ -52,10 +52,11 @@ export class EventsListComponent implements OnInit, DoCheck {
 
 
   ngOnInit() {
-    
+
     // TODO way too much time to copy all that data, fix it later
     if (this.router.url == "/Header/donor/donorEvent") {
-      this.eventService.generalEvents = this.eventService.donorsEvents;
+      this.eventService.generalEvents = this.eventService.privateDonorEvents
+      this.eventService.generalEvents = this.eventService.generalEvents.concat(this.eventService.donorsEvents);
     }
     else if (this.router.url == "/Header/volenteer/VolunteerEvents/eventsList") {
       this.eventService.generalEvents = this.eventService.volunteersEvents;
@@ -65,12 +66,12 @@ export class EventsListComponent implements OnInit, DoCheck {
   // TODO editing the arrived and didnt arrived arrays needs to be sent to the server also
   addToList(item, i) {
     const index = this.eventService.elementsToShow[i].didntArrived.indexOf(item);
-    
+
     this.validToSave[i] = true
-    
+
     this.eventService.elementsToShow[i].arrived.push(this.eventService.generalEvents[i].didntArrived[index]);
     this.eventService.elementsToShow[i].didntArrived.splice(index, 1);
-    
+
   }
   delFromList(item, i) {
     this.validToSave[i] = true
@@ -78,13 +79,13 @@ export class EventsListComponent implements OnInit, DoCheck {
     this.eventService.elementsToShow[i].didntArrived.push(this.eventService.elementsToShow[i].arrived[index]);
     this.eventService.elementsToShow[i].arrived.splice(index, 1);
   }
-  
+
   addToRelativeList(item, i) {
     const index = this.relevant_persons_to_event.indexOf(item);
     this.m_relatedTo.push(this.relevant_persons_to_event[index]);
     this.relevant_persons_to_event.splice(index, 1);
-    
-    
+
+
   }
   delFromRelativeList(item, i) {
     const index = this.m_relatedTo.indexOf(item);
@@ -96,7 +97,7 @@ export class EventsListComponent implements OnInit, DoCheck {
 
   arrayOfPersons(i) {
     this.i = i;
-    let m_event = this.eventService.elementsToShow[i] 
+    let m_event = this.eventService.elementsToShow[i]
     this.name = m_event.name;
     this.m_date = m_event.date;
     this.description = m_event.description;
@@ -105,12 +106,14 @@ export class EventsListComponent implements OnInit, DoCheck {
     this.m_relatedTo = m_event.relativeTo; // right
 
     let every_one = [];
-    if (m_event.type == "donor-Model")
-      every_one =this.donors.donor
+    if (m_event.type == this.eventService.privateDonorType)
+      every_one = this.donors.private_donor
+    else if (m_event.type == this.eventService.organizationDonorType)
+      every_one = this.donors.org_donor
     else
       every_one = this.volunteerService.volunteers
 
-    
+
     // TODO see why this line doesnt work, when it works, it can replace the two fors
     // this.relevantVolunteersToEvent = this.volunteerService.volunteers.filter(item => this.m_relatedTo.indexOf(item) < 0);
     for (let i = 0; i < every_one.length; i++) {
@@ -155,23 +158,32 @@ export class EventsListComponent implements OnInit, DoCheck {
   }
   removeEvent() {
     let m_index = (this.eventService.CurrentPageNumber * this.eventService.elementsPerPage) + this.i
-    this.eventService.deletedEvents.push(this.eventService.generalEvents[m_index]);
+    // this.eventService.deletedEvents.push(this.eventService.generalEvents[m_index]);
     let event_to_remove = this.eventService.generalEvents[m_index];
+    if (event_to_remove.type == this.eventService.privateDonorType) {
+      let temp_index = this.eventService.privateDonorEvents.indexOf(event_to_remove)
+      this.eventService.privateDonorEvents.splice(temp_index, 1)
+    } else if (event_to_remove.type == this.eventService.organizationDonorType) {
+      let temp_index = this.eventService.donorsEvents.indexOf(event_to_remove)
+      this.eventService.donorsEvents.splice(temp_index, 1)
+    }
+
     this.eventService.generalEvents.splice(m_index, 1);
     this.eventService.elementsToShow.splice(this.i, 1);
     this.serverService.deleteEvent(event_to_remove).subscribe((res) => {
+      this.eventService.deletedEvents.push(res.json())
     }, (e) => alert(e));
     this.eventService.generalEvents = this.eventService.generalEvents;
   }
 
   update(m_date) {
-  //  TODO replace filter pipe with function to make it faster
+    //  TODO replace filter pipe with function to make it faster
   }
 
-  saveChanges(i){
+  saveChanges(i) {
     this.serverService.editEvent(this.eventService.elementsToShow[i])
-    .subscribe((res) => {
-      this.validToSave[i] = false
-    }, (e) => alert(e));
+      .subscribe((res) => {
+        this.validToSave[i] = false
+      }, (e) => alert(e));
   }
 }

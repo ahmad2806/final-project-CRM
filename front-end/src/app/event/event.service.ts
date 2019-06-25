@@ -5,6 +5,8 @@ import { empty } from 'rxjs/Observer';
 import { FreeDayes } from '../volunteer/free-days.model';
 import { EventEmitter } from 'protractor';
 import { ServerService } from '../server.service';
+import { DonorService } from '../donor/donor.service';
+import { VolunteersService } from '../volunteer/volunteers.service';
 
 @Injectable()
 export class EventService {
@@ -13,7 +15,7 @@ export class EventService {
   volunteersEvents: EventModel[] = [];
   donorsEvents: EventModel[] = [];
   privateDonorEvents = []
-  generalEvents: EventModel[] = [];
+  generalEvents: any[] = [];
 
 
   commingSoonEvents: EventModel[] = [];
@@ -47,20 +49,20 @@ export class EventService {
   public organizationDonorType = "organization-donor-Model"
   public volunteerType = "volunteer-Model"
 
-  constructor(private serverService: ServerService) {
+  constructor(private serverService: ServerService, private donorService: DonorService, private volunteerService: VolunteersService) {
 
   }
   public add(event: EventModel, type) {
-    if (type == "donor")
-    {
-      if (event.type == this.organizationDonorType)
-      {
+    if (type == "donor") {
+      if (event.type == this.organizationDonorType) {
         this.donorsEvents.push(event);
         this.pageDivider(this.donorsEvents);
-        
+        this.pageDivider(this.donorService.org_donor);
+
       } else {
         this.privateDonorEvents.push(event);
-        this.pageDivider(this.donorsEvents);
+        this.pageDivider(this.privateDonorEvents);
+        this.pageDivider(this.donorService.private_donor);
       }
 
     }
@@ -68,27 +70,31 @@ export class EventService {
 
       this.volunteersEvents.push(event);
       this.pageDivider(this.volunteersEvents);
+      this.pageDivider(this.volunteerService.volunteers);
     }
-    
+
 
   }
 
-  public addNewEvent(donor, donation_date){
-    
+  public addNewEvent(donor, donation_date) {
+
+    let m_type = ""
+    if (donor.donorType == 'פרטי') {
+      m_type = this.privateDonorType
+    } else {
+      m_type = this.organizationDonorType
+    }
     let date2 = new Date(donation_date);
     date2.setDate(date2.getDate() + 365);
 
 
-    let donor_to_add = {name: donor.name}
-    let m_new_event = new EventModel("לתרום שוב", "donor-Model", date2, "האם רוצה לתרום שוב", [donor_to_add], [], [donor_to_add])
+    let donor_to_add = { name: donor.name }
+    let m_new_event = new EventModel("לתרום שוב", m_type, date2, "האם רוצה לתרום שוב", [donor_to_add], [], [donor_to_add])
     
-
-    this.add(m_new_event, "donor");
     // maybe need to be moved
-    donor.hisEvent.push(m_new_event);
-
     this.serverService.addNewEvent(m_new_event).subscribe((res) => {
-      
+      donor.hisEvent.push({name: m_new_event.name, description: m_new_event.description, date: m_new_event.date});
+      this.add(m_new_event, "donor");
     }, (e) => alert(e));
   }
 
@@ -106,7 +112,7 @@ export class EventService {
 
 
   public pageDivider(all_items) {
-
+    
     this.m_all_items = all_items;
     this.resetPageParams();
 
@@ -137,7 +143,7 @@ export class EventService {
     } else {
       this.isEmpty = true;
     }
-    
+
   }
 
   public ChangePage(pressedPage) {
@@ -166,9 +172,9 @@ export class EventService {
         this.elementsToShow[i] = this.m_all_items[i + (pressedPage * this.elementsPerPage)];
     }
   }
-  public reset_buttons(){
-      this.ndisabled = "next";
-      this.pdisabled = "previous disabled";
+  public reset_buttons() {
+    this.ndisabled = "next";
+    this.pdisabled = "previous disabled";
   }
 
 }

@@ -82,16 +82,17 @@ export class LoginComponent implements OnInit {
 
         this.eventService.donorsEvents = [];
         let donorsEvents = res.json().events;
-
+        
         for (let i = 0; i < donorsEvents.length; ++i) {
-          
-          if (donorsEvents[i].type == this.eventService.privateDonorType) 
+
+          if (donorsEvents[i].type == this.eventService.privateDonorType) {
             this.eventService.privateDonorEvents.push(donorsEvents[i])
-            
-            if (donorsEvents[i].type == this.eventService.organizationDonorType) 
+          }
+          else if (donorsEvents[i].type == this.eventService.organizationDonorType) {
             this.eventService.donorsEvents.push(donorsEvents[i])
           }
-        
+        }
+
         // this.eventService.donorsEvents.push.apply(this.eventService.donorsEvents, res.json().events);//her we get all the donor event.. just push them to the array you read from
       }, (e) => alert(e));
     this.serverService.getAllDonors()
@@ -147,7 +148,9 @@ export class LoginComponent implements OnInit {
           if (this.UserService.activeUser.username == "admin") {
             this.loadUsers();
           }
-
+          this.serverService.getDeletedEvents().subscribe((res) => {
+            this.eventService.deletedEvents = res.json().events;  
+          })
         }
       }, (e) => {
         if (e.status === 400) {

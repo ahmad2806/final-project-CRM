@@ -33,7 +33,17 @@ export class AddEventComponent implements OnInit {
     eventService.relatedTo = this.relatedTo;
 
     if (this.router.url == "/Header/donor/donorEvent") {
-      this.tempArr = donors.Donor;
+      if (this.eventService.m_all_items)
+        if (this.eventService.m_all_items[0].type == this.eventService.privateDonorType){
+          this.tempArr = this.donors.private_donor
+        } else {
+          this.tempArr = this.donors.org_donor
+        }
+      
+      else {
+        this.tempArr = this.donors.private_donor
+        this.tempArr = this.tempArr.concat(this.donors.org_donor)
+      }
     }
     else {
       this.tempArr = volunteerService.volunteers;
@@ -54,10 +64,10 @@ export class AddEventComponent implements OnInit {
     this.arrayToView.push(this.relatedTo[index]);
     this.relatedTo.splice(index, 1);
   }
-
-
+  
+  
   onAddEvent(dis) {
-
+    
     for (let i = 0; i < this.relatedTo.length; i++) {
       this.relatedTo[i] = (({ name, id }) => ({ name, id }))(this.relatedTo[i]);
     }
@@ -87,9 +97,17 @@ export class AddEventComponent implements OnInit {
         //   this.relatedTo[i].myEvents.push(eventAdded);
 
         // }
-        this.eventService.add(eventAdded, "volunteer");
+        this.eventService.volunteersEvents.push(eventAdded)
+        this.eventService.pageDivider(this.eventService.volunteersEvents)
       } else {
-        this.eventService.add(eventAdded, "donor");
+        if (eventAdded.type == this.eventService.privateDonorType){
+          this.eventService.privateDonorEvents.push(eventAdded)
+          this.eventService.pageDivider(this.eventService.privateDonorEvents)
+        }else {
+          this.eventService.donorsEvents.push(eventAdded)
+          this.eventService.pageDivider(this.eventService.donorsEvents)
+        }
+        
       }
 
       this.serverService.addNewEvent(eventAdded)
@@ -100,6 +118,7 @@ export class AddEventComponent implements OnInit {
     this.clearInputs();
 
   }
+  
   clearInputs() {
     this.nameInputRef.nativeElement.value = '';
     this.dateInputRef.nativeElement.value = '';

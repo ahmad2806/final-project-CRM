@@ -30,7 +30,17 @@ export class AddDonorComponent implements OnInit {
 
   Foundation = false;
   private_donor = false;
-  constructor(private donor: DonorService, private newEvent: EventService, private serverService: ServerService) { }
+  constructor(private donor: DonorService, private newEvent: EventService, private serverService: ServerService) { 
+    if (newEvent.m_all_items[0].donorType == 'פרטי') {
+      this.private_donor = true;
+      this.Foundation = false;
+      
+    }
+    else {
+      this.Foundation = true;
+      this.private_donor = false;
+    }
+  }
 
   ngOnInit() {
   }
@@ -56,8 +66,6 @@ export class AddDonorComponent implements OnInit {
     this.birthday;
     this.amount = "";
     this.discription = "";
-    this.private_donor = false;
-    this.Foundation = false;
   }
 
   save(exit) {
@@ -92,7 +100,7 @@ export class AddDonorComponent implements OnInit {
       // this.newEvent.add(new EventModel("לתרום שוב", "donor-Model", new Date(2018, 0, 8), "האם רוצה לתרום שוב",[] , [],[]));	
 
       this.reset();
-      exit.click();
+      // exit.click();
     }
 
 

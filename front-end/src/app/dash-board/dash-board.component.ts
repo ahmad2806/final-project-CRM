@@ -19,26 +19,33 @@ export class DashBoardComponent implements OnInit {
   @Input() EventType: string = "";
 
 
-  constructor(private events: EventService, private userService: UserService, private datePipe:DatePipe) {
+  constructor(private events: EventService, private userService: UserService, private datePipe: DatePipe) {
+
+
   }
   ngOnInit() {
+
     let today = new Date();
 
 
     this.events.oldEvents = [];
     this.events.inProgressEvents = [];
     this.events.commingSoonEvents = [];
-    this.events.deletedEvents = [];
+    // this.events.deletedEvents = [];
 
 
     this.events.generalEvents = this.events.volunteersEvents;
     this.events.generalEvents = this.events.generalEvents.concat(this.events.donorsEvents);
+    this.events.generalEvents = this.events.generalEvents.concat(this.events.privateDonorEvents);
+
+
 
 
     for (let index = 0; index < this.events.generalEvents.length; index++) {
+
       let d1 = new Date(today);
       let d2 = new Date(this.events.generalEvents[index].date);
-      
+
       // Check if the dates are equal
       let same = this.datePipe.transform(d1, 'yyyy-MM-dd') === this.datePipe.transform(d2, 'yyyy-MM-dd');
       if (same) this.events.inProgressEvents.push(this.events.generalEvents[index]);
@@ -48,7 +55,6 @@ export class DashBoardComponent implements OnInit {
 
       // Check if the first is less than second
       if (d1 < d2) this.events.commingSoonEvents.push(this.events.generalEvents[index]);
-
     }
   }
 

@@ -36,16 +36,21 @@ export class FilterPipe implements PipeTransform {
             || next.address.includes(query)
             || next.phone.includes(query)
             || next.homePhone.includes(query)
-            || next.email.includes(query)
-            || next.job.includes(query)) { prev.push(next); }
-          else if (searchFor == 'volunteer') {
-            if (next.telePhone.includes(query)
+            || next.email.includes(query)) { prev.push(next); }
+            else if (searchFor == 'volunteer') {
+              if (next.telePhone.includes(query)
+              || next.job.includes(query)
               || next.volunteerType.includes(query)) { prev.push(next); }
           }
 
-          else if (searchFor == 'donor') {
-            if (next.donorType.includes(query)) { prev.push(next); }
-          }
+          // else if (searchFor == 'donor') {
+          //   if (next.name.includes(query) 
+          //   || next.email.includes(query)
+          //   || next.id.includes(query)
+          //   || next.address.includes(query)
+          //   || next.phone.includes(query)
+          //   ) { prev.push(next); }
+          // }
 
 
           return prev;

@@ -1,11 +1,11 @@
-<span class="container">
+<!-- <span class="container">
   <button type="button text-left" #exit class="close" data-dismiss="modal" aria-label="Close"></button>
   <mat-radio-group>
     <mat-radio-button value="1" (click)="radioChoice('Foundation')">קרן</mat-radio-button>
     <mat-radio-button value="2" (click)="radioChoice('private')">פרטי</mat-radio-button>
   </mat-radio-group>
-</span>
-<ol *ngIf="private">
+</span> -->
+<ol *ngIf="private_donor">
   <br>
   <mat-form-field>
     <input matInput placeholder="שם התורם" [(ngModel)]="name">
@@ -30,7 +30,7 @@
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput placeholder="תאריך לידה" class="date-time form-control pull-right col-xs-12 text-right" [(ngModel)]="birthday">
+    <input matInput placeholder="תאריך לידה" type="date" class="date-time form-control pull-right col-xs-12 text-right" [(ngModel)]="birthday">
   </mat-form-field>
   <mat-form-field>
     <textarea matInput placeholder="פרטים נוספים" [(ngModel)]="discription"></textarea>
@@ -81,7 +81,9 @@
   </mat-form-field>
   <br>
 
-  <button type="button " class="btn btn-primary center-block" style="width: 30%;" (click)="save(exit)" [routerLink]="['/Header/donor/donorList']"
-    >שמור</button>
+  <button class="btn btn-primary center-block" style="width: 30%;" (click)="save(exit)" [routerLink]="['/Header/donor/donorList']"
+  data-dismiss="modal">שמור</button>
+  
+
 
 </ol>

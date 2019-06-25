@@ -23,7 +23,7 @@ export class DonorListComponent implements OnInit {
   phone = "";
   email = "";
   extraphone = "";
-  birthday: Date;
+  birthday: String;
   amount: number;
   privateDonor = false;
   FoundationDonor = false;
@@ -32,7 +32,11 @@ export class DonorListComponent implements OnInit {
   donate: Donate[] = [];
   newAmount;
   newAmountDate;
+  tempDonor = []
+  searchFor = "donor"
+  
   constructor(private donorList: DonorService, private donorEvents: EventService, private serverService: ServerService) {
+    
 
   }
 
@@ -41,21 +45,30 @@ export class DonorListComponent implements OnInit {
   }
 
   saveNewAmount() {
-    
+
     let newDonate: Donate = new Donate(0, new Date);
 
     newDonate.donateAmount = this.newAmount;
-    newDonate.donateDate = this.newAmountDate;
+    
+    if (this.newAmountDate){
 
-    this.donorEvents.addNewEvent(this.donorList.donor[this.i], this.newAmountDate)
-
-    this.donorList.donor[this.i].donate.push(newDonate);
-    this.newAmount = "";
-    this.newAmountDate = "";
+      newDonate.donateDate = this.newAmountDate;
+      
+      
+      this.donorEvents.addNewEvent(this.donorEvents.m_all_items[this.i], this.newAmountDate)
+      this.donorEvents.m_all_items[this.i].donate.push(newDonate);
+      this.newAmount = "";
+      this.newAmountDate = "";
+    }
+    else{
+      alert("תאריך לא חוקי, נסה שוב")
+    }
+    
   }
 
   edit(item) {
-    this.i = this.donorList.donor.indexOf(item);
+    this.i = this.donorEvents.m_all_items.indexOf(item);
+    console.log(item)
     if (item.name)
       this.name = item.name;
 
@@ -72,8 +85,10 @@ export class DonorListComponent implements OnInit {
     if (item.donate)
       this.donate = item.donate;
     if (item.description)
-
       this.description = item.description;
+    if (item.birthday)
+      this.birthday = item.birthday;
+   
     if (item.donorType === 'פרטי') {
       this.privateDonor = true;
       this.FoundationDonor = false;
@@ -85,40 +100,45 @@ export class DonorListComponent implements OnInit {
 
   }
   disc(item) {
-    this.i = this.donorList.donor.indexOf(item)
-    if (item.description){
+
+    this.i = this.donorEvents.m_all_items.indexOf(item)
+    if (item.description) {
       this.description = item.description;
     }
-    if (item.donate[0] != null){
+    if (item.donate[0] != null) {
       this.donate = item.donate
     }
+    if (item.hisEvent)
+      this.hisEvent = item.hisEvent
 
   }
 
 
   save() {
+  
+    this.donorEvents.m_all_items[this.i].name = this.name;
+    this.donorEvents.m_all_items[this.i].id = this.id;
+    this.donorEvents.m_all_items[this.i].phone = this.phone;
+    this.donorEvents.m_all_items[this.i].email = this.email;
+    this.donorEvents.m_all_items[this.i].homePhone = this.extraphone;
+    this.donorEvents.m_all_items[this.i].amount += this.amount;
+    this.donorEvents.m_all_items[this.i].birthday = this.birthday;
+    this.donorEvents.m_all_items[this.i].address = this.address;
+    this.donorEvents.m_all_items[this.i].description = this.description;
 
-    this.donorList.donor[this.i].name = this.name;
-    this.donorList.donor[this.i].id = this.id;
-    this.donorList.donor[this.i].phone = this.phone;
-    this.donorList.donor[this.i].email = this.email;
-    this.donorList.donor[this.i].homePhone = this.extraphone;
-    this.donorList.donor[this.i].amount += this.amount;
-    this.donorList.donor[this.i].birthday = this.birthday;
-    this.donorList.donor[this.i].address = this.address;
-    this.donorList.donor[this.i].description = this.description;
+    this.serverService.editDonor(this.donorEvents.m_all_items[this.i]).subscribe((res) => {
 
-    this.serverService.editDonor(this.donorList.donor[this.i]).subscribe((res) => {
-      
     }, (e) => alert(e));
+
 
   }
 
   delete(item) {
-    const index = this.donorList.donor.indexOf(item);
-    this.serverService.deleteDonor(this.donorList.donor[index]).subscribe((res) => {
+
+    const index = this.donorEvents.m_all_items.indexOf(item);
+    this.serverService.deleteDonor(this.donorEvents.m_all_items[index]).subscribe((res) => {
+      this.donorEvents.m_all_items.splice(index, 1);
     }, (e) => alert(e))
-    this.donorList.donor.splice(index, 1);
   }
 
 
