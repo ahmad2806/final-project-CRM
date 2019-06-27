@@ -11,7 +11,7 @@ import { VolunteersService } from '../volunteer/volunteers.service';
 @Injectable()
 export class EventService {
 
-
+  data_formate:any;
   volunteersEvents: EventModel[] = [];
   donorsEvents: EventModel[] = [];
   privateDonorEvents = []

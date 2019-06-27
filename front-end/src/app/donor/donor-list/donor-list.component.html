@@ -27,7 +27,7 @@
 
     </mat-toolbar>
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let item of donorEvents.elementsToShow  | filter:queryIn:donorEvents.m_all_items:searchFor">
+      <mat-expansion-panel *ngFor="let item of donorEvents.elementsToShow  | filter:queryIn:donorEvents.m_all_items:searchFor; index as i">
         <mat-expansion-panel-header dir="rtl" cols="2">
           <mat-panel-title class="col-xs-3">
             {{item.name}} {{item.lastName}}
@@ -53,7 +53,9 @@
         </div>
         <div class="pull-left">
           <button class="btn btn-warning" (click)="edit(item)" data-toggle="modal" data-target="#edit">עדכן</button>
-          <button class="btn btn-danger" (click)="delete(item)">מחק</button>
+          
+          
+          <button type="button"  data-toggle="modal" (click)="index(i)" data-target="#confirmDeleteDonor" class="btn btn-danger">מחק</button>
           <button class="btn btn-info" (click)="disc(item)" data-toggle="modal" data-target="#disc">הצג</button>
         </div>
         <br>
@@ -222,4 +224,19 @@
       <a>Next</a>
     </li>
   </ul>
+</div>
+
+<div class="modal fade" id="confirmDeleteDonor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                ? למחוק את התורם
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">לא</button>
+                <button type="button" class="btn btn-primary" (click)="delete()" data-dismiss="modal">כן</button>
+            </div>
+        </div>
+    </div>
 </div>

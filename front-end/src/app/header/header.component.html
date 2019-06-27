@@ -9,7 +9,9 @@
       <div class="col-xs-4 col-lg-3 text-center move">
 
             <button type="button" (click)="openNav()" class="btn btn-default text-success  glyphicon glyphicon-th-list col-xs-2"  data-toggle="tooltip" data-placement="bottom" title="סרגל ניווט"></button>
-            <button type="button" class="btn btn-info text-success  glyphicon glyphicon-import col-xs-2" data-toggle="tooltip" data-placement="bottom" title="ייבוא נתונים"></button>
+            <span class="btn btn-file btn-primary text-success  glyphicon glyphicon-import col-xs-2" data-toggle="tooltip" data-placement="bottom" title="ייבוא נתונים">
+                  <input  (change)="onFileChange($event)"type="file" multiple="false" />
+            </span>
             <!-- <span class="badge col-xs-3" *ngIf="badge">{{events.inProgressEvents.length}}</span> -->
 
 

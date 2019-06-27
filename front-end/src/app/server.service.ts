@@ -7,7 +7,7 @@ import { User } from "./users/user.model";
 export class ServerService {
     localhost_url = 'http://localhost:3000';
     heroku_url = 'https://stormy-plains-63553.herokuapp.com';
-    url = this.heroku_url
+    url = this.localhost_url
     constructor(private http: Http) {
     }
     addNewUser(user: User) {
@@ -79,6 +79,17 @@ export class ServerService {
     }
     getDeletedEvents(){
         return this.http.get(`${this.url}/deleted/event`);
+    }
+
+
+    /* this param updates in the donor and the volunteer component and the header usues it */
+    data_type = "allDonors";
+    // volunteers
+    saveImportedData(data){
+        return this.http.post(`${this.url}/${this.data_type}`, data);
+    }
+    getImportedData(){
+        return this.http.get(`${this.url}/${this.data_type}`);
     }
 
 } 

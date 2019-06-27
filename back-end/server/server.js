@@ -157,11 +157,23 @@ app.post('/edit/donor', (req, res) => {
 
 /* deleting  donor */
 app.post('/delete/donor', (req, res) => {
+    console.log("inn delete")
     Donor.findOneAndRemove({
         _id: req.body._id
     }).then((donor) => {
+
         res.send({ donor })
     }, (e) => res.status(400).send());
+});
+app.post('/allDonors', (req, res) => {
+    let my_req = req.body
+    let donors_to_add = []
+    my_req.forEach(function (element) {
+        donors_to_add.push(Donor(element))
+    });
+    Donor.insertMany(donors_to_add).then((result) => {
+        res.send(result);
+    });
 });
 
 /************** Events ****************/
@@ -202,7 +214,7 @@ app.post('/delete/event', (req, res) => {
     deletedEvent.type = 'deleted';
     Event.findOneAndUpdate({
         _id: req.body._id
-    }, { $set: deletedEvent }, { new: true }).then((event) => {        
+    }, { $set: deletedEvent }, { new: true }).then((event) => {
         res.send(deletedEvent);
     }, (e) => res.status(400).send(e));
 

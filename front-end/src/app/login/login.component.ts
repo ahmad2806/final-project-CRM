@@ -8,6 +8,7 @@ import { VolunteersService } from '../volunteer/volunteers.service';
 import { EventService } from '../event/event.service';
 import { DonorService } from '../donor/donor.service';
 import { EMLINK } from 'constants';
+import { DonorModel } from '../donor/donor.model';
 
 //TODO
 @Component({
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
     private eventService: EventService,
     private donorList: DonorService,
   ) { }
-
+  x:DonorModel
   ngOnInit() {
   }
 
@@ -104,7 +105,10 @@ export class LoginComponent implements OnInit {
             this.donorList.org_donor.push(element)
           }
         });
+        console.log(res.json())
+        
         this.donorList.donor.push.apply(this.donorList.donor, res.json())
+        this.eventService.data_formate =  Object.keys(this.donorList.template_donor)
       }, (e) => alert(e));
 
   }

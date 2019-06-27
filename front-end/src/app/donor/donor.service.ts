@@ -7,10 +7,11 @@ import { Donate } from './donate.model';
 export class DonorService {
   public private_donor:DonorModel[] = [];
   public org_donor:DonorModel[] = [];
-
+  template_donor = ["name", "donateDate", "id", "birthday", "address", "phone", "homePhone", "email", "donorType", "amount", "hisEvent", "description"]
+   
   public Donor:DonorModel[]=[
     //TODO
-    // new DonorModel("name",new Date,"id",new Date,"address","phone","homePhone","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","קרן",15654,[],"discription", []),	
+    
     // new DonorModel("אברהים",new Date,"2058*****",new Date,"ירושלים","0549927495","","ibrahimidkedke@gmail.com","פרטי",1231,[],"discription", []),	
     // new DonorModel("victor",new Date,"id",new Date,"address","phone","homePhone","email","פרטי",31243,[],"discription", []),	
     // new DonorModel("omar",new Date,"id",new Date,"address","phone","homePhone","email","קרן",43243,[],"discription", []),	

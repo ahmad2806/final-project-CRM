@@ -35,36 +35,38 @@ export class DonorListComponent implements OnInit {
   tempDonor = []
   searchFor = "donor"
   queryIn = ""
-  
+
   constructor(private donorList: DonorService, public donorEvents: EventService, private serverService: ServerService) {
-    
+
 
   }
 
   ngOnInit() {
 
   }
-
+  index(i) {
+    this.i = i;
+  }
   saveNewAmount() {
 
     let newDonate: Donate = new Donate(0, new Date);
 
     newDonate.donateAmount = this.newAmount;
-    
-    if (this.newAmountDate){
+
+    if (this.newAmountDate) {
 
       newDonate.donateDate = this.newAmountDate;
-      
-      
+
+
       this.donorEvents.addNewEvent(this.donorEvents.m_all_items[this.i], this.newAmountDate)
       this.donorEvents.m_all_items[this.i].donate.push(newDonate);
       this.newAmount = "";
       this.newAmountDate = "";
     }
-    else{
+    else {
       alert("תאריך לא חוקי, נסה שוב")
     }
-    
+
   }
 
   edit(item) {
@@ -89,7 +91,7 @@ export class DonorListComponent implements OnInit {
       this.description = item.description;
     if (item.birthday)
       this.birthday = item.birthday;
-   
+
     if (item.donorType === 'פרטי') {
       this.privateDonor = true;
       this.FoundationDonor = false;
@@ -116,7 +118,7 @@ export class DonorListComponent implements OnInit {
 
 
   save() {
-  
+
     this.donorEvents.m_all_items[this.i].name = this.name;
     this.donorEvents.m_all_items[this.i].id = this.id;
     this.donorEvents.m_all_items[this.i].phone = this.phone;
@@ -134,12 +136,25 @@ export class DonorListComponent implements OnInit {
 
   }
 
-  delete(item) {
+  delete() {
+    const m_index = (this.donorEvents.CurrentPageNumber * this.donorEvents.elementsPerPage) + this.i
+    let donor_to_remove = this.donorEvents.m_all_items[m_index];
+    if (donor_to_remove.donorType == "פרטי") {
+      let temp_index = this.donorList.private_donor.indexOf(donor_to_remove)
+      this.donorList.private_donor.splice(temp_index, 1)
+    } else  {
+      let temp_index = this.donorList.org_donor.indexOf(donor_to_remove)
+      this.donorList.org_donor.splice(temp_index, 1)
+    }
 
-    const index = this.donorEvents.m_all_items.indexOf(item);
-    this.serverService.deleteDonor(this.donorEvents.m_all_items[index]).subscribe((res) => {
-      this.donorEvents.m_all_items.splice(index, 1);
-    }, (e) => alert(e))
+    console.log(donor_to_remove, m_index,this.donorList.donor, this.donorEvents.m_all_items)
+    this.donorList.donor.splice(m_index, 1);
+    
+
+    this.serverService.deleteDonor(donor_to_remove).subscribe((res) => {
+      this.donorEvents.m_all_items.splice(m_index, 1);
+      this.donorEvents.pageDivider(this.donorEvents.m_all_items);
+    }, (e) => alert(e));
   }
 
 
