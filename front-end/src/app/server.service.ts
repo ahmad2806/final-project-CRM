@@ -77,19 +77,20 @@ export class ServerService {
     deleteDonor(donor) {
         return this.http.post(`${this.url}/delete/donor`, donor);
     }
-    getDeletedEvents(){
+    getDeletedEvents() {
         return this.http.get(`${this.url}/deleted/event`);
     }
 
-
+    
+    /* this function updates in the donor and the volunteer component and the header usues it */
+    addAttributeFunc = function (data) { };
+    arrangeInUiFunc = function (element) { return [] };
     /* this param updates in the donor and the volunteer component and the header usues it */
-    data_type = "allDonors";
-    // volunteers
-    saveImportedData(data){
+    data_type = "";
+
+    saveImportedData(data) {
         return this.http.post(`${this.url}/${this.data_type}`, data);
     }
-    getImportedData(){
-        return this.http.get(`${this.url}/${this.data_type}`);
-    }
-
+    
+  
 } 

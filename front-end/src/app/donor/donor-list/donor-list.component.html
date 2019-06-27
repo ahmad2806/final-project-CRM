@@ -44,7 +44,7 @@
             <h5>מספר נוסף: {{item.homePhone}}</h5>
           </div>
           <div class="col-sm-4 pull-right">
-            <h5 *ngIf="item.donorType ==='פרטי'">תאריך לידה: {{ item.birthday }}</h5>
+            <h5 *ngIf="item.donorType ==='פרטי'">תאריך לידה: {{ item.birthday | date:"dd/MM/yyyy" }}</h5>
             <h5>כתובת: {{item.address}}</h5>
             <h5 *ngIf="item.donorType ==='פרטי'">ת"ז: {{item.id}}</h5>
             <h5>תאריך תרומה: {{item.donateDate | date:"dd/MM/yyyy"}}</h5>

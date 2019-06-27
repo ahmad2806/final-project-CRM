@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx';
 import { ServerService } from '../server.service';
 import { DonorService } from '../donor/donor.service';
 import { element } from 'protractor';
+import { VolunteersService } from '../volunteer/volunteers.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { element } from 'protractor';
 })
 export class HeaderComponent implements OnInit {
   badge = false;
-  constructor(private auth: AuthService, private router: Router, public events: EventService, public serverService: ServerService, public donorService: DonorService) {
+  constructor(private auth: AuthService, private router: Router, public events: EventService, public serverService: ServerService, public donorService: DonorService, public volunteerService: VolunteersService) {
     if (this.events.inProgressEvents.length > 0) {
       this.badge = true;
     }
@@ -55,6 +56,7 @@ export class HeaderComponent implements OnInit {
       /* save data */
       this.data = (XLSX.utils.sheet_to_json(ws));
 
+      
       this.saveDataInDataBase();
 
     };
@@ -62,8 +64,7 @@ export class HeaderComponent implements OnInit {
   }
 
   saveDataInDataBase() {
-    console.log(this.data);
-    console.log(this.events.data_formate);
+
     if (this.data.length <= 0) {
       alert("הקובץ ריק");
       return
@@ -71,27 +72,44 @@ export class HeaderComponent implements OnInit {
     if (!this.validateFormate()) {
       return
     }
-    this.data.forEach(function (element) {
-      element.donate = []
-      element.donateDate = new Date()
-      element.hisEvent = []
-    });
+
+
+    this.data = this.serverService.addAttributeFunc(this.data);
 
     this.serverService.saveImportedData(this.data).subscribe((res) => {
 
       let elements = res.json();
-      let len = elements.length;
-      for (let i = 0; i < len; ++i) {
 
-        if (elements[i].donorType == "פרטי") {
-          this.donorService.private_donor.push(elements[i])
-        } else {
-          this.donorService.org_donor.push(elements[i])
-        }
+
+      let returned_list = this.serverService.arrangeInUiFunc(elements);
+
+      if (returned_list.length == 3) {
+
+        this.donorService.private_donor = this.donorService.private_donor.concat(returned_list[0]);
+        this.donorService.org_donor = this.donorService.org_donor.concat(returned_list[1]);
+        this.donorService.Donor = this.donorService.donor.concat(returned_list[2]);
+      } else {
+
+        this.volunteerService.volunteers = this.volunteerService.volunteers.concat(returned_list[0])
       }
-      console.log(res.json())
+      try {
 
-      this.donorService.donor.push.apply(this.donorService.donor, res.json())
+        if (this.events.m_all_items[0].donorType == "פרטי") {
+        
+          this.events.pageDivider(this.donorService.private_donor)
+        } else if (this.events.m_all_items[0].donorType == "קרן") {
+
+          this.events.pageDivider(this.donorService.org_donor)
+        } else {
+
+          this.events.pageDivider(this.volunteerService.volunteers);
+        }
+
+      } catch (error) {
+
+      }
+
+
     }, (e) => {
       // all the errors that accuered
     });

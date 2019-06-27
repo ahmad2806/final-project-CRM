@@ -8,14 +8,28 @@
 <div class="bg-default col-xs-12 nav" style="background-image:url('/assets/background.jpg')">
       <div class="col-xs-4 col-lg-3 text-center move">
 
-            <button type="button" (click)="openNav()" class="btn btn-default text-success  glyphicon glyphicon-th-list col-xs-2"  data-toggle="tooltip" data-placement="bottom" title="סרגל ניווט"></button>
-            <span class="btn btn-file btn-primary text-success  glyphicon glyphicon-import col-xs-2" data-toggle="tooltip" data-placement="bottom" title="ייבוא נתונים">
-                  <input  (change)="onFileChange($event)"type="file" multiple="false" />
+            <button type="button" (click)="openNav()"
+                  class="btn btn-default text-success  glyphicon glyphicon-th-list col-xs-2" data-toggle="tooltip"
+                  data-placement="bottom" title="סרגל ניווט"></button>
+            <span class="btn btn-file btn-primary text-success  glyphicon glyphicon-import col-xs-2"
+                  data-toggle="tooltip" data-placement="bottom" title="ייבוא נתונים"
+                  *ngIf="this.router.url == '/Header/donor/donorList'">
+                  <input (change)="onFileChange($event)" type="file" multiple="false" />
             </span>
+            <span class="btn btn-file btn-primary text-success  glyphicon glyphicon-import col-xs-2"
+                  data-toggle="tooltip" data-placement="bottom" title="ייבוא נתונים"
+                  *ngIf="this.router.url == '/Header/volenteer/VolunteersList'">
+                  <input (change)="onFileChange($event)" type="file" multiple="false" />
+            </span>
+            <button class="btn btn-file btn-primary glyphicon glyphicon-import col-xs-2" data-toggle="modal"
+                  data-target="#pick" *ngIf="this.router.url == '/Header/main'">
+
+            </button>
             <!-- <span class="badge col-xs-3" *ngIf="badge">{{events.inProgressEvents.length}}</span> -->
 
 
-            <button type="button" class="btn btn-danger text-success  glyphicon glyphicon-log-out col-xs-2 " (click)="signOut()" data-toggle="tooltip" data-placement="bottom" title="יצאה"></button>
+            <button type="button" class="btn btn-danger text-success  glyphicon glyphicon-log-out col-xs-2 "
+                  (click)="signOut()" data-toggle="tooltip" data-placement="bottom" title="יצאה"></button>
       </div>
       <div class="col-xs-6 text-center text-success btn-lg">
             <a [routerLink]="['/Header/main']">J.S.P.C.A</a>

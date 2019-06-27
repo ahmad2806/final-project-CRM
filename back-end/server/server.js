@@ -219,6 +219,18 @@ app.post('/delete/event', (req, res) => {
     }, (e) => res.status(400).send(e));
 
 });
+app.post('/volunteers', (req, res) => {
+    let my_req = req.body
+    
+    let volunteers_to_add = []
+    my_req.forEach(function (element) {
+        volunteers_to_add.push(Volunteer(element))
+    });
+    Volunteer.insertMany(volunteers_to_add).then((result) => {
+        console.log(result);
+        res.send(result);
+    });
+});
 
 app.get('/deleted/event', (req, res) => {
     Event.find({

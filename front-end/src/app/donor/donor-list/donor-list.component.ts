@@ -40,10 +40,14 @@ export class DonorListComponent implements OnInit {
 
 
   }
-
   ngOnInit() {
-
+    
+    this.serverService.data_type = "allDonors";
+    this.serverService.addAttributeFunc = this.donorList.m_fun;
+    this.serverService.arrangeInUiFunc = this.donorList.arrangeInUi;
+    this.donorEvents.data_formate = this.donorList.template_donor;
   }
+  
   index(i) {
     this.i = i;
   }
@@ -142,17 +146,16 @@ export class DonorListComponent implements OnInit {
     if (donor_to_remove.donorType == "פרטי") {
       let temp_index = this.donorList.private_donor.indexOf(donor_to_remove)
       this.donorList.private_donor.splice(temp_index, 1)
-    } else  {
+    } else {
       let temp_index = this.donorList.org_donor.indexOf(donor_to_remove)
       this.donorList.org_donor.splice(temp_index, 1)
     }
 
-    console.log(donor_to_remove, m_index,this.donorList.donor, this.donorEvents.m_all_items)
-    this.donorList.donor.splice(m_index, 1);
     
-
+    
     this.serverService.deleteDonor(donor_to_remove).subscribe((res) => {
-      this.donorEvents.m_all_items.splice(m_index, 1);
+      this.donorList.donor.splice(m_index, 1);
+      console.log(donor_to_remove, m_index, this.donorList.donor, this.donorEvents.m_all_items)
       this.donorEvents.pageDivider(this.donorEvents.m_all_items);
     }, (e) => alert(e));
   }
